@@ -1,1 +1,1 @@
-#LowTime - better than snooze
+#LowTime - avoiding the snooze button
