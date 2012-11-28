@@ -42,25 +42,25 @@ public class MainActivity extends Activity{
         
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-        	
-            sleeptone = extras.getString("sleeptone");
+        	sleeptone = extras.getString("sleeptone");
             waketone = extras.getString("waketone");
-            
+            System.out.println("sleeptone : " + sleeptone);
+            System.out.println("waketone : " + waketone);
             //sleeptoneUri = extras.getString("sleeptoneUri");
             //waketoneUri = extras.getString("waketoneUri");
-            
-            if(sleeptone != null && !sleeptone.equals("")){
-                TextView sleetoneView = (TextView) findViewById(R.id.sleeptone);
-                sleetoneView.setText(sleeptone);
-            }        
-            
-            if(waketone != null && !waketone.equals("")){
-                TextView waketoneView = (TextView) findViewById(R.id.waketone);
-                waketoneView.setText(waketone);
-            }
-            
         }
-      
+
+        
+        if(sleeptone != null && !sleeptone.equals("")){
+            TextView sleetoneView = (TextView) findViewById(R.id.sleeptone);
+            sleetoneView.setText(sleeptone);
+        }        
+        
+        if(waketone != null && !waketone.equals("")){
+            TextView waketoneView = (TextView) findViewById(R.id.waketone);
+            waketoneView.setText(waketone);
+        }
+        
     }
 
     
@@ -73,6 +73,16 @@ public class MainActivity extends Activity{
       // killed and restarted.
       savedInstanceState.putString("waketone", waketone);
       savedInstanceState.putString("sleeptone", sleeptone);
+    }    
+    
+    
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+      super.onRestoreInstanceState(savedInstanceState);
+      // Restore UI state from the savedInstanceState.
+      // This bundle has also been passed to onCreate.
+      waketone = savedInstanceState.getString("waketone");
+      sleeptone = savedInstanceState.getString("sleeptone");     
     }
     
     

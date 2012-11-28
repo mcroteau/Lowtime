@@ -46,8 +46,7 @@ public class WakeToneIntent extends Activity{
         layout.setOrientation(LinearLayout.VERTICAL);
 
     	int count = 0;
-    	radioButtons = new ArrayList<CheckBox>();
-    	
+    	radioButtons = new ArrayList<CheckBox>();    	
     	
     	while(!alarmsCursor.isAfterLast() && alarmsCursor.moveToNext()) {
 
@@ -64,6 +63,7 @@ public class WakeToneIntent extends Activity{
             setToneButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
+                    	System.out.println("\n\nWakeToneIntent\n\n");
                     	processRadioButtonClick(buttonView);
                     	int id = buttonView.getId();
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
@@ -74,7 +74,6 @@ public class WakeToneIntent extends Activity{
                         i.putExtra("waketoneUri", uri);
                         i.putExtra("waketone", tone);
                         startActivity(i);
-                    
                     }
                 }   
             });
@@ -104,7 +103,6 @@ public class WakeToneIntent extends Activity{
             lookup.get(elementsId).put(URI, ringtoneMgr.getRingtoneUri(currentPosition));
             
     	    count++;
-    	    
     	    layout.addView(row);
         
     	}

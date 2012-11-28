@@ -1,6 +1,5 @@
 package org.agius.lowtime;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +64,7 @@ public class SleepToneIntent extends Activity{
             setToneButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
+                    	System.out.println("\n\nSleepToneIntent\n\n");
                     	processRadioButtonClick(buttonView);
                     	int id = buttonView.getId();
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
@@ -82,10 +82,12 @@ public class SleepToneIntent extends Activity{
             radioButtons.add((CheckBox) setToneButton);
     	    row.addView(setToneButton, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     	    
+    	    
             TextView title = new TextView(this);
     	    title.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
     	    title.setText(ringtoneMgr.getRingtone(currentPosition).getTitle(this));
     	    row.addView(title, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    	    
     	    
     	    Button preview = new Button(this);
             preview.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
