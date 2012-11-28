@@ -25,32 +25,35 @@ import android.widget.TextView;
 
 public class SleepToneIntent extends Activity{
 
-	private Map<Integer, Uri> uriLookup = new HashMap<Integer, Uri>();
+	@SuppressLint("UseSparseArrays")
+	private Map<Integer, Map<String, Object>> lookup = new HashMap<Integer, Map<String, Object>>();
 	
 	private LinearLayout layout;
 	private List<CheckBox> radioButtons; 
+	
+	private static String TONE = "tone";
+	private static String URI = "uri";
 	
     @SuppressLint("NewApi")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.waketone);
+        setContentView(R.layout.sleeptone);
         
         RingtoneManager ringtoneMgr = new RingtoneManager(this);
     	ringtoneMgr.setType(RingtoneManager.TYPE_ALARM);
     	Cursor alarmsCursor = ringtoneMgr.getCursor();
     	
-    	layout = (LinearLayout) findViewById(R.id.waketone);
+    	layout = (LinearLayout) findViewById(R.id.sleeptone);
         layout.setOrientation(LinearLayout.VERTICAL);
 
     	int count = 0;
-    	
     	radioButtons = new ArrayList<CheckBox>();
     	
     	while(!alarmsCursor.isAfterLast() && alarmsCursor.moveToNext()) {
 
     		int currentPosition = alarmsCursor.getPosition();
-    		int elementsId = count + 1 + (count * 5);
+    		int elementsId = count + 2 + (count * 5);
     		
             LinearLayout row = new LinearLayout(this);
             row.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
@@ -64,25 +67,25 @@ public class SleepToneIntent extends Activity{
                     if (isChecked) {
                     	processRadioButtonClick(buttonView);
                     	int id = buttonView.getId();
-                    	System.out.println("ID : " + id);
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                        String uri = uriLookup.get(id).toString();
-                        i.putExtra("sleeptone", uri);
+
+                        String tone = lookup.get(id).get(TONE).toString();
+                        Uri uri = (Uri) lookup.get(id).get(URI);
+
+                        i.putExtra("sleeptoneUri", uri);
+                        i.putExtra("sleeptone", tone);
                         startActivity(i);
+                    
                     }
                 }   
             });
             radioButtons.add((CheckBox) setToneButton);
     	    row.addView(setToneButton, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     	    
-
-    	    
             TextView title = new TextView(this);
     	    title.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
     	    title.setText(ringtoneMgr.getRingtone(currentPosition).getTitle(this));
     	    row.addView(title, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-    	    
-    	    
     	    
     	    Button preview = new Button(this);
             preview.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
@@ -91,16 +94,17 @@ public class SleepToneIntent extends Activity{
             preview.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                 	int id = v.getId();
-                	System.out.println("ID : " + id);
-        	    	Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), uriLookup.get(id));
+        	    	Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), (Uri) lookup.get(id).get(URI));
         	    	r.play();
                 }
             });
             
             row.addView(preview);
-    	    uriLookup.put(elementsId, ringtoneMgr.getRingtoneUri(currentPosition));
+            lookup.put(elementsId, new HashMap<String, Object>());
+            lookup.get(elementsId).put(TONE, ringtoneMgr.getRingtone(currentPosition).getTitle(this));
+            lookup.get(elementsId).put(URI, ringtoneMgr.getRingtoneUri(currentPosition));
+
     	    count++;
-    	    
     	    layout.addView(row);
         
     	}

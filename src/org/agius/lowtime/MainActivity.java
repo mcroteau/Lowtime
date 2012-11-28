@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity{
 
+	//TODO : Might use in for preview
+	//private String sleeptoneUri;
+	//private String waketoneUri;
 	
 	private String sleeptone;
 	private String waketone;
@@ -37,40 +40,30 @@ public class MainActivity extends Activity{
         });
         
         
-        if(savedInstanceState != null){
-            sleeptone = savedInstanceState.getString("sleeptone");
-            waketone = savedInstanceState.getString("waketone");
-            if(sleeptone != null && !sleeptone.equals("")){
-                TextView sleetoneView = (TextView) findViewById(R.id.sleeptone);
-                sleetoneView.setText(sleeptone);
-            }
-           
-            if(waketone != null && !waketone.equals("")){
-                TextView waketoneView = (TextView) findViewById(R.id.waketone);
-                waketoneView.setText(waketone);
-            }
-            
-        }
-        
-        
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+        	
             sleeptone = extras.getString("sleeptone");
             waketone = extras.getString("waketone");
             
+            //sleeptoneUri = extras.getString("sleeptoneUri");
+            //waketoneUri = extras.getString("waketoneUri");
+            
             if(sleeptone != null && !sleeptone.equals("")){
                 TextView sleetoneView = (TextView) findViewById(R.id.sleeptone);
                 sleetoneView.setText(sleeptone);
-            }
-           
+            }        
+            
             if(waketone != null && !waketone.equals("")){
                 TextView waketoneView = (TextView) findViewById(R.id.waketone);
                 waketoneView.setText(waketone);
             }
+            
         }
-        
+      
     }
 
+    
     
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
