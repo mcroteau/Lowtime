@@ -2,6 +2,7 @@ package org.agius.lowtime;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -17,11 +18,15 @@ public class MainActivity extends Activity{
 	private String sleeptone;
 	private String waketone;
 	
+	private SharedPreferences settings;
+	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        settings = getSharedPreferences("lowtimeSettings", 0);
         
         Button sleeptoneButton = (Button) findViewById(R.id.sleeptone_button);
         sleeptoneButton.setOnClickListener(new View.OnClickListener() {
@@ -39,27 +44,15 @@ public class MainActivity extends Activity{
             }
         });
         
+        sleeptone = settings.getString("sleeptone", "");
+        TextView sleetoneView = (TextView) findViewById(R.id.sleeptone);
+        sleetoneView.setText(sleeptone);
         
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-        	sleeptone = extras.getString("sleeptone");
-            waketone = extras.getString("waketone");
-            System.out.println("sleeptone : " + sleeptone);
-            System.out.println("waketone : " + waketone);
-            //sleeptoneUri = extras.getString("sleeptoneUri");
-            //waketoneUri = extras.getString("waketoneUri");
-        }
-
+        waketone = settings.getString("waketone", "");
+        TextView waketoneView = (TextView) findViewById(R.id.waketone);
+        waketoneView.setText(waketone);
         
-        if(sleeptone != null && !sleeptone.equals("")){
-            TextView sleetoneView = (TextView) findViewById(R.id.sleeptone);
-            sleetoneView.setText(sleeptone);
-        }        
-        
-        if(waketone != null && !waketone.equals("")){
-            TextView waketoneView = (TextView) findViewById(R.id.waketone);
-            waketoneView.setText(waketone);
-        }
+        System.out.println("sleeptone : " + sleeptone + " waketone : " + waketone);
         
     }
 

@@ -3,24 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TimePicker
-        android:id="@+id/timePicker1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="82dp" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/timePicker1"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="47dp"
-        android:text="Set LowTime"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <Button
         android:id="@+id/save"
         android:layout_width="wrap_content"
@@ -32,21 +14,30 @@
         android:onClick="onClick"
         android:text="Set LowTime" />
 
-    <Button
-        android:id="@+id/waketone_button"
+    <TimePicker
+        android:id="@+id/timePicker1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/timePicker1"
-        android:layout_marginTop="24dp"
-        android:text="Set Wake Tone" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp" />
 
     <Button
         android:id="@+id/sleeptone_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/waketone_button"
+        android:layout_alignLeft="@+id/timePicker1"
+        android:layout_centerVertical="true"
         android:text="Set Sleep Tone" />
+
+    <Button
+        android:id="@+id/waketone_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/sleeptone_button"
+        android:layout_below="@+id/sleeptone_button"
+        android:layout_marginTop="17dp"
+        android:text="Set Wake Tone" />
 
     <TextView
         android:id="@+id/sleeptone"
@@ -55,7 +46,7 @@
         android:layout_alignBaseline="@+id/sleeptone_button"
         android:layout_alignBottom="@+id/sleeptone_button"
         android:layout_alignLeft="@+id/save"
-        android:text="..." />
+        android:text="---" />
 
     <TextView
         android:id="@+id/waketone"
@@ -64,6 +55,6 @@
         android:layout_alignBaseline="@+id/waketone_button"
         android:layout_alignBottom="@+id/waketone_button"
         android:layout_alignLeft="@+id/sleeptone"
-        android:text="..." />
+        android:text="---" />
 
 </RelativeLayout>

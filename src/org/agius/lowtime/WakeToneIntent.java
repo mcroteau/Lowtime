@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -31,14 +32,20 @@ public class WakeToneIntent extends Activity{
 	
 	private static String TONE = "tone";
 	private static String URI = "uri";
+
+	private SharedPreferences settings;
+
+	private static Ringtone ringtone;
 	
     @SuppressLint("NewApi")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.waketone);
+
+        settings = getSharedPreferences("lowtimeSettings", 0);
         
-        RingtoneManager ringtoneMgr = new RingtoneManager(this);
+        RingtoneManager ringtoneMgr = new RingtoneManager(getApplicationContext());
     	ringtoneMgr.setType(RingtoneManager.TYPE_ALARM);
     	Cursor alarmsCursor = ringtoneMgr.getCursor();
     	
@@ -71,8 +78,13 @@ public class WakeToneIntent extends Activity{
                         String tone = lookup.get(id).get(TONE).toString();
                         Uri uri = (Uri) lookup.get(id).get(URI);
 
-                        i.putExtra("waketoneUri", uri);
-                        i.putExtra("waketone", tone);
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putString("waketoneUri", uri.toString());
+                        editor.putString("waketone", tone);
+                        editor.commit();
+
+                    	if(ringtone != null && ringtone.isPlaying())ringtone.stop();
+                    	
                         startActivity(i);
                     }
                 }   
@@ -92,8 +104,9 @@ public class WakeToneIntent extends Activity{
             preview.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                 	int id = v.getId();
-        	    	Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), (Uri) lookup.get(id).get(URI));
-        	    	r.play();
+                	if(ringtone != null && ringtone.isPlaying())ringtone.stop();
+        	    	ringtone = RingtoneManager.getRingtone(getApplicationContext(), (Uri) lookup.get(id).get(URI));
+        	    	ringtone.play();
                 }
             });
             
