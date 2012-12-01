@@ -20,6 +20,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -47,7 +48,8 @@ public class MainActivity extends Activity{
     private SensorManager sensorManager;
     private PowerManager powerManager;
     private WindowManager windowManager;
-    private SimulationView simulationView;
+    
+    SimulationView simulationView;
     
     
 	private MediaPlayer mediaPlayer, 
@@ -116,11 +118,18 @@ public class MainActivity extends Activity{
 	        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 	        mDisplay = windowManager.getDefaultDisplay();
 	
-	
-	        simulationView = new SimulationView(this);
-	        setContentView(simulationView);
-	
-	        startService(new Intent(this, LowtimeService.class));
+	        
+	        
+	        Button setLowtimeButton = (Button) findViewById(R.id.waketone_button);
+	        setLowtimeButton.setOnClickListener(new View.OnClickListener() {
+	            public void onClick(View v) {
+	            	Log.d("Lowtime", "Button clicekd to start lowtime");
+	    	        simulationView = new SimulationView(getApplicationContext());
+	    	        setContentView(simulationView);
+	    	        startService(new Intent(getApplicationContext(), LowtimeService.class));
+	            }
+	        });
+	        
 	        
 	    }catch (Exception e){
 	    	e.printStackTrace();
@@ -441,7 +450,7 @@ public class MainActivity extends Activity{
 
             mSensorZ = event.values[2];
             
-            switch (mDisplay.getRotation()) {
+            switch (mDisplay.getOrientation()) {
                 case Surface.ROTATION_0:
                     mSensorX = event.values[0];
                     mSensorY = event.values[1];
