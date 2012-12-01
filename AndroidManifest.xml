@@ -23,10 +23,10 @@
         </activity>
         
 	    <activity android:name="WakeToneIntent"
-        		  android:theme="@android:style/Theme.Holo.Dialog" ></activity>
+        		  android:theme="@android:style/Theme.Dialog" ></activity>
 	    
 	    <activity android:name="SleepToneIntent"
-        		  android:theme="@android:style/Theme.Holo.Dialog"></activity>
+        		  android:theme="@android:style/Theme.Dialog"></activity>
 	    
     </application>
 

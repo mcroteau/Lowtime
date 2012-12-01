@@ -7,7 +7,6 @@ import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -61,7 +60,7 @@ public class WakeToneIntent extends Activity{
     		int elementsId = count + 2 + (count * 5);
     		
             LinearLayout row = new LinearLayout(this);
-            row.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+            row.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     	    row.setOrientation(LinearLayout.HORIZONTAL);
     	  
     	    CheckBox setToneButton = new CheckBox(this);
@@ -90,15 +89,15 @@ public class WakeToneIntent extends Activity{
                 }   
             });
             radioButtons.add((CheckBox) setToneButton);
-    	    row.addView(setToneButton, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    	    row.addView(setToneButton, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     	    
             TextView title = new TextView(this);
-    	    title.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+    	    title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     	    title.setText(ringtoneMgr.getRingtone(currentPosition).getTitle(this));
-    	    row.addView(title, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    	    row.addView(title, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     	    
     	    Button preview = new Button(this);
-            preview.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            preview.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             preview.setText("Preview");
             preview.setId(elementsId);
             preview.setOnClickListener(new View.OnClickListener() {
