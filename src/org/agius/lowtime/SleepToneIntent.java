@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,7 +23,6 @@ import android.widget.TextView;
 
 public class SleepToneIntent extends Activity{
 
-	@SuppressLint("UseSparseArrays")
 	private Map<Integer, Map<String, Object>> lookup = new HashMap<Integer, Map<String, Object>>();
 	
 	private LinearLayout layout;
@@ -38,7 +36,6 @@ public class SleepToneIntent extends Activity{
 	private static Ringtone ringtone;
 	
 	
-    @SuppressLint("NewApi")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +82,7 @@ public class SleepToneIntent extends Activity{
                         editor.putString("sleeptone", tone);
                         editor.commit();
 
-                    	if(ringtone != null && ringtone.isPlaying())ringtone.stop();
+                    	if(ringtone != null)ringtone.stop();
                         
                         startActivity(i);
                     }
@@ -106,7 +103,7 @@ public class SleepToneIntent extends Activity{
             preview.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                 	int id = v.getId();
-                	if(ringtone != null && ringtone.isPlaying())ringtone.stop();
+                	if(ringtone != null)ringtone.stop();
         	    	ringtone = RingtoneManager.getRingtone(getApplicationContext(), (Uri) lookup.get(id).get(URI));
         	    	ringtone.play();
                 }

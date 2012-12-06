@@ -12,24 +12,37 @@ public final class R {
     }
     public static final class drawable {
         public static final int ball=0x7f020000;
-        public static final int ic_action_search=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int icon=0x7f020003;
-        public static final int wood=0x7f020004;
+        public static final int horizontal=0x7f020001;
+        public static final int ic_action_search=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int icon=0x7f020004;
+        public static final int vertical=0x7f020005;
+        public static final int wood=0x7f020006;
     }
     public static final class id {
-        public static final int menu_settings=0x7f070006;
+        public static final int TextView01=0x7f070008;
+        public static final int back=0x7f07000d;
+        public static final int image=0x7f07000f;
+        public static final int lowtimetime=0x7f070006;
+        public static final int menu_settings=0x7f070010;
+        public static final int minutes=0x7f070007;
         public static final int save=0x7f070000;
         public static final int sleeptone=0x7f070004;
-        public static final int sleeptone_button=0x7f070002;
-        public static final int timePicker1=0x7f070001;
+        public static final int sleeptone_button=0x7f070001;
+        public static final int timePicker1=0x7f070002;
         public static final int waketone=0x7f070005;
         public static final int waketone_button=0x7f070003;
+        public static final int withinmins=0x7f070009;
+        public static final int x_axis=0x7f07000a;
+        public static final int y_axis=0x7f07000b;
+        public static final int z_axis=0x7f07000c;
+        public static final int zvalue=0x7f07000e;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int sleeptone=0x7f030001;
-        public static final int waketone=0x7f030002;
+        public static final int lowtime=0x7f030001;
+        public static final int sleeptone=0x7f030002;
+        public static final int waketone=0x7f030003;
     }
     public static final class menu {
         public static final int activity_main=0x7f060000;

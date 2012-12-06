@@ -3,6 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
+
+    
     <Button
         android:id="@+id/save"
         android:layout_width="wrap_content"
@@ -11,16 +13,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="54dp"
         android:layout_marginRight="18dp"
-        android:onClick="onClick"
         android:text="Set LowTime" />
-
-    <TimePicker
-        android:id="@+id/timePicker1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp" />
 
     <Button
         android:id="@+id/sleeptone_button"
@@ -56,5 +49,39 @@
         android:layout_alignBottom="@+id/waketone_button"
         android:layout_alignLeft="@+id/sleeptone"
         android:text="---" />
+
+    <TimePicker
+        android:id="@+id/lowtimetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/minutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sleeptone_button"
+        android:layout_alignRight="@+id/sleeptone"
+        android:ems="10"
+        android:width="75px" />
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="---" />
+
+    <TextView
+        android:id="@+id/withinmins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/minutes"
+        android:layout_alignBottom="@+id/minutes"
+        android:layout_alignLeft="@+id/sleeptone_button"
+        android:text="Within # mins"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,7 +22,6 @@ import android.widget.TextView;
 
 public class WakeToneIntent extends Activity{
 
-	@SuppressLint("UseSparseArrays")
 	private Map<Integer, Map<String, Object>> lookup = new HashMap<Integer, Map<String, Object>>();
 	
 	private LinearLayout layout;
@@ -36,8 +34,7 @@ public class WakeToneIntent extends Activity{
 
 	private static Ringtone ringtone;
 	
-    @SuppressLint("NewApi")
-	@Override
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.waketone);

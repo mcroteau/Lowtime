@@ -1,5 +1,7 @@
 package org.agius.lowtime;
 
+import java.sql.Date;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +31,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 public class MainActivity extends Activity{
 
@@ -82,6 +85,31 @@ public class MainActivity extends Activity{
 	            }
 	        });
 	        
+	        Button setLowtimeButton = (Button) findViewById(R.id.save);
+	        setLowtimeButton.setOnClickListener(new View.OnClickListener() {
+	            public void onClick(View v) {
+	                Intent i = new Intent(MainActivity.this, LowtimeIntent.class);
+	                startActivity(i);
+	                
+	                //TODO: add logic to check for low time
+	                /*
+	                TextView minutesButton = (Button) findViewById(R.id.minutes);
+	                String minutes = (String) minutesButton.getText();
+	                SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("minutes", minutes);
+                    
+                    TimePicker timePicker = (TimePicker) findViewById(R.id.minutes);
+                    int lowtimeHour = timePicker.getCurrentHour();
+                    int lowtimeMinute = timePicker.getCurrentMinute();
+                    
+                    editor.putInt("lowtimeHour", lowtimeHour);
+                    editor.putInt("lowtimeMinute", lowtimeMinute);
+                    
+                    editor.commit();
+                    */
+	            }
+	        });
+	        
 	        sleeptone = settings.getString("sleeptone", "");
 	        TextView sleetoneView = (TextView) findViewById(R.id.sleeptone);
 	        sleetoneView.setText(sleeptone);
@@ -93,11 +121,9 @@ public class MainActivity extends Activity{
 	        sleeptoneUri = settings.getString("sleeptoneUri","");
 	        waketoneUri = settings.getString("waketoneUri", "");
 	
-	
 	        wakePlayer = new MediaPlayer();
 	        wakePlayer.setDataSource(waketoneUri);
 	        sleepPlayer.prepare();
-	
 	
 	        sleepPlayer = new MediaPlayer();
 	        sleepPlayer.setDataSource(sleeptoneUri);
@@ -120,15 +146,7 @@ public class MainActivity extends Activity{
 	
 	        
 	        
-	        Button setLowtimeButton = (Button) findViewById(R.id.waketone_button);
-	        setLowtimeButton.setOnClickListener(new View.OnClickListener() {
-	            public void onClick(View v) {
-	            	Log.d("Lowtime", "Button clicekd to start lowtime");
-	    	        simulationView = new SimulationView(getApplicationContext());
-	    	        setContentView(simulationView);
-	    	        startService(new Intent(getApplicationContext(), LowtimeService.class));
-	            }
-	        });
+
 	        
 	        
 	    }catch (Exception e){
