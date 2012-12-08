@@ -68,11 +68,11 @@ public class MainActivity extends Activity{
                     
                     editor.commit();
                     
-                    startService(new Intent(MainActivity.this, LowtimeService.class));
-                    moveTaskToBack(true);
+                    //startService(new Intent(MainActivity.this, LowtimeService.class));
+                    //moveTaskToBack(true);
                     
-	                //Intent i = new Intent(MainActivity.this, LowtimeIntent.class);
-	                //startActivity(i);
+	                Intent i = new Intent(MainActivity.this, LowtimeIntent.class);
+	                startActivity(i);
 	            }
 	        });
 
