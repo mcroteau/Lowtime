@@ -58,18 +58,21 @@
 		</TableRow>
 		
 		<TableRow>
-		    
+
 			<TextView
+			    android:id="@+id/lowtime"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
-			    android:textSize="20sp"/>
-			
+			    android:gravity="center"
+			    android:text="---"
+			    android:textSize="20sp" />
+
 			<Button
 			    android:id="@+id/back"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
-			    android:text="Back" 
-				android:gravity="center"/>
+			    android:gravity="center"
+			    android:text="Back" />
 		
 			<TextView
 			    android:layout_width="wrap_content"
@@ -80,6 +83,27 @@
 				android:gravity="center"/>
 			
 		</TableRow>
+		
+		
+		<TableRow>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/na1"
+				android:gravity="center"/>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/difference"
+				android:gravity="center"
+				android:text="Difference"/>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/na2"
+				android:gravity="center"/>
+		</TableRow>
+		
 	</TableLayout>
 
 	<ImageView

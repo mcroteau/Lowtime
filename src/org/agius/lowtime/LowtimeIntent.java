@@ -1,5 +1,12 @@
 package org.agius.lowtime;
 
+import java.util.Calendar;
+
+import org.agius.lowtime.R;
+import org.agius.lowtime.R.drawable;
+import org.agius.lowtime.R.id;
+import org.agius.lowtime.R.layout;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,17 +35,9 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 	private Sensor mAccelerometer;
 	private final float NOISE = (float) 2.0;
 
-	int lowHour = 1;
-
-	private float zSensor;
-	private MediaPlayer mediaPlayer, 
-						sleepPlayer, 
-						wakePlayer;	
-
-	private static Ringtone ringtone;
-	
-	private String sleeptoneUri;
-	private String waketoneUri;
+//	private static Ringtone ringtone;
+//	private String sleeptoneUri;
+//	private String waketoneUri;
 	private SharedPreferences settings;
 	
 	private int minutes,
@@ -60,24 +59,30 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 			mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 			mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 			mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-	        sleeptoneUri = settings.getString("sleeptoneUri","");
-	        waketoneUri = settings.getString("waketoneUri", "");
+			
+//	        sleeptoneUri = settings.getString("sleeptoneUri","");
+//	        waketoneUri = settings.getString("waketoneUri", "");
+
+	        minutes = settings.getInt("minutes", 0);
+	        lowtimeHour = settings.getInt("lowtimeHour", 0);
+	        lowtimeMinute = settings.getInt("lowtimeMinute", 0);
 	        
+	        final Calendar calendar = Calendar.getInstance();
+	        calendar.set(Calendar.HOUR_OF_DAY, lowtimeHour);
+	        calendar.set(Calendar.MINUTE, lowtimeMinute);
 	        
-//	        lowtimeHour = Integer.parseInt(settings.getString("lowtimeHour", ""));
-//	        minutes = Integer.parseInt(settings.getString("minutes", ""));
-//	        lowtimeMinute = Integer.parseInt(settings.getString("lowtimeMinute", ""));
+	        TextView lowtimeText = (TextView) findViewById(R.id.lowtime);
+	        String time = calendar.getTime().toLocaleString();
+	        lowtimeText.setText(time);
 	        
-	
 	        Button backButton = (Button) findViewById(R.id.back);
 	        backButton.setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View v) {
-                	if(ringtone != null && ringtone.isPlaying())ringtone.stop();
+//                	if(ringtone != null && ringtone.isPlaying())ringtone.stop();
 	                Intent i = new Intent(getApplicationContext(), MainActivity.class);
 	                startActivity(i);
 	            }
 	        });
-	        
 	        
 		}catch(Exception e){}
         
@@ -89,11 +94,13 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 	}
 		
+	
 	protected void onPause() {
 		super.onPause();
 		mSensorManager.unregisterListener(this);
 	}
 		
+	
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 		
@@ -123,30 +130,39 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 			
 		} else {
 			
-			int hour = new java.sql.Time(System.currentTimeMillis()).getHours();
-
+	        Calendar currentCalendar = Calendar.getInstance();
+	        Calendar lowtimeCalendar = Calendar.getInstance();
+	        lowtimeCalendar.set(Calendar.HOUR_OF_DAY, lowtimeHour);
+	        lowtimeCalendar.set(Calendar.MINUTE, lowtimeMinute);
+	        
+	        long currentMillis = currentCalendar.getTimeInMillis();
+	        long lowtimeMillis = lowtimeCalendar.getTimeInMillis();
+	        
+	        long diff = currentMillis - lowtimeMillis;
+	        
+	        long diffMinutes = ( diff/1000 ) / 60;
+	        
+	        TextView differenceView = (TextView) findViewById(R.id.difference);
+	        differenceView.setText(Long.toString(diffMinutes));
+	        
 			try{
 				
-		        Uri uri;
-			    if (hour < lowHour){
-			    	uri = Uri.parse(sleeptoneUri);
+		        Intent intent;
+			    if (diffMinutes <= minutes){
+	                intent = new Intent(getApplicationContext(), WakeIntent.class);
 			    } else {
-			    	uri = Uri.parse(waketoneUri);
+	                intent = new Intent(getApplicationContext(), SleepIntent.class);
 			    }
 	
-			    ringtone = RingtoneManager.getRingtone(getApplicationContext(), uri);
 		    	
-		    	System.out.println("z : " + Float.toString(z));
 		    	zvalue.setText(Float.toString(z));
 		    	
 			    if ( (z > -9.5 && z < -7.0) || 
 			    		( z > 7.0 && z < 9.5 ) ) {
 			    	
-			    	zvalue.setText("PLAY SOUND");
-
-                	if(ringtone != null && ringtone.isPlaying())ringtone.stop();
-                	ringtone.play();
-                	
+//			    	zvalue.setText("PLAY SOUND");
+	                startActivity(intent);
+	                
 			    } 
 			    
 			}catch(Exception e){

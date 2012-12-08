@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.agius.lowtime.R;
+import org.agius.lowtime.R.id;
+import org.agius.lowtime.R.layout;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
