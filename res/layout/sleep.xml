@@ -14,13 +14,24 @@
         android:text="SLEEP"
         android:textSize="60sp" />
 
+
     <Button
-        android:id="@+id/back"
+        android:id="@+id/snooze"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/sleep"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
-        android:text="Back" />
+        android:layout_alignBaseline="@+id/turnoff"
+        android:layout_alignBottom="@+id/turnoff"
+        android:layout_marginRight="14dp"
+        android:layout_toLeftOf="@+id/turnoff"
+        android:text="Snooze" />
+
+    <Button
+        android:id="@+id/turnoff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/sleep"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:text="Turn Off" />
     
 </RelativeLayout>

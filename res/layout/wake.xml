@@ -3,14 +3,7 @@
 			android:orientation="vertical"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent">
-
-    <Button
-        android:id="@+id/turnoff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Turn Off" />
+    
 
     <TextView
         android:id="@+id/wake"
@@ -21,5 +14,26 @@
         android:layout_marginBottom="35dp"
         android:text="WAKE"
         android:textSize="60sp" />
+
+    
+    <Button
+        android:id="@+id/snooze"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/turnoff"
+        android:layout_alignBottom="@+id/turnoff"
+        android:layout_marginRight="14dp"
+        android:layout_toLeftOf="@+id/turnoff"
+        android:text="Snooze" />
+
+    
+    <Button
+        android:id="@+id/turnoff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/wake"
+        android:layout_centerVertical="true"
+        android:text="Turn Off" />
+    
     
 </RelativeLayout>

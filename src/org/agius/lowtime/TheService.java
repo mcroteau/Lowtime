@@ -157,7 +157,8 @@ public class TheService extends Service implements SensorEventListener {
 			    	
 			        Log.i(TAG, "start activity");
 			        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			        getApplication().startActivity(intent);
+			        if(!SleepIntent.active && !WakeIntent.active)
+			        	getApplication().startActivity(intent);
 			        
 			    } 
 			    

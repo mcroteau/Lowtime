@@ -12,8 +12,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+
 public class WakeIntent extends Activity{
 
+	static boolean active = false;	
+	
 	private String waketoneUri;
 	private SharedPreferences settings;
 	private MediaPlayer player;
@@ -47,24 +50,37 @@ public class WakeIntent extends Activity{
     	}        
         
 	    
-        Button backButton = (Button) findViewById(R.id.turnoff);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        Button offButton = (Button) findViewById(R.id.turnoff);
+        offButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	player.stop();
-                Intent i = new Intent(getApplicationContext(), LowtimeIntent.class);
-                startActivity(i);
+                stopService(new Intent(WakeIntent.this, TheService.class));
             }
         });
         
-//        Button backButton = (Button) findViewById(R.id.turnoff);
-//        backButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//            	player.stop();
-//                Intent i = new Intent(getApplicationContext(), LowtimeIntent.class);
-//                startActivity(i);
-//            }
-//        });
         
+        Button backButton = (Button) findViewById(R.id.snooze);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	player.stop();
+            	finish();
+            }
+        });
+        
+    }
+    
+
+    @Override
+    public void onStart(){
+    	super.onStart();
+    	active = true;
+    }
+    
+    
+    @Override
+    public void onStop(){
+    	super.onStop();
+    	active = false;
     }
     
 }
