@@ -39,6 +39,9 @@
 	    
         <service android:name=".LowtimeService" ></service>
         
+        <service android:name=".TheService"></service>
+            
+        
     </application>
 
     <uses-permission android:name="android.permission.VIBRATE"></uses-permission>

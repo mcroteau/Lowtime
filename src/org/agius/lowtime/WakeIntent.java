@@ -56,6 +56,15 @@ public class WakeIntent extends Activity{
             }
         });
         
+        Button backButton = (Button) findViewById(R.id.turnoff);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	player.stop();
+                Intent i = new Intent(getApplicationContext(), LowtimeIntent.class);
+                startActivity(i);
+            }
+        });
+        
     }
     
 }

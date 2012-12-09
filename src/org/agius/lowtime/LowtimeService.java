@@ -128,12 +128,9 @@ public class LowtimeService extends Service implements SensorEventListener {
 			mLastX = x;
 			mLastY = y;
 			mLastZ = z;
-
 			
 		}
-		
-
-		
+				
 	}   
     
 }
