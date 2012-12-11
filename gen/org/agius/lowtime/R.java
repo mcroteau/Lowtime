@@ -20,11 +20,14 @@ public final class R {
         public static final int ic_launcher=0x7f020003;
         public static final int icon=0x7f020004;
         public static final int mainbackground=0x7f020005;
-        public static final int vertical=0x7f020006;
-        public static final int wakebackground=0x7f020007;
-        public static final int wakesnooze=0x7f020008;
-        public static final int waketurnoff=0x7f020009;
-        public static final int wood=0x7f02000a;
+        public static final int sleep_background=0x7f020006;
+        public static final int sleep_snooze_button=0x7f020007;
+        public static final int sleep_turnoff_button=0x7f020008;
+        public static final int vertical=0x7f020009;
+        public static final int wake_background=0x7f02000a;
+        public static final int wake_snooze_button=0x7f02000b;
+        public static final int wake_turnoff_button=0x7f02000c;
+        public static final int wood=0x7f02000d;
     }
     public static final class id {
         public static final int back=0x7f080009;
