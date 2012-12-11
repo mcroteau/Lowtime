@@ -19,8 +19,12 @@ public final class R {
         public static final int ic_action_search=0x7f020002;
         public static final int ic_launcher=0x7f020003;
         public static final int icon=0x7f020004;
-        public static final int vertical=0x7f020005;
-        public static final int wood=0x7f020006;
+        public static final int mainbackground=0x7f020005;
+        public static final int vertical=0x7f020006;
+        public static final int wakebackground=0x7f020007;
+        public static final int wakesnooze=0x7f020008;
+        public static final int waketurnoff=0x7f020009;
+        public static final int wood=0x7f02000a;
     }
     public static final class id {
         public static final int back=0x7f080009;
@@ -65,5 +69,6 @@ public final class R {
     }
     public static final class style {
         public static final int AppTheme=0x7f060000;
+        public static final int WakeText=0x7f060001;
     }
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 public class WakeIntent extends Activity{
@@ -28,6 +30,12 @@ public class WakeIntent extends Activity{
 
 		settings = getSharedPreferences("lowtimeSettings", 0);
         waketoneUri = settings.getString("waketoneUri", "");    
+        
+
+        TextView wakeText = (TextView)findViewById(R.id.wake);
+        Typeface face= Typeface.createFromAsset(getAssets(), "fonts/Roboto-Black.ttf");
+
+        wakeText.setTypeface(face);
         
         try {
         	

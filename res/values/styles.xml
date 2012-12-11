@@ -1,5 +1,14 @@
 <resources>
 
     <style name="AppTheme" parent="android:Theme.Light" />
+      
+	<style name="WakeText">
+	  <item name="android:textColor">#ffffffff</item>
+	  <item name="android:textSize">60sp</item>
+	  <item name="android:shadowColor">#064b7c</item>
+	  <item name="android:shadowDx">1</item>
+	  <item name="android:shadowDy">1</item>
+	  <item name="android:shadowRadius">4</item>
+	</style>
 
 </resources>

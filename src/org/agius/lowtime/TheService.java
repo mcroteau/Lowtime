@@ -173,6 +173,7 @@ public class TheService extends Service implements SensorEventListener {
 		}
 		
     }
+    
 
     @Override
     public void onCreate() {
@@ -183,20 +184,16 @@ public class TheService extends Service implements SensorEventListener {
         minutes = settings.getInt("minutes", 0);
         lowtimeHour = settings.getInt("lowtimeHour", 0);
         lowtimeMinute = settings.getInt("lowtimeMinute", 0);
-        
-		
 		
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
-        PowerManager manager =
-            (PowerManager) getSystemService(Context.POWER_SERVICE);
+        PowerManager manager = (PowerManager) getSystemService(Context.POWER_SERVICE);
         mWakeLock = manager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
 
         registerReceiver(mReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
         
-        Toast.makeText(getApplicationContext(), 
-				"onCreate",
-				Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "onCreate", Toast.LENGTH_SHORT).show();
+        
     }
 
     
