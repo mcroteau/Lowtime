@@ -40,6 +40,9 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 //	private String waketoneUri;
 	private SharedPreferences settings;
 	
+	private int back;
+	private int forth;
+	
 	private int minutes,
 				lowtimeHour,
 				lowtimeMinute;
@@ -49,6 +52,10 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lowtime);
+		
+		back = 0;
+    	forth = 0;
+    	
     	
 		try{
 			
@@ -71,9 +78,9 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 	        calendar.set(Calendar.HOUR_OF_DAY, lowtimeHour);
 	        calendar.set(Calendar.MINUTE, lowtimeMinute);
 	        
-	        TextView lowtimeText = (TextView) findViewById(R.id.lowtime);
-	        String time = calendar.getTime().toLocaleString();
-	        lowtimeText.setText(time);
+	        //TextView lowtimeText = (TextView) findViewById(R.id.lowtime);
+	        //String time = calendar.getTime().toLocaleString();
+	        //lowtimeText.setText(time);
 	        
 	        Button backButton = (Button) findViewById(R.id.back);
 	        backButton.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +119,9 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 		TextView tvY= (TextView)findViewById(R.id.y_axis);
 		TextView tvZ= (TextView)findViewById(R.id.z_axis);
 		TextView zvalue = (TextView)findViewById(R.id.zvalue);
+		TextView backValue = (TextView)findViewById(R.id.back);
+		TextView forthValue = (TextView)findViewById(R.id.forth);
+		
 		ImageView iv = (ImageView)findViewById(R.id.image);
 		
 		float x = event.values[0];
@@ -126,10 +136,40 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 			tvX.setText("0.0");
 			tvY.setText("0.0");
 			tvZ.setText("0.0");
+			
 			mInitialized = true;
 			
 		} else {
 			
+
+			tvX.setText(Float.toString(x));
+			tvY.setText(Float.toString(y));
+			tvZ.setText(Float.toString(z));
+	    	zvalue.setText(Float.toString(z));
+			
+
+		    if ( (z > -9.5 && z < -7.0) || 
+		    		( z > 7.0 && z < 9.5 ) ) {
+		    	back++;
+		    	backValue.setText("b:" + Integer.toString(back));
+		    }
+
+		    
+		    if( (z < 5 && z > 0) || z > -5 && z < 0){
+		    	forth++;
+		    	forthValue.setText("f:" + Integer.toString(forth));
+		    }
+		    
+		    
+	    	if(back >= 5 && forth >=5){
+	    		backValue.setText("LOW");
+	    		forthValue.setText("TIME");
+	    		back = 0;
+	    		forth = 0;
+	    	}
+	    	
+	    	
+			/*
 	        Calendar currentCalendar = Calendar.getInstance();
 	        Calendar lowtimeCalendar = Calendar.getInstance();
 	        lowtimeCalendar.set(Calendar.HOUR_OF_DAY, lowtimeHour);
@@ -161,7 +201,7 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 			    		( z > 7.0 && z < 9.5 ) ) {
 			    	
 //			    	zvalue.setText("PLAY SOUND");
-	                startActivity(intent);
+	                //startActivity(intent);
 	                
 			    } 
 			    
@@ -193,6 +233,8 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 			} else {
 				iv.setVisibility(View.INVISIBLE);
 			}
+			
+			*/
 			
 		}
 		
