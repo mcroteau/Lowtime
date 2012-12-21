@@ -31,7 +31,7 @@ public class TheService extends Service implements SensorEventListener {
     private SensorManager mSensorManager = null;
     private WakeLock mWakeLock = null;
 	
-	private float mLastX, mLastY, mLastZ;
+
 	private boolean mInitialized;
 
 	private Sensor mAccelerometer;
@@ -43,7 +43,21 @@ public class TheService extends Service implements SensorEventListener {
 				lowtimeHour,
 				lowtimeMinute;
 	
+	
+	private static final int FORCE_THRESHOLD = 150;
+	private static final int TIME_THRESHOLD = 100;
+	private static final int SHAKE_TIMEOUT = 500;
+	private static final int SHAKE_DURATION = 1000;
+	private static final int SHAKE_COUNT = 3;
+	
+	private float mLastX, mLastY, mLastZ;
+	private long mLastTime;
+	private int mShakeCount = 0;
+	private long mLastShake;
+	private long mLastForce;
 
+	
+	
     /*
      * Register this as a sensor event listener.
      */
@@ -105,6 +119,75 @@ public class TheService extends Service implements SensorEventListener {
 				Toast.LENGTH_SHORT).show();
     }
 
+    
+    @Override
+    public void onSensorChanged(SensorEvent event){
+    	
+        Calendar currentCalendar = Calendar.getInstance();
+        Calendar lowtimeCalendar = Calendar.getInstance();
+        lowtimeCalendar.set(Calendar.HOUR_OF_DAY, lowtimeHour);
+        lowtimeCalendar.set(Calendar.MINUTE, lowtimeMinute);
+        
+        long currentMillis = currentCalendar.getTimeInMillis();
+        long lowtimeMillis = lowtimeCalendar.getTimeInMillis();
+        
+        long diffMillis = currentMillis - lowtimeMillis;
+        
+        long diffMinutes = ( diffMillis/1000 ) / 60;
+        
+        
+        try{
+				
+	        Intent intent;
+		    if (diffMinutes <= minutes){
+                intent = new Intent(getApplicationContext(), WakeIntent.class);
+		    } else {
+                intent = new Intent(getApplicationContext(), SleepIntent.class);
+		    }
+    
+        
+        
+			long now = System.currentTimeMillis();
+		    if ((now - mLastForce) > SHAKE_TIMEOUT) {
+		        mShakeCount = 0;
+		    }
+	
+		    if ((now - mLastTime) > TIME_THRESHOLD) {
+		    	  
+		    	long diff = now - mLastTime;
+		        
+		    	float sum = event.values[SensorManager.DATA_X] + event.values[SensorManager.DATA_Y] + event.values[SensorManager.DATA_Z];
+		    	float speed = Math.abs(sum - mLastX - mLastY - mLastZ) / diff * 10000;
+		        
+		    	if (speed > FORCE_THRESHOLD) {
+		    		if ((++mShakeCount >= SHAKE_COUNT) && (now - mLastShake > SHAKE_DURATION)) {
+		        		mLastShake = now;
+		        		mShakeCount = 0; 
+				        Log.i(TAG, "start activity");
+				        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				        if(!SleepIntent.active && !WakeIntent.active)
+				        	getApplication().startActivity(intent);
+				        
+		        	}
+		        	mLastForce = now;
+		        }
+		        mLastTime = now;
+		        mLastX = event.values[SensorManager.DATA_X];
+		        mLastY = event.values[SensorManager.DATA_Y];
+		        mLastZ = event.values[SensorManager.DATA_Z];
+		    }  	
+		    
+		}catch(Exception e){
+			
+		}
+			
+    }
+    
+    
+    
+    
+    
+    /**
     public void onSensorChanged(SensorEvent event) {
         
         float x = event.values[0];
@@ -173,6 +256,7 @@ public class TheService extends Service implements SensorEventListener {
 		}
 		
     }
+    **/
     
 
     @Override

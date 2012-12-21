@@ -20,15 +20,17 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class LowtimeIntent extends Activity implements SensorEventListener {
 	
-	private float mLastX, mLastY, mLastZ;
+	//private float mLastX, mLastY, mLastZ;
 	private boolean mInitialized;
 
 	private SensorManager mSensorManager;
@@ -42,11 +44,34 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 	
 	private int back;
 	private int forth;
+	private boolean backSet;
+	private boolean forthSet;
+	private boolean lowtime;
+	
+	private static final int SHAKE_THRESHOLD = 800;
 	
 	private int minutes,
 				lowtimeHour,
 				lowtimeMinute;
 	
+	
+	private static final int FORCE_THRESHOLD = 150;
+	private static final int TIME_THRESHOLD = 100;
+	private static final int SHAKE_TIMEOUT = 500;
+	private static final int SHAKE_DURATION = 1000;
+	private static final int SHAKE_COUNT = 3;
+	
+	
+	private SensorManager mSensorMgr;
+	private float mLastX, mLastY, mLastZ;
+	private long mLastTime;
+	private int mShakeCount = 0;
+	private long mLastShake;
+	private long mLastForce;
+	
+	
+	
+		  
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		
@@ -55,7 +80,9 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 		
 		back = 0;
     	forth = 0;
-    	
+    	backSet = false;
+    	forthSet = false;
+    	lowtime = false;
     	
 		try{
 			
@@ -90,28 +117,120 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 	                startActivity(i);
 	            }
 	        });
-	        
+	       
+			
+			
 		}catch(Exception e){}
         
 	}
 
-	
-	protected void onResume() {
-		super.onResume();
-		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-	}
-		
-	
-	protected void onPause() {
-		super.onPause();
-		mSensorManager.unregisterListener(this);
-	}
-		
+
 	
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 		
 	
+	
+	@Override
+	public void onSensorChanged(SensorEvent event){
+
+		TextView tvX= (TextView)findViewById(R.id.x_axis);
+		TextView tvY= (TextView)findViewById(R.id.y_axis);
+		TextView tvZ= (TextView)findViewById(R.id.z_axis);
+		TextView zvalue = (TextView)findViewById(R.id.zvalue);
+		TextView backValue = (TextView)findViewById(R.id.back);
+		TextView forthValue = (TextView)findViewById(R.id.forth);
+		
+		long now = System.currentTimeMillis();
+	    if ((now - mLastForce) > SHAKE_TIMEOUT) {
+	        mShakeCount = 0;
+	    }
+
+	    if ((now - mLastTime) > TIME_THRESHOLD) {
+	    	  
+	    	long diff = now - mLastTime;
+	        
+	    	float sum = event.values[SensorManager.DATA_X] + event.values[SensorManager.DATA_Y] + event.values[SensorManager.DATA_Z];
+	    	float speed = Math.abs(sum - mLastX - mLastY - mLastZ) / diff * 10000;
+	        
+	    	if (speed > FORCE_THRESHOLD) {
+	    		if ((++mShakeCount >= SHAKE_COUNT) && (now - mLastShake > SHAKE_DURATION)) {
+	        		mLastShake = now;
+	        		mShakeCount = 0; 
+	        		zvalue.setText("LOWTIME");
+	        	}
+	        	mLastForce = now;
+	        }
+	        mLastTime = now;
+	        mLastX = event.values[SensorManager.DATA_X];
+	        mLastY = event.values[SensorManager.DATA_Y];
+	        mLastZ = event.values[SensorManager.DATA_Z];
+	    }
+	    
+	}
+	
+	
+	
+	/**
+	@Override
+	public void onSensorChanged(SensorEvent event){
+		float x = 0;
+		float y = 0;
+		float z = 0;
+		float lastX = 0;
+		float lastY = 0;
+		float lastZ = 0;
+		long lastUpdate = 0;
+
+
+		TextView tvX= (TextView)findViewById(R.id.x_axis);
+		TextView tvY= (TextView)findViewById(R.id.y_axis);
+		TextView tvZ= (TextView)findViewById(R.id.z_axis);
+		TextView zvalue = (TextView)findViewById(R.id.zvalue);
+		TextView backValue = (TextView)findViewById(R.id.back);
+		TextView forthValue = (TextView)findViewById(R.id.forth);
+		
+	    long curTime = System.currentTimeMillis();
+	    
+	    // only allow one update every 100ms.
+	    if ((curTime - lastUpdate) > 100) {
+			long diffTime = (curTime - lastUpdate);
+			lastUpdate = curTime;
+			
+			x = event.values[SensorManager.DATA_X];
+			y = event.values[SensorManager.DATA_Y];
+			z = event.values[SensorManager.DATA_Z];
+			  
+			if(x > 0 || y > 0 || z > 0){
+				tvX.setText(Float.toString(x));
+				tvY.setText(Float.toString(y));
+				tvZ.setText(Float.toString(z));
+		    	zvalue.setText(Float.toString(z));
+			}
+	    	
+			float diff = lastX - lastY - lastZ;
+			float sum = x + y + z; 
+			  
+			float speed = Math.abs(sum - diff) / diffTime * 10000;
+			
+			if (speed > SHAKE_THRESHOLD) {
+			    Log.d("sensor", "shake detected w/ speed: " + speed);
+			    Toast.makeText(this, "shake detected w/ speed: " + speed, Toast.LENGTH_SHORT).show();
+			}
+			
+			lastX = x;
+			lastY = y;
+			lastZ = z;
+			
+	    }
+	    
+	}
+	**/
+	
+	
+	
+	
+	/*
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 		
@@ -148,26 +267,35 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 	    	zvalue.setText(Float.toString(z));
 			
 
-		    if ( (z > -9.5 && z < -7.0) || 
-		    		( z > 7.0 && z < 9.5 ) ) {
+		    if ( ((z > -9.5 && z < -7.0) || 
+		    		( z > 7.0 && z < 9.5 ) ) && !backSet && !lowtime) {
 		    	back++;
 		    	backValue.setText("b:" + Integer.toString(back));
+		    	forthSet = false;
+		    	backSet = true;
 		    }
 
 		    
-		    if( (z < 5 && z > 0) || z > -5 && z < 0){
+		    if( ((z < 5 && z > 0) || (z > -5 && z < 0)) && !forthSet && !lowtime){
 		    	forth++;
 		    	forthValue.setText("f:" + Integer.toString(forth));
+		    	forthSet = true;
+		    	backSet = false;
 		    }
 		    
 		    
 	    	if(back >= 5 && forth >=5){
-	    		backValue.setText("LOW");
-	    		forthValue.setText("TIME");
 	    		back = 0;
 	    		forth = 0;
+	    		backSet = false;
+	    		forthSet = false;
+	    		lowtime = true;
+	    		backValue.setText("LOW");
+	    		forthValue.setText("TIME");
 	    	}
 	    	
+	    	*/
+	
 	    	
 			/*
 	        Calendar currentCalendar = Calendar.getInstance();
@@ -235,11 +363,11 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 			}
 			
 			*/
-			
+			/*
 		}
-		
-
-		
+			
 	}
+		
+	*/
 	
 }
