@@ -73,7 +73,7 @@ public class WakeToneIntent extends Activity{
                     	System.out.println("\n\nWakeToneIntent\n\n");
                     	processRadioButtonClick(buttonView);
                     	int id = buttonView.getId();
-                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        Intent i = new Intent(getApplicationContext(), LowtimeSettingIntent.class);
 
                         String tone = lookup.get(id).get(TONE).toString();
                         Uri uri = (Uri) lookup.get(id).get(URI);

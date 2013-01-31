@@ -1,9 +1,70 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" 
-	android:background="@drawable/mainbackground">
+    android:layout_height="fill_parent"
+    android:background="@drawable/mainbackground" >
 
+    <TextView
+        android:id="@+id/lowtimeRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_below="@+id/activatedStatus"
+        android:layout_marginTop="62dp"
+        android:text="4:50am to 5:10am" />
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="107dp"
+        android:text="LowTime" />
+
+    <RadioButton
+        android:id="@+id/activatedStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignLeft="@+id/lowTimeRange" />
+
+    <TextView
+        android:id="@+id/lowtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activatedStatus"
+        android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@+id/textView1"
+        android:text="5:00am" />
+
+    <Button
+        android:id="@+id/disableButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/lowTimeRange"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="102dp"
+        android:text="Disable" />
+
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button1"
+        android:layout_alignBottom="@+id/button1"
+        android:layout_toLeftOf="@+id/button1"
+        android:text="Edit" />
+
+    <TextView
+        android:id="@+id/lowtimeRangeMinutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/lowTimeTime"
+        android:layout_alignBottom="@+id/lowTimeTime"
+        android:layout_alignLeft="@+id/button1"
+        android:text="20 mins" />
 
 </RelativeLayout>

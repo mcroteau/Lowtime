@@ -30,28 +30,37 @@ public final class R {
         public static final int wood=0x7f02000d;
     }
     public static final class id {
-        public static final int back=0x7f08000a;
-        public static final int difference=0x7f08000e;
-        public static final int forth=0x7f08000b;
-        public static final int image=0x7f080010;
-        public static final int lowtime=0x7f080009;
+        public static final int activatedStatus=0x7f080008;
+        public static final int back=0x7f080013;
+        public static final int button1=0x7f08000d;
+        public static final int difference=0x7f080017;
+        public static final int disableButton=0x7f08000b;
+        public static final int editButton=0x7f08000c;
+        public static final int forth=0x7f080014;
+        public static final int image=0x7f080019;
+        public static final int lowTimeRange=0x7f080009;
+        public static final int lowTimeTime=0x7f08000f;
+        public static final int lowtime=0x7f08000a;
+        public static final int lowtimeRange=0x7f080006;
+        public static final int lowtimeRangeMinutes=0x7f08000e;
         public static final int lowtimetime=0x7f080004;
-        public static final int menu_settings=0x7f080015;
+        public static final int menu_settings=0x7f08001e;
         public static final int minutes=0x7f080005;
-        public static final int na1=0x7f08000d;
-        public static final int na2=0x7f08000f;
+        public static final int na1=0x7f080016;
+        public static final int na2=0x7f080018;
         public static final int save=0x7f080002;
-        public static final int sleep=0x7f080011;
-        public static final int sleeptone=0x7f080014;
-        public static final int snooze=0x7f080012;
-        public static final int turnoff=0x7f080013;
+        public static final int sleep=0x7f08001a;
+        public static final int sleeptone=0x7f08001d;
+        public static final int snooze=0x7f08001b;
+        public static final int textView1=0x7f080007;
+        public static final int turnoff=0x7f08001c;
         public static final int wake=0x7f080003;
         public static final int waketone=0x7f080000;
         public static final int waketone_button=0x7f080001;
-        public static final int x_axis=0x7f080006;
-        public static final int y_axis=0x7f080007;
-        public static final int z_axis=0x7f080008;
-        public static final int zvalue=0x7f08000c;
+        public static final int x_axis=0x7f080010;
+        public static final int y_axis=0x7f080011;
+        public static final int z_axis=0x7f080012;
+        public static final int zvalue=0x7f080015;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;

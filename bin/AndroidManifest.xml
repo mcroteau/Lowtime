@@ -13,7 +13,7 @@
         	android:theme="@android:style/Theme.Black"
         	android:debuggable="true">
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeActivity"
             android:label="@string/title_activity_main" 
         	android:theme="@android:style/Theme.Black" >
             <intent-filter>
@@ -35,6 +35,9 @@
         		  android:theme="@android:style/Theme.Black"></activity>
 	    
 	    <activity android:name="SleepIntent"
+        		  android:theme="@android:style/Theme.Black"></activity>
+	    
+	    <activity android:name="LowtimeSettingIntent"
         		  android:theme="@android:style/Theme.Black"></activity>
 	    
         <service android:name=".LowtimeService" ></service>

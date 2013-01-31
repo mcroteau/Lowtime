@@ -39,19 +39,18 @@ public class WakeIntent extends Activity{
         
         try {
         	
-        	Uri alert =  RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
             Uri uri = Uri.parse(waketoneUri);
         	player = new MediaPlayer();
         	player.setDataSource(this, uri);
         	
-        	final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        	  
-        	if (audioManager.getStreamVolume(AudioManager.STREAM_RING) != 0) {
-        		 player.setAudioStreamType(AudioManager.STREAM_RING);
-        		 player.setLooping(true);
-        		 player.prepare();
-        		 player.start();
-        	}
+//        	final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+//        	  
+//        	if (audioManager.getStreamVolume(AudioManager.STREAM_RING) != 0) {
+//        		 player.setAudioStreamType(AudioManager.STREAM_RING);
+//        		 player.setLooping(true);
+//        		 player.prepare();
+//        		 player.start();
+//        	}
         	
     	} catch(Exception e) {
     		
