@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	    package="org.agius.lowtime"
 	    android:versionCode="1"
-	    android:versionName="1.0" >
+	    android:versionName="1.0">
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -10,7 +10,8 @@
     <application
         	android:icon="@drawable/ic_launcher"
         	android:label="@string/app_name" 
-        	android:theme="@android:style/Theme.Black"
+        	android:theme="@android:style/Theme.Black" 
+	    	android:alwaysRetainTaskState="false" 
         	android:debuggable="true">
         <activity
             android:name=".HomeActivity"
@@ -23,22 +24,28 @@
         </activity>
         
 	    <activity android:name="WakeToneIntent"
-        		  android:theme="@android:style/Theme.Dialog" ></activity>
-	    
-	    <activity android:name="SleepToneIntent"
-        		  android:theme="@android:style/Theme.Dialog"></activity>
+        		  android:theme="@android:style/Theme.Black"
+	    		  android:alwaysRetainTaskState="false"></activity>
 	    
 	    <activity android:name="LowtimeIntent"
-        		  android:theme="@android:style/Theme.Black"></activity>
+        		  android:theme="@android:style/Theme.Black"
+	    		  android:alwaysRetainTaskState="false"
+	    		  android:launchMode="singleInstance"></activity>
 	    
 	    <activity android:name="WakeIntent"
-        		  android:theme="@android:style/Theme.Black"></activity>
+        		  android:theme="@android:style/Theme.Black"
+	    		  android:alwaysRetainTaskState="false"
+	    		  android:launchMode="singleInstance"></activity>
 	    
 	    <activity android:name="SleepIntent"
-        		  android:theme="@android:style/Theme.Black"></activity>
+        		  android:theme="@android:style/Theme.Black"
+	    		  android:alwaysRetainTaskState="false"
+	    		  android:launchMode="singleInstance"></activity>
 	    
 	    <activity android:name="LowtimeSettingIntent"
-        		  android:theme="@android:style/Theme.Black"></activity>
+        		  android:theme="@android:style/Theme.Black"
+	    		  android:alwaysRetainTaskState="false"
+	    		  android:launchMode="singleInstance"></activity>
 	    
         <service android:name=".LowtimeService" ></service>
         

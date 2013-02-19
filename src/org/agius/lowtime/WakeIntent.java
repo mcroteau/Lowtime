@@ -1,5 +1,7 @@
 package org.agius.lowtime;
 
+import org.agius.lowtime.domain.LowtimeSettings;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,23 +17,22 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+import static org.agius.lowtime.LowtimeConstants.*;
+
 public class WakeIntent extends Activity{
 
 	static boolean active = false;	
 	
-	private String waketoneUri;
-	private SharedPreferences settings;
 	private MediaPlayer player;
+	private LowtimeSettings settings;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wake);
 
-		settings = getSharedPreferences("lowtimeSettings", 0);
-        waketoneUri = settings.getString("waketoneUri", "");    
+        settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
         
-
         TextView wakeText = (TextView)findViewById(R.id.wake);
         Typeface face= Typeface.createFromAsset(getAssets(), "fonts/Roboto-Black.ttf");
 
@@ -39,12 +40,12 @@ public class WakeIntent extends Activity{
         
         try {
         	
-            Uri uri = Uri.parse(waketoneUri);
+            Uri uri = Uri.parse(settings.getWaketoneUri());
         	player = new MediaPlayer();
         	player.setDataSource(this, uri);
         	
-//        	final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-//        	  
+        	final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        	  
 //        	if (audioManager.getStreamVolume(AudioManager.STREAM_RING) != 0) {
 //        		 player.setAudioStreamType(AudioManager.STREAM_RING);
 //        		 player.setLooping(true);
@@ -62,6 +63,7 @@ public class WakeIntent extends Activity{
             public void onClick(View v) {
             	player.stop();
                 stopService(new Intent(WakeIntent.this, TheService.class));
+            	finish();
             }
         });
         
@@ -77,6 +79,13 @@ public class WakeIntent extends Activity{
     }
     
 
+    
+    @Override
+    protected void onRestart() {
+        super.onRestart();  
+        settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
+    }
+    
     @Override
     public void onStart(){
     	super.onStart();

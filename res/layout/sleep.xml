@@ -24,9 +24,7 @@
         android:layout_alignBottom="@+id/turnoff"
         android:layout_marginRight="27dp"
         android:layout_toLeftOf="@+id/turnoff"
-        android:background="@drawable/sleep_snooze_button"
-        android:text="Snooze"
-        android:textColor="#efefef" />
+        android:text="Snooze"/>
 
     <Button
         android:id="@+id/turnoff"
@@ -35,8 +33,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="49dp"
-        android:background="@drawable/sleep_snooze_button"
-        android:text="Turn Off"
-        android:textColor="#efefef" />
+        android:text="Turn Off"/>
     
 </RelativeLayout>

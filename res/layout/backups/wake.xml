@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:orientation="vertical"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:background="@drawable/wake_background">
+
+    <TextView
+        android:id="@+id/wake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/turnoff"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="35dp"
+        android:text="GET UP!"
+        android:textColor="#3c3d41"
+        android:textSize="60sp"
+        android:shadowColor="#efefef"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="15"/>
+
+    <Button
+        android:id="@+id/snooze"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/turnoff"
+        android:layout_alignBottom="@+id/turnoff"
+        android:layout_alignLeft="@+id/wake"
+        android:background="@drawable/wake_snooze_button"
+        android:text="Snooze"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/turnoff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/wake"
+        android:layout_centerVertical="true"
+        android:background="@drawable/wake_turnoff_button"
+        android:text="Turn Off"
+        android:textColor="#ffffff" />
+    
+</RelativeLayout>

@@ -1,6 +1,10 @@
 package org.agius.lowtime;
 
+import static org.agius.lowtime.LowtimeConstants.LOWTIME_SETTINGS;
+
 import org.agius.lowtime.R;
+import org.agius.lowtime.domain.LowtimeSettings;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,16 +15,20 @@ import android.widget.Button;
 public class SleepIntent extends Activity {
 
 	static boolean active = false;
+	private LowtimeSettings settings;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sleep);
         
+        settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
+        
         Button offButton = (Button) findViewById(R.id.turnoff);
         offButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 stopService(new Intent(SleepIntent.this, TheService.class));
+            	finish();
             }
         });
         
@@ -33,6 +41,11 @@ public class SleepIntent extends Activity {
         
     }
     
+    @Override
+    protected void onRestart() {
+        super.onRestart();  
+        settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
+    }
     
     @Override
     public void onStart(){

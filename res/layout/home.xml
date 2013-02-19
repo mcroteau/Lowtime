@@ -1,70 +1,126 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/mainbackground" >
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    		 xmlns:tools="http://schemas.android.com/tools"
+			 android:paddingTop="10dip"
+			 android:layout_width="fill_parent"
+			 android:layout_height="fill_parent"
+			 android:stretchColumns="*"
+	    	 android:background="@drawable/mainbackground" >
+		
+	<TableRow>
+	   
+	    <TextView
+	        android:id="@+id/lowtimeTitle"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:layout_marginTop="15dp"
+	        android:textSize="40sp"
+	        android:layout_span="4"
+	        android:text="LowTime" />	
+	                
+    </TableRow>
+    
+	<TableRow>
+	    
+	    <RadioButton
+	        android:id="@+id/activatedStatus"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" 
+	        android:layout_gravity="right"/>
+	    
+	    <TextView
+	        android:id="@+id/lowtimeStatus"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="15dp"
+	        android:textSize="30sp"
+	        android:text="Inactive" />
+	    
+   	</TableRow>
+   	
+	
+	<TableRow android:id="@+id/lowtimeRow"
+	          android:visibility="gone">
+	    
+	    <TextView
+	        android:id="@+id/lowtime"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:textSize="20sp"
+	        android:layout_marginBottom="20dp"
+	        android:layout_span="4"
+	        android:text="5:00 am" />
+	    
+	</TableRow>
+	
+	
+	<TableRow android:id="@+id/rangeRow"
+	          android:visibility="gone">
+	    <TextView
+	        android:id="@+id/lowtimeRangeLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="right"
+	        android:text="Time Range :  " />
+	    
+	    <TextView
+	        android:id="@+id/lowtimeRangeMinutes"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="left"
+	        android:text="" />	    
+	</TableRow>
+	
+	
+	<TableRow android:layout_marginTop="20dp" 
+	    	  android:id="@+id/editRow"
+	          android:visibility="gone">
+	    
+	    <Button
+	        android:id="@+id/editButton"
+	        android:layout_width="0dip"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="20dp"
+	        android:text="Edit" />
+	
 
-    <TextView
-        android:id="@+id/lowtimeRange"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView1"
-        android:layout_below="@+id/activatedStatus"
-        android:layout_marginTop="62dp"
-        android:text="4:50am to 5:10am" />
+	    <Button
+	        android:id="@+id/hideButton"
+	        android:layout_width="0dip"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:text="Hide" />
+	    
+	    
+	    <Button
+	        android:id="@+id/toggleButton"
+	        android:layout_width="0dip"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:layout_marginRight="20dp"
+	        android:text="Disable" />
+	    
+	</TableRow>
+	
+	
+	<TableRow android:id="@+id/createRow"
+	    	  android:layout_marginTop="20dp">
+		
+	    <Button
+	        android:id="@+id/createButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:layout_span="4"
+	        android:text="Set LowTime" />
+	    
+	</TableRow>
+	
+	
+	
+</TableLayout>
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="107dp"
-        android:text="LowTime" />
-
-    <RadioButton
-        android:id="@+id/activatedStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView1"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_alignLeft="@+id/lowTimeRange" />
-
-    <TextView
-        android:id="@+id/lowtime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/activatedStatus"
-        android:layout_marginTop="20dp"
-        android:layout_toLeftOf="@+id/textView1"
-        android:text="5:00am" />
-
-    <Button
-        android:id="@+id/disableButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/lowTimeRange"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="102dp"
-        android:text="Disable" />
-
-    <Button
-        android:id="@+id/editButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_toLeftOf="@+id/button1"
-        android:text="Edit" />
-
-    <TextView
-        android:id="@+id/lowtimeRangeMinutes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/lowTimeTime"
-        android:layout_alignBottom="@+id/lowTimeTime"
-        android:layout_alignLeft="@+id/button1"
-        android:text="20 mins" />
-
-</RelativeLayout>

@@ -8,7 +8,9 @@ import java.util.Map;
 import org.agius.lowtime.R;
 import org.agius.lowtime.R.id;
 import org.agius.lowtime.R.layout;
+import org.agius.lowtime.domain.LowtimeSettings;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,26 +26,26 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+
+import static org.agius.lowtime.LowtimeConstants.*;
+
 public class WakeToneIntent extends Activity{
 
+	@SuppressLint("UseSparseArrays")
 	private Map<Integer, Map<String, Object>> lookup = new HashMap<Integer, Map<String, Object>>();
 	
 	private LinearLayout layout;
 	private List<CheckBox> radioButtons; 
-	
-	private static String TONE = "tone";
-	private static String URI = "uri";
-
-	private SharedPreferences settings;
 
 	private static Ringtone ringtone;
+	private LowtimeSettings settings;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.waketone);
-
-        settings = getSharedPreferences("lowtimeSettings", 0);
+        
+        settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
         
         RingtoneManager ringtoneMgr = new RingtoneManager(getApplicationContext());
     	ringtoneMgr.setType(RingtoneManager.TYPE_ALARM);
@@ -70,7 +72,7 @@ public class WakeToneIntent extends Activity{
             setToneButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                    	System.out.println("\n\nWakeToneIntent\n\n");
+
                     	processRadioButtonClick(buttonView);
                     	int id = buttonView.getId();
                         Intent i = new Intent(getApplicationContext(), LowtimeSettingIntent.class);
@@ -78,10 +80,14 @@ public class WakeToneIntent extends Activity{
                         String tone = lookup.get(id).get(TONE).toString();
                         Uri uri = (Uri) lookup.get(id).get(URI);
 
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putString("waketoneUri", uri.toString());
-                        editor.putString("waketone", tone);
-                        editor.commit();
+                        settings.setWaketoneUri(uri.toString());
+                        settings.setWaketone(tone);
+                        settings.commit();
+                        
+//                        SharedPreferences.Editor editor = settings.edit();
+//                        editor.putString(LOWTIME_WAKETONE_URI, uri.toString());
+//                        editor.putString(LOWTIME_WAKETONE, tone);
+//                        editor.commit();
 
                     	if(ringtone != null && ringtone.isPlaying())ringtone.stop();
                     	
@@ -89,6 +95,7 @@ public class WakeToneIntent extends Activity{
                     }
                 }   
             });
+            
             radioButtons.add((CheckBox) setToneButton);
     	    row.addView(setToneButton, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     	    
@@ -129,6 +136,13 @@ public class WakeToneIntent extends Activity{
         for (CheckBox checkbox : radioButtons){
             if (checkbox != checkboxView ) checkbox.setChecked(false);
         }
+    }
+    
+    
+    @Override
+    protected void onRestart() {
+        super.onRestart();  
+        settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
     }
 	
 }

@@ -1,8 +1,18 @@
 package org.agius.lowtime;
 
+import static org.agius.lowtime.LowtimeConstants.LOWTIME_SETTINGS;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.agius.lowtime.domain.LowtimeSettings;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -11,38 +21,26 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+@SuppressLint("UseSparseArrays")
 public class LowtimeSettingIntent extends Activity {
 
-//	private String sleeptoneUri;
-	private String waketoneUri;
-	
-//	private String sleeptone;
-	private String waketone;
-	
-	private SharedPreferences settings;
-	private Spinner minutesSpinner;
-    
-	private String hour;
-	private String minute;
-	
+	TextView waketoneView; 
 	TimePicker timePicker;
+	private Spinner minutesSpinner;
+	Map<Integer, Integer> minuteOptionsLookup;
+    
+	private LowtimeSettings settings;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.lowtime_setting);
         
         try {
-        
-        	settings = getSharedPreferences("lowtimeSettings", 0);
-        
-//	        Button sleeptoneButton = (Button) findViewById(R.id.sleeptone_button);
-//	        sleeptoneButton.setOnClickListener(new View.OnClickListener() {
-//	            public void onClick(View v) {
-//	                Intent i = new Intent(MainActivity.this, SleepToneIntent.class);
-//	                startActivity(i);
-//	            }
-//	        });
+
+            settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
+            
+        	setupOptionsLookup();
 	        
             timePicker = (TimePicker) findViewById(R.id.lowtimetime);
             
@@ -57,43 +55,64 @@ public class LowtimeSettingIntent extends Activity {
 	        Button setLowtimeButton = (Button) findViewById(R.id.save);
 	        setLowtimeButton.setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View v) {
-	                SharedPreferences.Editor editor = settings.edit();
-                    
-                    int lowtimeHour = timePicker.getCurrentHour();
-                    int lowtimeMinute = timePicker.getCurrentMinute();
-                    
-                    editor.putInt("lowtimeHour", lowtimeHour);
-                    editor.putInt("lowtimeMinute", lowtimeMinute);
-                    
-                    editor.commit();
-                    
-                    startService(new Intent(LowtimeSettingIntent.this, TheService.class));
-                    moveTaskToBack(true);
-                    
-	                //Intent i = new Intent(MainActivity.this, LowtimeIntent.class);
-	                //startActivity(i);
+	            	
+	            	if(!settings.getWaketone().equals("")){
+	                    
+	                    int lowtimeHour = timePicker.getCurrentHour();
+	                    int lowtimeMinute = timePicker.getCurrentMinute();
+	                    int lowtimeMinuteDifference = Integer.parseInt(minutesSpinner.getSelectedItem().toString());
+	                    
+	                    settings.setHour(lowtimeHour);
+	                    settings.setMinutes(lowtimeMinute);
+	                    settings.setRange(lowtimeMinuteDifference);
+	                    settings.setActive(true);
+	                    settings.commit();
+	                    
+		                Intent i = new Intent(LowtimeSettingIntent.this, HomeActivity.class);
+		                startActivity(i);
+		                
+	            	}else{
+
+	            		AlertDialog.Builder builder = new AlertDialog.Builder(LowtimeSettingIntent.this);
+
+	            		builder.setMessage("Your \"Wakeup Tone\" needs to be set")
+	            		       .setTitle("")
+	            		       .setCancelable(true)
+	            		       .setPositiveButton("OK", new OnClickListener(){
+									@Override
+									public void onClick(DialogInterface dialogInterface, int arg1) {
+										dialogInterface.dismiss();
+									}
+	            		       });
+
+	            		AlertDialog dialog = builder.create();
+	            		dialog.show();
+	            	}
+	            	
 	            }
 	        });
+	        
+	        
+	 
+	        Button cancelButton = (Button) findViewById(R.id.cancel);
+	        cancelButton.setOnClickListener(new View.OnClickListener() {
+	            public void onClick(View v) {
+	                Intent i = new Intent(LowtimeSettingIntent.this, HomeActivity.class);
+	                startActivity(i);
+	            }
+	        });
+	        
 
-            minutesSpinner = (Spinner) findViewById(R.id.minutes);
-            hour = settings.getString("hour", "");
-            minute = settings.getString("minute", "");
+	        minutesSpinner = (Spinner) findViewById(R.id.minutes);
+	        waketoneView = (TextView) findViewById(R.id.waketone);
+	        
+	        reinitializeView();
             
-            if(!hour.equals("") && !minute.equals("")){
-            	timePicker.setCurrentHour(Integer.parseInt(hour));
-            	timePicker.setCurrentMinute(Integer.parseInt(minute));
-            }
             
 //          sleeptone = settings.getString("sleeptone", "");
 //	        TextView sleetoneView = (TextView) findViewById(R.id.sleeptone);
 //	        sleetoneView.setText(sleeptone);
-	        
-	        waketone = settings.getString("waketone", "");
-	        TextView waketoneView = (TextView) findViewById(R.id.waketone);
-	        waketoneView.setText(waketone);
-	
 //	        sleeptoneUri = settings.getString("sleeptoneUri","");
-//	        waketoneUri = settings.getString("waketoneUri", "");
 	
 	        addListenerOnSpinnerItemSelection();
 	        
@@ -104,8 +123,27 @@ public class LowtimeSettingIntent extends Activity {
     }
 
     
+    private void setupOptionsLookup(){
+
+    	minuteOptionsLookup = new HashMap<Integer, Integer>();
+    	minuteOptionsLookup.put(5, 0);
+    	minuteOptionsLookup.put(10, 0);
+    	minuteOptionsLookup.put(15, 0);
+    	minuteOptionsLookup.put(20, 0);
+    	minuteOptionsLookup.put(25, 0);
+    	minuteOptionsLookup.put(30, 0);
+    	minuteOptionsLookup.put(35, 0);
+    	minuteOptionsLookup.put(40, 0);
+    	minuteOptionsLookup.put(45, 0);
+    	minuteOptionsLookup.put(50, 0);
+    	minuteOptionsLookup.put(60, 0);
+    	minuteOptionsLookup.put(90, 0);
+    	
+    }
+    
+    
     public void addListenerOnSpinnerItemSelection() {
-    	minutesSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(settings));
+    	minutesSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(settings.getSettings()));
     }
     
 
@@ -113,6 +151,38 @@ public class LowtimeSettingIntent extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
+    }
+    
+    
+    @Override
+    protected void onStart() {
+        super.onStart();  
+        reinitializeView();
+    }
+
+    private void reinitializeView(){
+    	
+        if(settings.settingsSet()){
+        	timePicker.setCurrentHour(settings.getHour());
+        	timePicker.setCurrentMinute(settings.getMinutes());
+        	minutesSpinner.setSelection(minuteOptionsLookup.get(settings.getRange()));
+        }
+        
+        if(!settings.getWaketone().equals("")){
+            waketoneView.setText(settings.getWaketone());
+        }
+    }
+    
+    
+    @Override
+    protected void onStop() {
+        super.onStop();  
+    }  
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();  
+    	settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
     }
     
 }
