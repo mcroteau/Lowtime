@@ -26,6 +26,7 @@ public class LowtimeConstants {
 	public static final int SHAKE_TIMEOUT = 500;
 	public static final int SHAKE_DURATION = 1000;
 	public static final int SHAKE_COUNT = 3;
+	public static final int MAX_MINUTES = 90;
 
     public static final int SCREEN_OFF_RECEIVER_DELAY = 500;
 	

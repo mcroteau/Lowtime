@@ -102,7 +102,7 @@ public class TheService extends Service implements SensorEventListener {
 		    	        
 						
 		    	        Intent intent;
-		    		    if (diffMinutes <= settings.getRange() || diffMinutes <= 0){
+		    		    if ((diffMinutes <= settings.getRange() || diffMinutes <= 0) && diffMinutes < MAX_MINUTES && diffMinutes > -MAX_MINUTES){
 		    		    	intent = new Intent(getApplicationContext(), WakeIntent.class);
 		    		    } else {
 		    		    	intent = new Intent(getApplicationContext(), SleepIntent.class);
