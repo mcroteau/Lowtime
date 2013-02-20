@@ -3,6 +3,11 @@
 	    android:versionCode="1"
 	    android:versionName="1.0">
 
+    <!-- 
+    	http://developer.android.com/guide/topics/manifest/activity-element.html 
+    	http://androidisland.blogspot.com/2010/12/activity-launch-modes-simple.html
+    -->
+    
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
@@ -25,17 +30,18 @@
         
 	    <activity android:name="WakeToneIntent"
         		  android:theme="@android:style/Theme.Black"
-	    		  android:alwaysRetainTaskState="false"></activity>
+	    		  android:alwaysRetainTaskState="false"
+	    		  android:launchMode="singleTask"></activity>
 	    
 	    <activity android:name="LowtimeIntent"
         		  android:theme="@android:style/Theme.Black"
 	    		  android:alwaysRetainTaskState="false"
-	    		  android:launchMode="singleInstance"></activity>
+	    		  android:launchMode="singleTask"></activity>
 	    
 	    <activity android:name="WakeIntent"
         		  android:theme="@android:style/Theme.Black"
 	    		  android:alwaysRetainTaskState="false"
-	    		  android:launchMode="singleInstance"></activity>
+	    		  android:launchMode="singleTask"></activity>
 	    
 	    <activity android:name="SleepIntent"
         		  android:theme="@android:style/Theme.Black"
@@ -45,7 +51,7 @@
 	    <activity android:name="LowtimeSettingIntent"
         		  android:theme="@android:style/Theme.Black"
 	    		  android:alwaysRetainTaskState="false"
-	    		  android:launchMode="singleInstance"></activity>
+	    		  android:launchMode="singleTask"></activity>
 	    
         <service android:name=".LowtimeService" ></service>
         

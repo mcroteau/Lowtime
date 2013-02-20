@@ -46,12 +46,12 @@ public class WakeIntent extends Activity{
         	
         	final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         	  
-//        	if (audioManager.getStreamVolume(AudioManager.STREAM_RING) != 0) {
-//        		 player.setAudioStreamType(AudioManager.STREAM_RING);
-//        		 player.setLooping(true);
-//        		 player.prepare();
-//        		 player.start();
-//        	}
+        	if (audioManager.getStreamVolume(AudioManager.STREAM_RING) != 0) {
+        		 player.setAudioStreamType(AudioManager.STREAM_RING);
+        		 player.setLooping(true);
+        		 player.prepare();
+        		 player.start();
+        	}
         	
     	} catch(Exception e) {
     		
@@ -61,6 +61,8 @@ public class WakeIntent extends Activity{
         Button offButton = (Button) findViewById(R.id.turnoff);
         offButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+            	settings.setActive(false);
+            	settings.commit();
             	player.stop();
                 stopService(new Intent(WakeIntent.this, TheService.class));
             	finish();
@@ -80,11 +82,11 @@ public class WakeIntent extends Activity{
     
 
     
-    @Override
-    protected void onRestart() {
-        super.onRestart();  
-        settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
-    }
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();  
+//        settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
+//    }
     
     @Override
     public void onStart(){

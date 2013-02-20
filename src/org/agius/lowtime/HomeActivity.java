@@ -39,6 +39,7 @@ public class HomeActivity  extends Activity{
 	
 	private LowtimeSettings settings;
 	
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +48,6 @@ public class HomeActivity  extends Activity{
     	if(serviceRunning())
         	System.out.println("running");
     	
-    		
         settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
     	
         lowtimeRow = (TableRow) findViewById(R.id.lowtimeRow);
@@ -69,14 +69,20 @@ public class HomeActivity  extends Activity{
     @Override
     protected void onStart() {
         super.onStart();  
+    	settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
+    	if(settings.isActive()){
+    		restartService();
+    		setActiveViewState();
+    	}else{
+    		setInactiveViewState();
+    	}
     }
     
     
-    @Override
-    protected void onRestart() {
-        super.onRestart();  
-    	settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
-        displayLowtimeSetView();
+    
+    private void restartService(){
+        stopService(new Intent(HomeActivity.this, TheService.class));
+        startService(new Intent(HomeActivity.this, TheService.class));
     }
     
     
@@ -104,10 +110,13 @@ public class HomeActivity  extends Activity{
         lowtimeRow.setVisibility(View.VISIBLE);
         rangeRow.setVisibility(View.VISIBLE);
     	createRow.setVisibility(View.GONE);
-        activatedStatus.setChecked(true);
-        
-        lowtimeStatus.setText(LOWTIME_ACTIVE_LABEL);
+    	if(settings.isActive()){
+    		setActiveViewState();
+    	}else{
+    		setInactiveViewState();
+    	}
     }
+    
     
     private void displayLowtimeUnsetView(){
 
@@ -115,9 +124,25 @@ public class HomeActivity  extends Activity{
         editRow.setVisibility(View.GONE);
         lowtimeRow.setVisibility(View.GONE);
         rangeRow.setVisibility(View.GONE);
-        activatedStatus.setChecked(false);
         
+        if(settings.isActive()){
+    		setActiveViewState();
+    	}else{
+    		setInactiveViewState();
+    	}
+    }
+    
+    
+    private void setActiveViewState(){
+        lowtimeStatus.setText(LOWTIME_ACTIVE_LABEL);
+        toggleButton.setText(LOWTIME_BUTTON_DISABLE);
+        activatedStatus.setChecked(true);
+    }
+    
+    private void setInactiveViewState(){
         lowtimeStatus.setText(LOWTIME_INACTIVE_LABEL);
+        toggleButton.setText(LOWTIME_BUTTON_ENABLE);
+        activatedStatus.setChecked(false);
     }
     
     
@@ -126,11 +151,12 @@ public class HomeActivity  extends Activity{
     }
     
     private void reinitializeView(){
-    	if(settings != null){
+    	if(settings.settingsSet()){
         	displayLowtimeSetView();
         }else{
         	displayLowtimeUnsetView();
         }
+    	
     }
     
 
@@ -157,7 +183,6 @@ public class HomeActivity  extends Activity{
         
         //saves state
         settings.commit();
-        
     }
     
     
@@ -206,6 +231,5 @@ public class HomeActivity  extends Activity{
         }
         return false;
     }
-
 
 }

@@ -6,8 +6,10 @@ import org.agius.lowtime.R;
 import org.agius.lowtime.domain.LowtimeSettings;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 
@@ -24,14 +26,20 @@ public class SleepIntent extends Activity {
         
         settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
         
-        Button offButton = (Button) findViewById(R.id.turnoff);
-        offButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                stopService(new Intent(SleepIntent.this, TheService.class));
-            	finish();
-            }
-        });
+//        Button offButton = (Button) findViewById(R.id.turnoff);
+//        offButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                stopService(new Intent(SleepIntent.this, TheService.class));
+//            	finish();
+//            }
+//        });
         
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        for(int m = 0; m < 3; m++){
+            v.vibrate(500);
+        }
+
+     
         Button snoozeButton = (Button) findViewById(R.id.snooze);
         snoozeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

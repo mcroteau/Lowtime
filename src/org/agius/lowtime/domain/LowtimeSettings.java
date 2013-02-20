@@ -92,6 +92,7 @@ public class LowtimeSettings {
 	}
 	
 	public void commit(){
+		setEditorValues();
 		editor.commit();
 	}
 	
@@ -104,6 +105,15 @@ public class LowtimeSettings {
 	        setMinutes(settings.getInt(LOWTIME_MINUTES, 0));
 	        setActive(settings.getBoolean(LOWTIME_ACTIVE, false));
         }
+	}
+	
+	public void setEditorValues(){
+		editor.putString(LOWTIME_WAKETONE, getWaketone());
+		editor.putString(LOWTIME_WAKETONE_URI, getWaketoneUri());
+		editor.putInt(LOWTIME_RANGE, getRange());
+		editor.putInt(LOWTIME_HOUR, getHour());
+		editor.putInt(LOWTIME_MINUTES, getMinutes());
+		editor.putBoolean(LOWTIME_ACTIVE, isActive());		
 	}
 	
 }

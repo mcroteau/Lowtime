@@ -18,11 +18,11 @@ public class LowtimeConstants {
 	
 	public static final String LOWTIME_ACTIVE_LABEL = "Active";
 	public static final String LOWTIME_INACTIVE_LABEL = "Inactive";
-	public static final String LOWTIME_BUTTON_ENABLE = "Enable";
-	public static final String LOWTIME_BUTTON_DISABLE = "Disable";
+	public static final String LOWTIME_BUTTON_ENABLE = "Turn On";
+	public static final String LOWTIME_BUTTON_DISABLE = "Turn Off";
 
 	public static final int FORCE_THRESHOLD = 150;
-	public static final int TIME_THRESHOLD = 100;
+	public static final int TIME_THRESHOLD = 85;
 	public static final int SHAKE_TIMEOUT = 500;
 	public static final int SHAKE_DURATION = 1000;
 	public static final int SHAKE_COUNT = 3;

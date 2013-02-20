@@ -40,6 +40,7 @@ public class WakeToneIntent extends Activity{
 	private static Ringtone ringtone;
 	private LowtimeSettings settings;
 	
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +67,14 @@ public class WakeToneIntent extends Activity{
             row.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     	    row.setOrientation(LinearLayout.HORIZONTAL);
     	  
+    	    String ringtoneTitle = ringtoneMgr.getRingtone(currentPosition).getTitle(this);
+    	    
     	    CheckBox setToneButton = new CheckBox(this);
             setToneButton.setId(elementsId);
+            
+            if(settings.getWaketone().equals(ringtoneTitle)){
+            	setToneButton.setChecked(true);
+            }
             
             setToneButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -101,7 +108,7 @@ public class WakeToneIntent extends Activity{
     	    
             TextView title = new TextView(this);
     	    title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-    	    title.setText(ringtoneMgr.getRingtone(currentPosition).getTitle(this));
+    	    title.setText(ringtoneTitle);
     	    row.addView(title, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     	    
     	    Button preview = new Button(this);
@@ -138,6 +145,11 @@ public class WakeToneIntent extends Activity{
         }
     }
     
+    @Override
+    protected void onStart() {
+        super.onStart();  
+    	settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
+    }
     
     @Override
     protected void onRestart() {

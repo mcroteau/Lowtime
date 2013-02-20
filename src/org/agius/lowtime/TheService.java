@@ -2,9 +2,13 @@ package org.agius.lowtime;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -99,9 +103,9 @@ public class TheService extends Service implements SensorEventListener {
 						
 		    	        Intent intent;
 		    		    if (diffMinutes <= settings.getRange() || diffMinutes <= 0){
-		                    intent = new Intent(getApplicationContext(), WakeIntent.class);
+		    		    	intent = new Intent(getApplicationContext(), WakeIntent.class);
 		    		    } else {
-		                    intent = new Intent(getApplicationContext(), SleepIntent.class);
+		    		    	intent = new Intent(getApplicationContext(), SleepIntent.class);
 		    		    }
 		    		    
 		        		mLastShake = now;
@@ -128,8 +132,16 @@ public class TheService extends Service implements SensorEventListener {
 			
     }
 
-   
- 
+//   
+//    public boolean isForeground(String myPackage){
+//		ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+//		List< ActivityManager.RunningTaskInfo > runningTaskInfo = am.getRunningTasks(1); 
+//	
+//		ComponentName componentInfo = runningTaskInfo.get(0).topActivity;
+//		if(componentInfo.getPackageName().equals(myPackage)) return true;
+//		return false;
+//	}
+//    
     
     @Override
     public void onDestroy() {
@@ -153,7 +165,6 @@ public class TheService extends Service implements SensorEventListener {
         startForeground(Process.myPid(), new Notification());
         registerListener();
         mWakeLock.acquire();
-        settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
         return START_STICKY;
     }
     
@@ -168,8 +179,6 @@ public class TheService extends Service implements SensorEventListener {
     private void unregisterListener() {
         mSensorManager.unregisterListener(this);
     }
-    
-
 
     
     public BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -183,7 +192,6 @@ public class TheService extends Service implements SensorEventListener {
             Runnable runnable = new Runnable() {
                 public void run() {
                     Log.i(TAG, "Runnable executing.");
-                    
                     unregisterListener();
                     registerListener();
                 }

@@ -157,6 +157,7 @@ public class LowtimeSettingIntent extends Activity {
     @Override
     protected void onStart() {
         super.onStart();  
+    	settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
         reinitializeView();
     }
 
@@ -178,11 +179,12 @@ public class LowtimeSettingIntent extends Activity {
     protected void onStop() {
         super.onStop();  
     }  
+    
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();  
-    	settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
-    }
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();  
+//    	settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
+//    }
     
 }

@@ -55,11 +55,11 @@ public final class R {
         public static final int rangeRow=0x7f080005;
         public static final int save=0x7f08001f;
         public static final int sleep=0x7f080020;
-        public static final int sleeptone=0x7f080023;
+        public static final int sleeptone=0x7f080022;
         public static final int snooze=0x7f080021;
         public static final int timespan=0x7f08001a;
         public static final int toggleButton=0x7f08000b;
-        public static final int turnoff=0x7f080022;
+        public static final int turnoff=0x7f080023;
         public static final int wake=0x7f080018;
         public static final int waketone=0x7f08001d;
         public static final int waketone_button=0x7f08001c;
