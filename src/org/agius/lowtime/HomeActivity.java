@@ -70,9 +70,13 @@ public class HomeActivity  extends Activity{
     protected void onStart() {
         super.onStart();  
     	settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
-    	if(settings.isActive()){
-    		restartService();
-    		setActiveViewState();
+    	if(settings.settingsSet()){
+    		if(settings.isActive()){
+        		setActiveViewState();
+    			restartService();
+    		}else{
+        		setInactiveViewState();
+    		}
     	}else{
     		setInactiveViewState();
     	}
@@ -156,7 +160,6 @@ public class HomeActivity  extends Activity{
         }else{
         	displayLowtimeUnsetView();
         }
-    	
     }
     
 

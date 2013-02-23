@@ -42,11 +42,14 @@ public class TheService extends Service implements SensorEventListener {
     private SensorManager mSensorManager = null;
 
     private LowtimeSettings settings;
+	private boolean intentLaunched = false;
 
+	
     @Override
     public void onCreate() {
         super.onCreate();
 
+        intentLaunched = false;
         settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
         
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -100,7 +103,6 @@ public class TheService extends Service implements SensorEventListener {
 		    	        long diffMillis = lowtimeMillis - currentMillis;
 		    	        long diffMinutes = ( diffMillis/1000 ) / 60;
 		    	        
-						
 		    	        Intent intent;
 		    		    if ((diffMinutes <= settings.getRange() || diffMinutes <= 0) && diffMinutes < MAX_MINUTES && diffMinutes > -MAX_MINUTES){
 		    		    	intent = new Intent(getApplicationContext(), WakeIntent.class);
@@ -113,12 +115,16 @@ public class TheService extends Service implements SensorEventListener {
 		        		
 				        Log.i(TAG, "start activity");
 				        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				        if(!SleepIntent.active && !WakeIntent.active)
-				        	getApplication().startActivity(intent);
+				        if(!intentLaunched && !WakeIntent.active && !SleepIntent.active){
+				        	intentLaunched = true;
+				        	getApplicationContext().startActivity(intent);
+				        	stopSelf();
+				        }
 				        
 		        	}
 		        	mLastForce = now;
 		        }
+		    	
 		        mLastTime = now;
 		        mLastX = event.values[SensorManager.DATA_X];
 		        mLastY = event.values[SensorManager.DATA_Y];
@@ -165,6 +171,7 @@ public class TheService extends Service implements SensorEventListener {
         startForeground(Process.myPid(), new Notification());
         registerListener();
         mWakeLock.acquire();
+        intentLaunched = false;
         return START_STICKY;
     }
     

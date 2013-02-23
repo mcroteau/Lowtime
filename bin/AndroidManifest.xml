@@ -46,7 +46,7 @@
 	    <activity android:name="SleepIntent"
         		  android:theme="@android:style/Theme.Black"
 	    		  android:alwaysRetainTaskState="false"
-	    		  android:launchMode="singleInstance"></activity>
+	    		  android:launchMode="singleTask"></activity>
 	    
 	    <activity android:name="LowtimeSettingIntent"
         		  android:theme="@android:style/Theme.Black"

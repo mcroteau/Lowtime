@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 
@@ -23,7 +24,12 @@ public class SleepIntent extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sleep);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+			               + WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+			               + WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+			               + WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         
+        stopService(new Intent(SleepIntent.this, TheService.class));        
         settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
         
 //        Button offButton = (Button) findViewById(R.id.turnoff);
@@ -43,6 +49,8 @@ public class SleepIntent extends Activity {
         Button snoozeButton = (Button) findViewById(R.id.snooze);
         snoozeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                stopService(new Intent(SleepIntent.this, TheService.class));
+                startService(new Intent(SleepIntent.this, TheService.class));
             	finish();
             }
         });
