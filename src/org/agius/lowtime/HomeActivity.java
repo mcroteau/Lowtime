@@ -192,7 +192,8 @@ public class HomeActivity  extends Activity{
     private void initializeLowtimeButtons(){
         Button editButton = (Button) findViewById(R.id.editButton);
         editButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            @Override
+			public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, LowtimeSettingIntent.class);
                 startActivity(i);
             }
@@ -200,7 +201,8 @@ public class HomeActivity  extends Activity{
         
         hideButton = (Button) findViewById(R.id.hideButton);
         hideButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            @Override
+			public void onClick(View v) {
             	moveTaskToBack(true);
             }
         });
@@ -208,14 +210,16 @@ public class HomeActivity  extends Activity{
         
         toggleButton = (Button) findViewById(R.id.toggleButton);
         toggleButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            @Override
+			public void onClick(View v) {
             	updateStatus();
             }
         });	  
         
         createButton = (Button) findViewById(R.id.createButton);
         createButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            @Override
+			public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, LowtimeSettingIntent.class);
                 startActivity(i);
             }

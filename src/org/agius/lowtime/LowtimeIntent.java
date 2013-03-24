@@ -36,7 +36,8 @@ public class LowtimeIntent extends Activity implements SensorEventListener {
 	        
 	        Button backButton = (Button) findViewById(R.id.back);
 	        backButton.setOnClickListener(new View.OnClickListener() {
-	            public void onClick(View v) {
+	            @Override
+				public void onClick(View v) {
 //                	if(ringtone != null && ringtone.isPlaying())ringtone.stop();
 	                Intent i = new Intent(getApplicationContext(), LowtimeSettingIntent.class);
 	                startActivity(i);

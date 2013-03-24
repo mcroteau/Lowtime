@@ -46,7 +46,8 @@ public class LowtimeSettingIntent extends Activity {
             
 	        Button waketoneButton = (Button) findViewById(R.id.waketone_button);
 	        waketoneButton.setOnClickListener(new View.OnClickListener() {
-	            public void onClick(View v) {
+	            @Override
+				public void onClick(View v) {
 	                Intent i = new Intent(LowtimeSettingIntent.this, WakeToneIntent.class);
 	                startActivity(i);
 	            }
@@ -54,7 +55,8 @@ public class LowtimeSettingIntent extends Activity {
 	        
 	        Button setLowtimeButton = (Button) findViewById(R.id.save);
 	        setLowtimeButton.setOnClickListener(new View.OnClickListener() {
-	            public void onClick(View v) {
+	            @Override
+				public void onClick(View v) {
 	            	
 	            	if(!settings.getWaketone().equals("")){
 	                    
@@ -96,7 +98,8 @@ public class LowtimeSettingIntent extends Activity {
 	 
 	        Button cancelButton = (Button) findViewById(R.id.cancel);
 	        cancelButton.setOnClickListener(new View.OnClickListener() {
-	            public void onClick(View v) {
+	            @Override
+				public void onClick(View v) {
 	                Intent i = new Intent(LowtimeSettingIntent.this, HomeActivity.class);
 	                startActivity(i);
 	            }

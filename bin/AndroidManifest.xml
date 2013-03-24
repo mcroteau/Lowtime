@@ -56,7 +56,6 @@
         <service android:name=".LowtimeService" ></service>
         
         <service android:name=".TheService"></service>
-            
         
     </application>
 

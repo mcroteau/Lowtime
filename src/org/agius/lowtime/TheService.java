@@ -2,17 +2,12 @@ package org.agius.lowtime;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-
-import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.Service;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -23,9 +18,6 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Process;
 import android.util.Log;
-
-import org.agius.lowtime.*;
-
 
 import org.agius.lowtime.domain.LowtimeSettings;
 import static org.agius.lowtime.LowtimeConstants.*;
@@ -197,7 +189,8 @@ public class TheService extends Service implements SensorEventListener {
             }
              
             Runnable runnable = new Runnable() {
-                public void run() {
+                @Override
+				public void run() {
                     Log.i(TAG, "Runnable executing.");
                     unregisterListener();
                     registerListener();
@@ -210,7 +203,8 @@ public class TheService extends Service implements SensorEventListener {
 
     
     
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    @Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
         Log.i(TAG, "onAccuracyChanged().");
     }
 

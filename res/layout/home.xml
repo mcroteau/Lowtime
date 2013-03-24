@@ -7,7 +7,6 @@
 	    	 android:background="@drawable/mainbackground" >
 		
 	<TableRow>
-	   
 	    <TextView
 	        android:id="@+id/lowtimeTitle"
 	        android:layout_width="wrap_content"
@@ -16,8 +15,7 @@
 	        android:layout_marginTop="15dp"
 	        android:textSize="40sp"
 	        android:layout_span="4"
-	        android:text="LowTime" />	
-	                
+	        android:text="LowTime" />
     </TableRow>
     
 	<TableRow>

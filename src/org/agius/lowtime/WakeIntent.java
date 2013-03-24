@@ -7,11 +7,9 @@ import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -78,7 +76,8 @@ public class WakeIntent extends Activity{
     	    
             Button offButton = (Button) findViewById(R.id.turnoff);
             offButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+                @Override
+				public void onClick(View v) {
                 	while(serviceRunning()){
                         stopService(new Intent(WakeIntent.this, TheService.class));
                 	}
@@ -92,7 +91,8 @@ public class WakeIntent extends Activity{
             
             Button backButton = (Button) findViewById(R.id.snooze);
             backButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+                @Override
+				public void onClick(View v) {
                     stopService(new Intent(WakeIntent.this, TheService.class));
                     startService(new Intent(WakeIntent.this, TheService.class));
                 	player.stop();
