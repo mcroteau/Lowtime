@@ -2,6 +2,7 @@ package org.agius.lowtime;
 
 import static org.agius.lowtime.LowtimeConstants.LOWTIME_SETTINGS;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,9 @@ import org.agius.lowtime.domain.LowtimeSettings;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -30,6 +33,10 @@ public class LowtimeSettingIntent extends Activity {
 	Map<Integer, Integer> minuteOptionsLookup;
     
 	private LowtimeSettings settings;
+	
+	private Intent wakeIntent;
+	private PendingIntent wakeAlarmIntent;
+	private AlarmManager alarm;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +76,7 @@ public class LowtimeSettingIntent extends Activity {
 	                    settings.setRange(lowtimeMinuteDifference);
 	                    settings.setActive(true);
 	                    settings.commit();
+	                    
 	                    
 		                Intent i = new Intent(LowtimeSettingIntent.this, HomeActivity.class);
 		                startActivity(i);

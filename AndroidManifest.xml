@@ -55,6 +55,9 @@
 	    
         <service android:name=".LowtimeService" ></service>
         
+	    <activity android:name="AlarmReceiverActivity"
+	    		  android:launchMode="singleTask"></activity>
+	    
         <service android:name=".TheService"></service>
         
     </application>
