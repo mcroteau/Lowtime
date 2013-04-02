@@ -1,10 +1,10 @@
 package org.agius.lowtime;
 
+
 import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.Toast;
  
 public class CustomOnItemSelectedListener implements OnItemSelectedListener {
 
@@ -24,11 +24,13 @@ public class CustomOnItemSelectedListener implements OnItemSelectedListener {
         editor.putString("minutes", parent.getContext().toString());
         
 	}
- 
-	
+
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
-
+		// TODO Auto-generated method stub
+		
 	}
+ 
+
  
 }

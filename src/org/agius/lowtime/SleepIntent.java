@@ -48,7 +48,8 @@ public class SleepIntent extends Activity {
      
         Button snoozeButton = (Button) findViewById(R.id.snooze);
         snoozeButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            @Override
+			public void onClick(View v) {
                 stopService(new Intent(SleepIntent.this, TheService.class));
                 startService(new Intent(SleepIntent.this, TheService.class));
             	finish();

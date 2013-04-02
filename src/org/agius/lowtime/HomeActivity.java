@@ -7,17 +7,24 @@ import java.util.Date;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.agius.lowtime.domain.LowtimeSettings;
+
+
+
+
 import static org.agius.lowtime.LowtimeConstants.*;
 
 @SuppressLint("SimpleDateFormat")
@@ -44,7 +51,8 @@ public class HomeActivity  extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-
+        
+        
     	if(serviceRunning())
         	System.out.println("running");
     	
@@ -157,12 +165,63 @@ public class HomeActivity  extends Activity{
     private void reinitializeView(){
     	if(settings.settingsSet()){
         	displayLowtimeSetView();
+        	setAlarm();
         }else{
         	displayLowtimeUnsetView();
         }
     }
     
+    private void setAlarm(){
 
+        /************* NEW ALARM LOGIC ******************/
+        
+//    	AlarmManager alarm = (AlarmManager) getSystemService(HomeActivity.ALARM_SERVICE);
+//
+//    	Intent wakeIntent = new Intent(HomeActivity.this, AlarmReceiverActivity.class);
+//    	PendingIntent wakeAlarmIntent = PendingIntent.getActivity(HomeActivity.this, 8675309, wakeIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+//        Calendar calendar = Calendar.getInstance();
+//        Calendar cal = Calendar.getInstance();
+//        cal.set(Calendar.SECOND, 10);
+//        calendar.set(Calendar.SECOND, 10);
+//        calendar.set(Calendar.HOUR, settings.getHour());
+//        calendar.set(Calendar.MINUTE, settings.getMinutes());
+//
+//        System.out.println("\n\n*************  SET ALARM  *************** \n");
+//        System.out.println(cal.getTimeInMillis() + " : " + calendar.getTimeInMillis());
+//        System.out.println(calendar.get(Calendar.MINUTE) + " : "  + cal.get(Calendar.MINUTE));
+//        System.out.println(calendar.get(Calendar.HOUR) + " : " + cal.get(Calendar.HOUR));
+//        
+//        alarm.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), wakeAlarmIntent);
+        
+        /************************************************/
+        
+        //Create an offset from the current time in which the alarm will go off.
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.SECOND, 5);
+//        cal.set(Calendar.HOUR, settings.getHour());
+//      cal.set(Calendar.MINUTE, settings.getMinutes());
+ 
+        //Create a new PendingIntent and add it to the AlarmManager
+        Intent intent = new Intent(this, WakeIntent.class);
+        intent.putExtra("onetime", Boolean.TRUE);
+        
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+            12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager am = 
+            (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
+                pendingIntent);
+        
+        
+        TextView currentTime =  (TextView) findViewById(R.id.currentTime);
+        currentTime.setText(String.valueOf(System.currentTimeMillis()));
+        
+        TextView alarmTime =  (TextView) findViewById(R.id.alarmTime);
+        alarmTime.setText(String.valueOf(cal.getTimeInMillis()));
+        
+        
+    }
+    
     private void updateStatus(){
 
     	if(serviceRunning())
@@ -192,7 +251,8 @@ public class HomeActivity  extends Activity{
     private void initializeLowtimeButtons(){
         Button editButton = (Button) findViewById(R.id.editButton);
         editButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            @Override
+			public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, LowtimeSettingIntent.class);
                 startActivity(i);
             }
@@ -200,7 +260,8 @@ public class HomeActivity  extends Activity{
         
         hideButton = (Button) findViewById(R.id.hideButton);
         hideButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            @Override
+			public void onClick(View v) {
             	moveTaskToBack(true);
             }
         });
@@ -208,14 +269,16 @@ public class HomeActivity  extends Activity{
         
         toggleButton = (Button) findViewById(R.id.toggleButton);
         toggleButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            @Override
+			public void onClick(View v) {
             	updateStatus();
             }
         });	  
         
         createButton = (Button) findViewById(R.id.createButton);
         createButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            @Override
+			public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, LowtimeSettingIntent.class);
                 startActivity(i);
             }

@@ -6,20 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 import org.agius.lowtime.R;
-import org.agius.lowtime.R.id;
-import org.agius.lowtime.R.layout;
 import org.agius.lowtime.domain.LowtimeSettings;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -64,7 +62,7 @@ public class WakeToneIntent extends Activity{
     		int elementsId = count + 2 + (count * 5);
     		
             LinearLayout row = new LinearLayout(this);
-            row.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            row.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
     	    row.setOrientation(LinearLayout.HORIZONTAL);
     	  
     	    String ringtoneTitle = ringtoneMgr.getRingtone(currentPosition).getTitle(this);
@@ -77,7 +75,8 @@ public class WakeToneIntent extends Activity{
             }
             
             setToneButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                @Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
 
                     	processRadioButtonClick(buttonView);
@@ -103,20 +102,21 @@ public class WakeToneIntent extends Activity{
                 }   
             });
             
-            radioButtons.add((CheckBox) setToneButton);
-    	    row.addView(setToneButton, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            radioButtons.add(setToneButton);
+    	    row.addView(setToneButton, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     	    
             TextView title = new TextView(this);
-    	    title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+    	    title.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
     	    title.setText(ringtoneTitle);
-    	    row.addView(title, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+    	    row.addView(title, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     	    
     	    Button preview = new Button(this);
-            preview.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            preview.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
             preview.setText("Preview");
             preview.setId(elementsId);
             preview.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+                @Override
+				public void onClick(View v) {
                 	int id = v.getId();
                 	if(ringtone != null && ringtone.isPlaying())ringtone.stop();
         	    	ringtone = RingtoneManager.getRingtone(getApplicationContext(), (Uri) lookup.get(id).get(URI));

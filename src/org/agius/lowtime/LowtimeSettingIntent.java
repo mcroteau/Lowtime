@@ -2,6 +2,7 @@ package org.agius.lowtime;
 
 import static org.agius.lowtime.LowtimeConstants.LOWTIME_SETTINGS;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,9 @@ import org.agius.lowtime.domain.LowtimeSettings;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -31,6 +34,10 @@ public class LowtimeSettingIntent extends Activity {
     
 	private LowtimeSettings settings;
 	
+	private Intent wakeIntent;
+	private PendingIntent wakeAlarmIntent;
+	private AlarmManager alarm;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +53,8 @@ public class LowtimeSettingIntent extends Activity {
             
 	        Button waketoneButton = (Button) findViewById(R.id.waketone_button);
 	        waketoneButton.setOnClickListener(new View.OnClickListener() {
-	            public void onClick(View v) {
+	            @Override
+				public void onClick(View v) {
 	                Intent i = new Intent(LowtimeSettingIntent.this, WakeToneIntent.class);
 	                startActivity(i);
 	            }
@@ -54,7 +62,8 @@ public class LowtimeSettingIntent extends Activity {
 	        
 	        Button setLowtimeButton = (Button) findViewById(R.id.save);
 	        setLowtimeButton.setOnClickListener(new View.OnClickListener() {
-	            public void onClick(View v) {
+	            @Override
+				public void onClick(View v) {
 	            	
 	            	if(!settings.getWaketone().equals("")){
 	                    
@@ -67,6 +76,7 @@ public class LowtimeSettingIntent extends Activity {
 	                    settings.setRange(lowtimeMinuteDifference);
 	                    settings.setActive(true);
 	                    settings.commit();
+	                    
 	                    
 		                Intent i = new Intent(LowtimeSettingIntent.this, HomeActivity.class);
 		                startActivity(i);
@@ -96,7 +106,8 @@ public class LowtimeSettingIntent extends Activity {
 	 
 	        Button cancelButton = (Button) findViewById(R.id.cancel);
 	        cancelButton.setOnClickListener(new View.OnClickListener() {
-	            public void onClick(View v) {
+	            @Override
+				public void onClick(View v) {
 	                Intent i = new Intent(LowtimeSettingIntent.this, HomeActivity.class);
 	                startActivity(i);
 	            }
