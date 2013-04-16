@@ -197,9 +197,21 @@ public class HomeActivity  extends Activity{
         
         //Create an offset from the current time in which the alarm will go off.
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND, 5);
-//        cal.set(Calendar.HOUR, settings.getHour());
-//      cal.set(Calendar.MINUTE, settings.getMinutes());
+        Calendar calendar = Calendar.getInstance();
+        
+        cal.setTimeInMillis(System.currentTimeMillis());
+        cal.set(Calendar.HOUR, settings.getHour());
+        cal.set(Calendar.MINUTE, settings.getMinutes());
+        
+        if(System.currentTimeMillis() < cal.getTimeInMillis()){
+            System.out.println("\n\n*************  SET ALARM  *************** \n");
+            System.out.println(cal.getTimeInMillis() + " : " + calendar.getTimeInMillis());
+            System.out.println(cal.getTimeInMillis() - calendar.getTimeInMillis());
+            System.out.println(calendar.get(Calendar.MINUTE) + " : "  + cal.get(Calendar.MINUTE));
+            System.out.println(calendar.get(Calendar.HOUR) + " : " + cal.get(Calendar.HOUR));
+            System.out.println(calendar.getTime() + " : " + cal.getTime());
+            cal.set(Calendar.DATE, calendar.get(Calendar.DATE));
+        }
  
         //Create a new PendingIntent and add it to the AlarmManager
         Intent intent = new Intent(this, WakeIntent.class);
@@ -214,10 +226,10 @@ public class HomeActivity  extends Activity{
         
         
         TextView currentTime =  (TextView) findViewById(R.id.currentTime);
-        currentTime.setText(String.valueOf(System.currentTimeMillis()));
+        currentTime.setText(String.valueOf(calendar.getTime()));
         
         TextView alarmTime =  (TextView) findViewById(R.id.alarmTime);
-        alarmTime.setText(String.valueOf(cal.getTimeInMillis()));
+        alarmTime.setText(String.valueOf(cal.getTime()));
         
         
     }
