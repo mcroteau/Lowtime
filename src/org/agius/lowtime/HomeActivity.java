@@ -161,6 +161,7 @@ public class HomeActivity  extends Activity{
     	settings.resetValues();
     }
     
+    
     private void reinitializeView(){
     	if(settings.settingsSet()){
         	displayLowtimeSetView();
@@ -170,67 +171,32 @@ public class HomeActivity  extends Activity{
         }
     }
     
+    
     private void setAlarm(){
 
-        /************* NEW ALARM LOGIC ******************/
-        
-//    	AlarmManager alarm = (AlarmManager) getSystemService(HomeActivity.ALARM_SERVICE);
-//
-//    	Intent wakeIntent = new Intent(HomeActivity.this, AlarmReceiverActivity.class);
-//    	PendingIntent wakeAlarmIntent = PendingIntent.getActivity(HomeActivity.this, 8675309, wakeIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-//        Calendar calendar = Calendar.getInstance();
-//        Calendar cal = Calendar.getInstance();
-//        cal.set(Calendar.SECOND, 10);
-//        calendar.set(Calendar.SECOND, 10);
-//        calendar.set(Calendar.HOUR, settings.getHour());
-//        calendar.set(Calendar.MINUTE, settings.getMinutes());
-//
-//        System.out.println("\n\n*************  SET ALARM  *************** \n");
-//        System.out.println(cal.getTimeInMillis() + " : " + calendar.getTimeInMillis());
-//        System.out.println(calendar.get(Calendar.MINUTE) + " : "  + cal.get(Calendar.MINUTE));
-//        System.out.println(calendar.get(Calendar.HOUR) + " : " + cal.get(Calendar.HOUR));
-//        
-//        alarm.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), wakeAlarmIntent);
-        
-        /************************************************/
-        
-        //Create an offset from the current time in which the alarm will go off.
         Calendar cal = Calendar.getInstance();
         Calendar calendar = Calendar.getInstance();
         
         cal.setTimeInMillis(System.currentTimeMillis());
-        cal.set(Calendar.HOUR, settings.getHour());
+        cal.set(Calendar.HOUR_OF_DAY, settings.getHour());
         cal.set(Calendar.MINUTE, settings.getMinutes());
         
-        if(System.currentTimeMillis() < cal.getTimeInMillis()){
-            System.out.println("\n\n*************  SET ALARM  *************** \n");
-            System.out.println(cal.getTimeInMillis() + " : " + calendar.getTimeInMillis());
-            System.out.println(cal.getTimeInMillis() - calendar.getTimeInMillis());
-            System.out.println(calendar.get(Calendar.MINUTE) + " : "  + cal.get(Calendar.MINUTE));
-            System.out.println(calendar.get(Calendar.HOUR) + " : " + cal.get(Calendar.HOUR));
-            System.out.println(calendar.getTime() + " : " + cal.getTime());
-            cal.set(Calendar.DATE, calendar.get(Calendar.DATE));
-            System.out.println(calendar.getTime() + " : " + cal.getTime());
+        if(cal.getTimeInMillis() < System.currentTimeMillis()){
+            cal.add(Calendar.DATE, 1);  
         }
  
-        //Create a new PendingIntent and add it to the AlarmManager
         Intent intent = new Intent(this, WakeIntent.class);
         intent.putExtra("onetime", Boolean.TRUE);
         
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-            12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager am = 
-            (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
-        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
-                pendingIntent);
-        
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
         
         TextView currentTime =  (TextView) findViewById(R.id.currentTime);
         currentTime.setText(String.valueOf(calendar.getTime()));
         
         TextView alarmTime =  (TextView) findViewById(R.id.alarmTime);
         alarmTime.setText(String.valueOf(cal.getTime()));
-        
         
     }
     

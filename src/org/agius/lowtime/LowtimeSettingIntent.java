@@ -34,9 +34,6 @@ public class LowtimeSettingIntent extends Activity {
     
 	private LowtimeSettings settings;
 	
-	private Intent wakeIntent;
-	private PendingIntent wakeAlarmIntent;
-	private AlarmManager alarm;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -119,11 +116,6 @@ public class LowtimeSettingIntent extends Activity {
 	        
 	        reinitializeView();
             
-            
-//          sleeptone = settings.getString("sleeptone", "");
-//	        TextView sleetoneView = (TextView) findViewById(R.id.sleeptone);
-//	        sleetoneView.setText(sleeptone);
-//	        sleeptoneUri = settings.getString("sleeptoneUri","");
 	
 	        addListenerOnSpinnerItemSelection();
 	        
@@ -138,17 +130,17 @@ public class LowtimeSettingIntent extends Activity {
 
     	minuteOptionsLookup = new HashMap<Integer, Integer>();
     	minuteOptionsLookup.put(5, 0);
-    	minuteOptionsLookup.put(10, 0);
-    	minuteOptionsLookup.put(15, 0);
-    	minuteOptionsLookup.put(20, 0);
-    	minuteOptionsLookup.put(25, 0);
-    	minuteOptionsLookup.put(30, 0);
-    	minuteOptionsLookup.put(35, 0);
-    	minuteOptionsLookup.put(40, 0);
-    	minuteOptionsLookup.put(45, 0);
-    	minuteOptionsLookup.put(50, 0);
-    	minuteOptionsLookup.put(60, 0);
-    	minuteOptionsLookup.put(90, 0);
+    	minuteOptionsLookup.put(10, 1);
+    	minuteOptionsLookup.put(15, 2);
+    	minuteOptionsLookup.put(20, 3);
+    	minuteOptionsLookup.put(25, 4);
+    	minuteOptionsLookup.put(30, 5);
+    	minuteOptionsLookup.put(35, 6);
+    	minuteOptionsLookup.put(40, 7);
+    	minuteOptionsLookup.put(45, 8);
+    	minuteOptionsLookup.put(50, 9);
+    	minuteOptionsLookup.put(60, 10);
+    	minuteOptionsLookup.put(90, 11);
     	
     }
     
@@ -177,12 +169,14 @@ public class LowtimeSettingIntent extends Activity {
         if(settings.settingsSet()){
         	timePicker.setCurrentHour(settings.getHour());
         	timePicker.setCurrentMinute(settings.getMinutes());
+        	System.out.println("SETTINGS SETUP -> SET SPINNER " + settings.getRange() + "  :  " + minuteOptionsLookup.get(settings.getRange()));
         	minutesSpinner.setSelection(minuteOptionsLookup.get(settings.getRange()));
         }
         
         if(!settings.getWaketone().equals("")){
             waketoneView.setText(settings.getWaketone());
         }
+        
     }
     
     

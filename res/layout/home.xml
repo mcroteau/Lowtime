@@ -119,6 +119,10 @@
 	</TableRow>
 	
 	<TableRow>
+	    <TextView android:id="@+id/currentTimeLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Current Time"/>
 	    <TextView android:id="@+id/currentTime"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
@@ -126,11 +130,17 @@
 	</TableRow>
 	
 	<TableRow>
+	    <TextView android:id="@+id/alarmTimeLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Alarm Time"/>
 	    <TextView android:id="@+id/alarmTime"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="--"/>
+	    
 	</TableRow>
+	
 	
 </TableLayout>
 
