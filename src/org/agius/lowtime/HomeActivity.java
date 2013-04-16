@@ -14,7 +14,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TableRow;
@@ -211,6 +210,7 @@ public class HomeActivity  extends Activity{
             System.out.println(calendar.get(Calendar.HOUR) + " : " + cal.get(Calendar.HOUR));
             System.out.println(calendar.getTime() + " : " + cal.getTime());
             cal.set(Calendar.DATE, calendar.get(Calendar.DATE));
+            System.out.println(calendar.getTime() + " : " + cal.getTime());
         }
  
         //Create a new PendingIntent and add it to the AlarmManager
