@@ -96,19 +96,21 @@ public class TheService extends Service implements SensorEventListener {
 		    	        long diffMinutes = ( diffMillis/1000 ) / 60;
 		    	        
 		    	        Intent intent;
+		    	        Context context = getApplicationContext();
 		    		    if ((diffMinutes <= settings.getRange() || diffMinutes <= 0) && diffMinutes < MAX_MINUTES && diffMinutes > -MAX_MINUTES){
-		    		    	intent = new Intent(getApplicationContext(), WakeIntent.class);
+		    		    	intent = new Intent(context, WakeIntent.class);
 		    		    } else {
-		    		    	intent = new Intent(getApplicationContext(), SleepIntent.class);
+		    		    	intent = new Intent(context, SleepIntent.class);
 		    		    }
 		    		    
 		        		mLastShake = now;
 		        		mShakeCount = 0; 
 		        		
-				        Log.i(TAG, "start activity");
+				        Log.i(TAG, "check to start activity " + settings.isLowtimeLaunched());
 				        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				        if(!intentLaunched && !WakeIntent.active && !SleepIntent.active){
-				        	intentLaunched = true;
+				        if(!settings.isLowtimeLaunched() && !WakeIntent.active && !SleepIntent.active){
+				        	Log.i(TAG, "START ACTIVITY");
+				        	settings.setLowtimeLaunched(true);
 				        	getApplicationContext().startActivity(intent);
 				        	stopSelf();
 				        }

@@ -12,6 +12,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -38,75 +39,72 @@ public class WakeIntent extends Activity{
 	               + WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
 	               + WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
 
-
-        count = getInstanceCount();
         
-        if(count == 0){
-        	
-        	if(serviceRunning())
-            	System.out.println("running");
-        	
-            
-            settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
-            
-            TextView wakeText = (TextView)findViewById(R.id.wake);
-            Typeface face= Typeface.createFromAsset(getAssets(), "fonts/Roboto-Black.ttf");
+        
+        settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
+        
+        TextView wakeText = (TextView)findViewById(R.id.wake);
+        Typeface face= Typeface.createFromAsset(getAssets(), "fonts/Roboto-Black.ttf");
 
-            wakeText.setTypeface(face);
-            
-            try {
-            	
-                Uri uri = Uri.parse(settings.getWaketoneUri());
-            	player = new MediaPlayer();
-            	player.setDataSource(this, uri);
-            	
-            	final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-            	  
-            	if (audioManager.getStreamVolume(AudioManager.STREAM_RING) != 0) {
-            		 player.setAudioStreamType(AudioManager.STREAM_RING);
-            		 player.setLooping(true);
-            		 player.prepare();
-            		 player.start();
-            	}
-            	
-        	} catch(Exception e) {
-        		
-        	}        
-            
-    	    
-            Button offButton = (Button) findViewById(R.id.turnoff);
-            offButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-				public void onClick(View v) {
-                	while(serviceRunning()){
-                        stopService(new Intent(WakeIntent.this, TheService.class));
-                	}
-                	settings.setActive(false);
-                	settings.commit();
-                	player.stop();
-                	finish();
-                }
-            });
+        wakeText.setTypeface(face);
+        
+        try {
+        	
+            Uri uri = Uri.parse(settings.getWaketoneUri());
+        	player = new MediaPlayer();
+        	player.setDataSource(this, uri);
+        	
+        	final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        	//check to see if volume is normally set
+        	Log.i("LOWTIME WAKE INTENT ", "check ringtone mode " + audioManager.getRingerMode() + " : " + (audioManager.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) );
+            if ( audioManager.getRingerMode() != AudioManager.RINGER_MODE_NORMAL )
+            	audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
             
             
-            Button backButton = (Button) findViewById(R.id.snooze);
-            backButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-				public void onClick(View v) {
+        	if (audioManager.getStreamVolume(AudioManager.STREAM_RING) != 0) {
+        		 player.setAudioStreamType(AudioManager.STREAM_RING);
+        		 player.setLooping(true);
+        		 player.prepare();
+        		 player.start();
+        	}
+        	
+    	} catch(Exception e) {
+    		
+    	}        
+        
+	    
+        Button offButton = (Button) findViewById(R.id.turnoff);
+        offButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+			public void onClick(View v) {
+            	while(serviceRunning()){
                     stopService(new Intent(WakeIntent.this, TheService.class));
-                    startService(new Intent(WakeIntent.this, TheService.class));
-                	player.stop();
-                	finish();
-                }
-            });
+            	}
+            	settings.setActive(false);
+            	settings.setLowtimeLaunched(false);
+            	settings.commit();
+            	player.stop();
+            	finish();
+            }
+        });
         
-        }else{
-        	//dont start the activity
-        }
         
-
+        Button backButton = (Button) findViewById(R.id.snooze);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+			public void onClick(View v) {
+                stopService(new Intent(WakeIntent.this, TheService.class));
+                startService(new Intent(WakeIntent.this, TheService.class));
+            	settings.setLowtimeLaunched(false);
+            	player.stop();
+            	finish();
+            }
+        });
         
     }
+    
+    
     
     /*
      * http://stackoverflow.com/questions/600207/android-check-if-a-service-is-running

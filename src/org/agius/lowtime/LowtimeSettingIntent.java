@@ -18,6 +18,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -75,7 +76,7 @@ public class LowtimeSettingIntent extends Activity {
 	                    settings.commit();
 	                    
 	                    
-		                Intent i = new Intent(LowtimeSettingIntent.this, HomeActivity.class);
+		                Intent i = new Intent(LowtimeSettingIntent.this, HomeIntent.class);
 		                startActivity(i);
 		                
 	            	}else{
@@ -105,7 +106,7 @@ public class LowtimeSettingIntent extends Activity {
 	        cancelButton.setOnClickListener(new View.OnClickListener() {
 	            @Override
 				public void onClick(View v) {
-	                Intent i = new Intent(LowtimeSettingIntent.this, HomeActivity.class);
+	                Intent i = new Intent(LowtimeSettingIntent.this, HomeIntent.class);
 	                startActivity(i);
 	            }
 	        });
@@ -127,7 +128,6 @@ public class LowtimeSettingIntent extends Activity {
 
     
     private void setupOptionsLookup(){
-
     	minuteOptionsLookup = new HashMap<Integer, Integer>();
     	minuteOptionsLookup.put(5, 0);
     	minuteOptionsLookup.put(10, 1);
@@ -141,7 +141,6 @@ public class LowtimeSettingIntent extends Activity {
     	minuteOptionsLookup.put(50, 9);
     	minuteOptionsLookup.put(60, 10);
     	minuteOptionsLookup.put(90, 11);
-    	
     }
     
     
@@ -150,11 +149,6 @@ public class LowtimeSettingIntent extends Activity {
     }
     
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
-        return true;
-    }
     
     
     @Override
@@ -186,10 +180,20 @@ public class LowtimeSettingIntent extends Activity {
     }  
     
 
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();  
-//    	settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
-//    }
+    private void showSettings(){
+        Intent i = new Intent(LowtimeSettingIntent.this, LowtimeSettingIntent.class);
+        startActivity(i);
+    }
+    
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_settings:
+                showSettings();
+                return true;
+        }
+		return false;
+    }
     
 }
