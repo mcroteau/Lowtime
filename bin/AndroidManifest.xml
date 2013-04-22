@@ -1,8 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	    package="org.agius.lowtime"
 	    android:versionCode="1"
-	    android:versionName="1.0" >
+	    android:versionName="1.0">
 
+    <!-- 
+    	http://developer.android.com/guide/topics/manifest/activity-element.html 
+    	http://androidisland.blogspot.com/2010/12/activity-launch-modes-simple.html
+    -->
+    
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
@@ -10,25 +15,59 @@
     <application
         	android:icon="@drawable/ic_launcher"
         	android:label="@string/app_name" 
+<<<<<<< HEAD
         	android:theme="@android:style/Theme.Black"
         	android:debuggable="true" >
+=======
+        	android:theme="@android:style/Theme.Black" 
+	    	android:alwaysRetainTaskState="false" 
+        	android:debuggable="true">
+>>>>>>> android-v2.1
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main" 
-        	android:theme="@android:style/Theme.Black" >
+            android:name="org.agius.lowtime.HomeIntent"
+            android:label="@string/title_activity_main"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         
 	    <activity android:name="WakeToneIntent"
-        		  android:theme="@android:style/Theme.Holo.Dialog" ></activity>
+	    		  android:alwaysRetainTaskState="false"
+	    		  android:launchMode="singleTask"
+            	  android:theme="@android:style/Theme.NoTitleBar"></activity>
 	    
-	    <activity android:name="SleepToneIntent"
-        		  android:theme="@android:style/Theme.Holo.Dialog"></activity>
+	    <activity android:name="LowtimeIntent"
+	    		  android:alwaysRetainTaskState="false"
+	    		  android:launchMode="singleTask"
+            	  android:theme="@android:style/Theme.NoTitleBar"></activity>
 	    
+	    <activity android:name="WakeIntent"
+	    		  android:alwaysRetainTaskState="false"
+	    		  android:launchMode="singleTask"
+            	  android:theme="@android:style/Theme.NoTitleBar"></activity>
+	    
+	    <activity android:name="SleepIntent"
+	    		  android:alwaysRetainTaskState="false"
+	    		  android:launchMode="singleTask"
+            	  android:theme="@android:style/Theme.NoTitleBar"></activity>
+	    
+	    <activity android:name="LowtimeSettingIntent"
+	    		  android:alwaysRetainTaskState="false"
+	    		  android:launchMode="singleTask"
+            	  android:theme="@android:style/Theme.NoTitleBar"></activity>
+	    
+        <service android:name=".LowtimeService" ></service>
+        
+	    <activity android:name="org.agius.lowtime.AlarmReceiverIntent"
+	    		  android:launchMode="singleTask"></activity>
+	    
+        <service android:name="org.agius.lowtime.TheService"></service>
+        
     </application>
+
+    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+	<uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
 
 </manifest>
