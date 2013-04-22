@@ -58,7 +58,7 @@
 	    <activity android:name="org.agius.lowtime.AlarmReceiverIntent"
 	    		  android:launchMode="singleTask"></activity>
 	    
-        <service android:name=".TheService"></service>
+        <service android:name="org.agius.lowtime.TheService"></service>
         
     </application>
 

@@ -12,19 +12,17 @@ import android.app.PendingIntent;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.agius.lowtime.domain.LowtimeSettings;
-
-
-
 
 import static org.agius.lowtime.LowtimeConstants.*;
 
@@ -32,11 +30,11 @@ import static org.agius.lowtime.LowtimeConstants.*;
 public class HomeIntent  extends Activity{
 
 	private TextView lowtime;
+	private TextView lowtimeTitle;
 	private TextView lowtimeStatus;
 	private TextView lowtimeRangeMinutes;
-	private RadioButton activatedStatus;
 	
-	private TableRow lowtimeRow;
+	private TableRow lowtimeAlarmRow;
 	private TableRow rangeRow;
 	private TableRow createRow;
 	private TableRow editRow;
@@ -53,28 +51,27 @@ public class HomeIntent  extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         
-        
     	if(serviceRunning())
         	System.out.println("running");
     	
         settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
     	
-        lowtimeRow = (TableRow) findViewById(R.id.lowtimeRow);
+        lowtimeAlarmRow = (TableRow) findViewById(R.id.lowtimeAlarmRow);
         rangeRow = (TableRow) findViewById(R.id.rangeRow);
-        createRow = (TableRow) findViewById(R.id.createRow);
+//        createRow = (TableRow) findViewById(R.id.createRow);
         editRow = (TableRow) findViewById(R.id.editRow);
         
         lowtime = (TextView) findViewById(R.id.lowtime);
+        lowtimeTitle = (TextView) findViewById(R.id.lowtimeTitle);
         lowtimeStatus = (TextView) findViewById(R.id.lowtimeStatus);
         lowtimeRangeMinutes = (TextView) findViewById(R.id.lowtimeRangeMinutes);
-        activatedStatus = (RadioButton) findViewById(R.id.activatedStatus);
-        activatedStatus.setEnabled(false);
         
         resetValues();
     	initializeLowtimeButtons();
     	reinitializeView();
     }
     
+
     
     @Override
     protected void onStart() {
@@ -120,10 +117,10 @@ public class HomeIntent  extends Activity{
         lowtime.setText(formattedTime);
         lowtimeRangeMinutes.setText(settings.getRange() + " mins    " + formattedTimePre + " - " + formattedTime);
         
-        editRow.setVisibility(View.VISIBLE);
-        lowtimeRow.setVisibility(View.VISIBLE);
-        rangeRow.setVisibility(View.VISIBLE);
-    	createRow.setVisibility(View.GONE);
+//        editRow.setVisibility(View.VISIBLE);
+//        lowtimeAlarmRow.setVisibility(View.VISIBLE);
+//        rangeRow.setVisibility(View.VISIBLE);
+//    	createRow.setVisibility(View.GONE);
     	if(settings.isActive()){
     		setActiveViewState();
     	}else{
@@ -134,10 +131,10 @@ public class HomeIntent  extends Activity{
     
     private void displayLowtimeUnsetView(){
 
-    	createRow.setVisibility(View.VISIBLE);
-        editRow.setVisibility(View.GONE);
-        lowtimeRow.setVisibility(View.GONE);
-        rangeRow.setVisibility(View.GONE);
+//    	createRow.setVisibility(View.VISIBLE);
+//        editRow.setVisibility(View.GONE);
+//        lowtimeAlarmRow.setVisibility(View.GONE);
+//        rangeRow.setVisibility(View.GONE);
         
         if(settings.isActive()){
     		setActiveViewState();
@@ -149,14 +146,14 @@ public class HomeIntent  extends Activity{
     
     private void setActiveViewState(){
         lowtimeStatus.setText(LOWTIME_ACTIVE_LABEL);
+        lowtimeStatus.setBackgroundColor(Color.parseColor(ACTIVE_COLOR));
         toggleButton.setText(LOWTIME_BUTTON_DISABLE);
-        activatedStatus.setChecked(true);
     }
     
     private void setInactiveViewState(){
         lowtimeStatus.setText(LOWTIME_INACTIVE_LABEL);
+        lowtimeStatus.setBackgroundColor(Color.parseColor(INACTIVE_COLOR));
         toggleButton.setText(LOWTIME_BUTTON_ENABLE);
-        activatedStatus.setChecked(false);
     }
     
     
@@ -195,11 +192,6 @@ public class HomeIntent  extends Activity{
         AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
         
-        TextView currentTime =  (TextView) findViewById(R.id.currentTime);
-        currentTime.setText(String.valueOf(calendar.getTime()));
-        
-        TextView alarmTime =  (TextView) findViewById(R.id.alarmTime);
-        alarmTime.setText(String.valueOf(cal.getTime()));
         
     }
     
@@ -213,14 +205,15 @@ public class HomeIntent  extends Activity{
     	if(settings.isActive()){
     		settings.setActive(false);
     		status = LOWTIME_INACTIVE_LABEL;
+    		lowtimeStatus.setBackgroundColor(Color.parseColor(ACTIVE_COLOR));
     		buttonText = LOWTIME_BUTTON_ENABLE;
         	stopService(new Intent(HomeIntent.this, TheService.class));
     	}else{
     		settings.setActive(true);
+    		lowtimeStatus.setBackgroundColor(Color.parseColor(INACTIVE_COLOR));
         	startService(new Intent(HomeIntent.this, TheService.class));
     	}    	
 
-        activatedStatus.setChecked(settings.isActive());
         lowtimeStatus.setText(status);
         toggleButton.setText(buttonText);
         
@@ -239,13 +232,13 @@ public class HomeIntent  extends Activity{
             }
         });
         
-        hideButton = (Button) findViewById(R.id.hideButton);
-        hideButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-			public void onClick(View v) {
-            	moveTaskToBack(true);
-            }
-        });
+//        hideButton = (Button) findViewById(R.id.hideButton);
+//        hideButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//			public void onClick(View v) {
+//            	moveTaskToBack(true);
+//            }
+//        });
         
         
         toggleButton = (Button) findViewById(R.id.toggleButton);
@@ -256,14 +249,14 @@ public class HomeIntent  extends Activity{
             }
         });	  
         
-        createButton = (Button) findViewById(R.id.createButton);
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-			public void onClick(View v) {
-                Intent i = new Intent(HomeIntent.this, LowtimeSettingIntent.class);
-                startActivity(i);
-            }
-        });
+//        createButton = (Button) findViewById(R.id.createButton);
+//        createButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//			public void onClick(View v) {
+//                Intent i = new Intent(HomeIntent.this, LowtimeSettingIntent.class);
+//                startActivity(i);
+//            }
+//        });
     }
     
     /*

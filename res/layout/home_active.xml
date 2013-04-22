@@ -33,7 +33,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_span="2"
 	        android:textSize="20sp"
-	        android:background="#ff2309"
+	        android:background="#5fba20"
 			android:paddingLeft="10dp"
 			android:paddingRight="10dp"
 			android:paddingTop="5dp"
@@ -41,16 +41,15 @@
 			android:textColor="#ffffff"
 			android:gravity="center"
 			android:textStyle="normal"
-	        android:text="INACTIVE" />
+	        android:text="ACTIVE" />
 	    
 	    <TextView android:layout_width="wrap_content"
 	        	  android:layout_height="wrap_content"/>
 	    
 	    
    	</TableRow>
-   	
+   		
 	
-		
 	<TableRow android:id="@+id/lowtimeAlarmRow"
 	    	  android:paddingTop="20dp"
 	    	  android:paddingBottom="10dp">
@@ -61,8 +60,8 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="right"
-	        android:textColor="#efefef"
-	        android:textSize="13sp"
+	        android:textColor="#fefefe"
+	        android:textSize="14sp"
 	        android:textStyle="bold"
 		    android:layout_span="2"
 	        android:text="Alarm Time : " />
@@ -73,10 +72,9 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="left"
-	        android:paddingLeft="10dp"
 	        android:textColor="#fefefe"
-	        android:textSize="15sp"
-			android:textStyle="normal"
+	        android:textSize="14sp"
+	        android:textStyle="italic"
 		    android:layout_span="2"
 	        android:text="5:00 am" />
 	    
@@ -93,8 +91,8 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="right"
-	        android:textColor="#efefef"
-	        android:textSize="13sp"
+	        android:textColor="#fefefe"
+	        android:textSize="14sp"
 	        android:textStyle="bold"
 		    android:layout_span="2"
 	        android:text="Range : " />
@@ -104,10 +102,9 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="left"
-	        android:paddingLeft="10dp"
 	        android:textColor="#fefefe"
-	        android:textSize="15sp"
-			android:textStyle="normal"
+	        android:textSize="14sp"
+	        android:textStyle="italic"
 		    android:layout_span="2"
 	        android:text="15 Minutes" />	    
 	        
@@ -124,8 +121,8 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="right"
-	        android:textColor="#efefef"
-	        android:textSize="13sp"
+	        android:textColor="#fefefe"
+	        android:textSize="14sp"
 	        android:textStyle="bold"
 		    android:layout_span="2"
 	        android:text="Wake Tone : " />
@@ -135,10 +132,9 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="left"
-	        android:paddingLeft="10dp"
 	        android:textColor="#fefefe"
-	        android:textSize="15sp"
-			android:textStyle="normal"
+	        android:textSize="14sp"
+	        android:textStyle="italic"
 		    android:layout_span="2"
 	        android:text="Simple Tone 1" />	    
 	        
@@ -155,8 +151,8 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="right"
-	        android:textColor="#efefef"
-	        android:textSize="13sp"
+	        android:textColor="#fefefe"
+	        android:textSize="14sp"
 	        android:textStyle="bold"
 		    android:layout_span="2"
 	        android:text="Snooze Duration : " />
@@ -166,10 +162,9 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="left"
-	        android:paddingLeft="10dp"
 	        android:textColor="#fefefe"
-	        android:textSize="15sp"
-			android:textStyle="normal"
+	        android:textSize="14sp"
+	        android:textStyle="italic"
 		    android:layout_span="2"
 	        android:text="10 Minutes" />	    
 	        
@@ -187,8 +182,8 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="right"
-	        android:textColor="#efefef"
-	        android:textSize="13sp"
+	        android:textColor="#fefefe"
+	        android:textSize="14sp"
 	        android:textStyle="bold"
 		    android:layout_span="2"
 	        android:text="Time Range : " />
@@ -198,9 +193,9 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="left"
-	        android:paddingLeft="10dp"
 	        android:textColor="#fefefe"
-	        android:textSize="15sp"
+	        android:textSize="14sp"
+	        android:textStyle="italic"
 		    android:layout_span="2"
 	        android:text="5:45 am - 6:00 am" />	    
 	        
@@ -229,64 +224,6 @@
 	    
 	</TableRow>
 	
-	<!-- 
-	
-	<TableRow android:id="@+id/welcomeTextRow1"> 
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/welcomeText1"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_span="4"
-	        android:textSize="18sp"
-	        android:layout_marginTop="20dp"
-			android:textColor="#fefefe"
-	        android:textStyle="normal"
-	        android:text="Welcome to Lowtime, a new take on the Alarm Clock."/>
-    </TableRow>
-    
-    <TableRow android:id="@+id/welcomeTextRow2">
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/welcomeText2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_span="4"
-	        android:textSize="18sp"
-	        android:layout_marginTop="20dp"
-	        android:layout_marginBottom="10dp"
-			android:textColor="#fefefe"
-	        android:textStyle="normal"
-	        android:text="For more information about the app and instructions on how to use...."/>   
-	</TableRow>
-	
-	
-	
-	<TableRow android:id="@+id/howToRow"
-	    	  android:layout_marginTop="20dp">
-		
-	    <org.agius.lowtime.custom.RobotoButton
-	        android:id="@+id/howToUseButton"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center"
-	        android:layout_span="4"
-	        android:text="How to Use" />
-	    
-	</TableRow>
-	
-	<TableRow android:id="@+id/createRow"
-	    	  android:layout_marginTop="20dp">
-		
-	    <org.agius.lowtime.custom.RobotoButton
-	        android:id="@+id/createButton"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center"
-	        android:layout_span="4"
-	        android:text="Set Lowtime" />
-	    
-	</TableRow>
-	
-	 -->
 	
 </TableLayout>
 
