@@ -12,14 +12,20 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -49,7 +55,7 @@ public class LowtimeSettingIntent extends Activity {
 	        
             timePicker = (TimePicker) findViewById(R.id.lowtimetime);
             
-	        Button waketoneButton = (Button) findViewById(R.id.waketone_button);
+	        Button waketoneButton = (Button) findViewById(R.id.set_waketone_button);
 	        waketoneButton.setOnClickListener(new View.OnClickListener() {
 	            @Override
 				public void onClick(View v) {
@@ -57,6 +63,55 @@ public class LowtimeSettingIntent extends Activity {
 	                startActivity(i);
 	            }
 	        });
+	        
+	        
+	        
+	        Button rangeButton = (Button) findViewById(R.id.set_range_button);
+	        rangeButton.setOnClickListener(new View.OnClickListener() {
+	            @Override
+				public void onClick(View v) {
+	            	
+	    			final Dialog dialog = new Dialog(LowtimeSettingIntent.this);
+	    			dialog.requestWindowFeature(dialog.getWindow().FEATURE_NO_TITLE); 
+	    			dialog.setContentView(R.layout.range_select_dialog);
+	     	     
+	    			Button dialogButton = (Button) dialog.findViewById(R.id.set_range);
+	    			
+	    			dialogButton.setOnClickListener(new View.OnClickListener() {
+	    				@Override
+	    				public void onClick(View v) {
+	    					dialog.dismiss();
+	    				}
+	    			});
+	     
+	    			dialog.show();
+	            }
+	        });
+	        
+	        
+
+	        Button snoozeButton = (Button) findViewById(R.id.set_snooze_duration_button);
+	        snoozeButton.setOnClickListener(new View.OnClickListener() {
+	            @Override
+				public void onClick(View v) {
+	            	
+	    			final Dialog dialog = new Dialog(LowtimeSettingIntent.this);
+	    			dialog.requestWindowFeature(dialog.getWindow().FEATURE_NO_TITLE); 
+	    			dialog.setContentView(R.layout.snooze_select_dialog);
+	     	     
+	    			Button dialogButton = (Button) dialog.findViewById(R.id.set_snooze_duration);
+	    			
+	    			dialogButton.setOnClickListener(new View.OnClickListener() {
+	    				@Override
+	    				public void onClick(View v) {
+	    					dialog.dismiss();
+	    				}
+	    			});
+	     
+	    			dialog.show();
+	            }
+	        });
+	        
 	        
 	        Button setLowtimeButton = (Button) findViewById(R.id.save);
 	        setLowtimeButton.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +167,7 @@ public class LowtimeSettingIntent extends Activity {
 	        });
 	        
 
-	        minutesSpinner = (Spinner) findViewById(R.id.minutes);
+//	        minutesSpinner = (Spinner) findViewById(R.id.minutes);
 	        waketoneView = (TextView) findViewById(R.id.waketone);
 	        
 	        reinitializeView();
@@ -126,6 +181,11 @@ public class LowtimeSettingIntent extends Activity {
         
     }
 
+    
+    private void setTextViewBackground(TextView textView){
+    	textView.setBackgroundColor(0);
+    }
+    
     
     private void setupOptionsLookup(){
     	minuteOptionsLookup = new HashMap<Integer, Integer>();

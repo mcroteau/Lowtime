@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+	android:stretchColumns="*"
+	android:paddingTop="20dp"
+	android:paddingLeft="20dp"
+	android:paddingRight="20dp"
+	android:paddingBottom="20dp"
+	android:background="@drawable/mainbackground"
+	android:id="@+id/layout_root">
+
+
+	<org.agius.lowtime.custom.RobotoTextView android:id="@+id/snooze_help_title"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:paddingBottom="10dp"
+	    android:textStyle="bold"
+	    android:textColor="#fefefe"
+	    android:textSize="22dp"
+	    android:text="Snooze Duration"/>
+	
+	<org.agius.lowtime.custom.RobotoTextView android:id="@+id/snooze_help"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:paddingBottom="20dp"
+	    android:textStyle="normal"
+	    android:textColor="#fefefe"
+	    android:textSize="15dp"
+	    android:text="The number of minutes to re-ring the main Alarm"/>
+    	
+	
+	<TableLayout android:layout_width="fill_parent"
+	    		android:layout_height="wrap_content"
+	        	android:gravity="right"
+        		android:stretchColumns="0">
+	    
+	    <TableRow>
+	        
+		    <Spinner android:id="@+id/minutes"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:entries="@array/lowtime_minute_select"
+		        android:prompt="@string/lowtime_minute_prompt" />
+	    
+	        <org.agius.lowtime.custom.RobotoButton android:id="@+id/set_snooze_duration"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="Set Snooze Duration"/>
+	        
+	    </TableRow>
+	    
+	</TableLayout>
+	
+	
+</LinearLayout>

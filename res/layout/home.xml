@@ -3,10 +3,10 @@
 			 android:layout_width="fill_parent"
 			 android:layout_height="fill_parent"
 			 android:stretchColumns="*"
-			 android:paddingTop="5dp"
+			 android:paddingTop="0dp"
 			 android:paddingLeft="20dp"
 			 android:paddingRight="20dp"
-			 android:paddingBottom="15dp"
+			 android:paddingBottom="5dp"
 	    	 android:background="@drawable/mainbackground" >
 		
 	<TableRow>
