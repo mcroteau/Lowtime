@@ -1,7 +1,10 @@
 package org.agius.lowtime;
 
 import static org.agius.lowtime.LowtimeConstants.LOWTIME_SETTINGS;
+import static org.agius.lowtime.LowtimeConstants.TONE;
+import static org.agius.lowtime.LowtimeConstants.URI;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,16 +21,27 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -40,6 +54,13 @@ public class LowtimeSettingIntent extends Activity {
 	Map<Integer, Integer> minuteOptionsLookup;
     
 	private LowtimeSettings settings;
+	private static Ringtone ringtone;
+	
+	private ArrayList<CheckBox> radioButtons;
+	
+	@SuppressLint("UseSparseArrays")
+	private Map<Integer, Map<String, Object>> lookup = new HashMap<Integer, Map<String, Object>>();
+	
 	
 	
     @Override
@@ -48,19 +69,18 @@ public class LowtimeSettingIntent extends Activity {
         setContentView(R.layout.lowtime_setting);
         
         try {
-
+	    	
             settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
-            
+
         	setupOptionsLookup();
+	        timePicker = (TimePicker) findViewById(R.id.lowtimetime);
 	        
-            timePicker = (TimePicker) findViewById(R.id.lowtimetime);
-            
+	        final Dialog waketoneDialog = createWaketoneDialog();
 	        Button waketoneButton = (Button) findViewById(R.id.set_waketone_button);
 	        waketoneButton.setOnClickListener(new View.OnClickListener() {
 	            @Override
 				public void onClick(View v) {
-	                Intent i = new Intent(LowtimeSettingIntent.this, WakeToneIntent.class);
-	                startActivity(i);
+	            	waketoneDialog.show();	 
 	            }
 	        });
 	        
@@ -107,10 +127,10 @@ public class LowtimeSettingIntent extends Activity {
 	    					dialog.dismiss();
 	    				}
 	    			});
-	     
 	    			dialog.show();
 	            }
 	        });
+	        
 	        
 	        
 	        Button setLowtimeButton = (Button) findViewById(R.id.save);
@@ -177,13 +197,113 @@ public class LowtimeSettingIntent extends Activity {
 	        
 	    }catch (Exception e){
 	    	e.printStackTrace();
-	    }
-        
+	    }        
     }
 
     
-    private void setTextViewBackground(TextView textView){
-    	textView.setBackgroundColor(0);
+    
+    private Dialog createWaketoneDialog(){
+    	final Dialog dialog = new Dialog(LowtimeSettingIntent.this);
+		dialog.requestWindowFeature(dialog.getWindow().FEATURE_NO_TITLE); 
+		dialog.setContentView(R.layout.waketone_select_dialog);
+	     
+		final Button dialogButton = (Button) dialog.findViewById(R.id.set_waketone);
+    	
+    	int ringtoneCount = 0; 	
+    	
+    	TableLayout tableLayout = (TableLayout) dialog.findViewById(R.id.waketone_select_table);
+    	radioButtons = new ArrayList<CheckBox>();    
+
+        RingtoneManager ringtoneMgr = new RingtoneManager(getApplicationContext());
+    	ringtoneMgr.setType(RingtoneManager.TYPE_ALARM);
+    	Cursor alarmsCursor = ringtoneMgr.getCursor();
+    	
+    	
+    	while(!alarmsCursor.isAfterLast() && alarmsCursor.moveToNext()) {
+
+    		Log.i("LOWTIME -->> ", "ringtoneCount : " + ringtoneCount);
+    		
+    		int currentPosition = alarmsCursor.getPosition();
+    		int elementsId = ringtoneCount + 2 + (ringtoneCount * 5);
+    		
+    		TableRow row = new TableRow(LowtimeSettingIntent.this); 
+    		row.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            
+    	    String ringtoneTitle = ringtoneMgr.getRingtone(currentPosition).getTitle(LowtimeSettingIntent.this);
+    	    
+    	    CheckBox toneCheckbox = new CheckBox(LowtimeSettingIntent.this);
+    	    toneCheckbox.setId(elementsId);
+            
+            if(settings.getWaketone().equals(ringtoneTitle)){
+            	toneCheckbox.setChecked(true);
+            }
+            
+            toneCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+                @Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+
+                    	processRadioButtonClick(buttonView);
+                    	int id = buttonView.getId();
+                    }
+                }   
+            });
+
+            radioButtons.add(toneCheckbox);
+            row.addView(toneCheckbox, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    	    
+            TextView title = new TextView(LowtimeSettingIntent.this);
+    	    title.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+    	    title.setText(ringtoneTitle);
+    	    
+    	    
+    	    row.addView(title, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    	    
+    	    Button preview = new Button(LowtimeSettingIntent.this);
+            preview.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            
+            
+            preview.setText("Preview");
+            preview.setId(elementsId);
+            preview.setOnClickListener(new View.OnClickListener() {
+                @Override
+				public void onClick(View v) {
+                 	int id = v.getId();
+                	if(ringtone != null && ringtone.isPlaying())ringtone.stop();
+        	    	ringtone = RingtoneManager.getRingtone(LowtimeSettingIntent.this, (Uri) lookup.get(id).get(URI));
+        	    	ringtone.play();
+                }
+            });
+            
+            row.addView(preview);
+            
+            lookup.put(elementsId, new HashMap<String, Object>());
+            lookup.get(elementsId).put(TONE, ringtoneMgr.getRingtone(currentPosition).getTitle(LowtimeSettingIntent.this));
+            lookup.get(elementsId).put(URI, ringtoneMgr.getRingtoneUri(currentPosition));
+            
+    	    ringtoneCount++;
+    	    tableLayout.addView(row);
+    	
+    	}
+    	
+    	alarmsCursor.close();  
+    	
+    	dialogButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+    	
+    	return dialog;
+    	
+    }
+    
+    
+    private void processRadioButtonClick(CompoundButton checkboxView){
+        for (CheckBox checkbox : radioButtons){
+            if (checkbox != checkboxView ) checkbox.setChecked(false);
+        }
     }
     
     

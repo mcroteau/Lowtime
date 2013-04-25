@@ -23,11 +23,12 @@ public final class R {
         public static final int sleep_background=0x7f020006;
         public static final int sleep_snooze_button=0x7f020007;
         public static final int sleep_turnoff_button=0x7f020008;
-        public static final int vertical=0x7f020009;
-        public static final int wake_background=0x7f02000a;
-        public static final int wake_snooze_button=0x7f02000b;
-        public static final int wake_turnoff_button=0x7f02000c;
-        public static final int wood=0x7f02000d;
+        public static final int top_bottom_border=0x7f020009;
+        public static final int vertical=0x7f02000a;
+        public static final int wake_background=0x7f02000b;
+        public static final int wake_snooze_button=0x7f02000c;
+        public static final int wake_turnoff_button=0x7f02000d;
+        public static final int wood=0x7f02000e;
     }
     public static final class id {
         public static final int back=0x7f080019;
@@ -47,7 +48,7 @@ public final class R {
         public static final int lowtimeStatus=0x7f080002;
         public static final int lowtimeTitle=0x7f080001;
         public static final int lowtimetime=0x7f080021;
-        public static final int menu_settings=0x7f080035;
+        public static final int menu_settings=0x7f080038;
         public static final int minutes=0x7f08002a;
         public static final int na1=0x7f08001c;
         public static final int na2=0x7f08001e;
@@ -61,6 +62,7 @@ public final class R {
         public static final int set_range_button=0x7f080023;
         public static final int set_snooze_duration=0x7f080031;
         public static final int set_snooze_duration_button=0x7f080024;
+        public static final int set_waketone=0x7f080037;
         public static final int set_waketone_button=0x7f080022;
         public static final int settingsText=0x7f080020;
         public static final int sleep=0x7f08002c;
@@ -80,6 +82,8 @@ public final class R {
         public static final int wakeToneLabel=0x7f08000a;
         public static final int wakeToneRow=0x7f080009;
         public static final int waketone=0x7f080034;
+        public static final int waketone_help_title=0x7f080035;
+        public static final int waketone_select_table=0x7f080036;
         public static final int x_axis=0x7f080015;
         public static final int y_axis=0x7f080016;
         public static final int z_axis=0x7f080017;
@@ -97,6 +101,7 @@ public final class R {
         public static final int snooze_select_dialog=0x7f030008;
         public static final int wake=0x7f030009;
         public static final int waketone=0x7f03000a;
+        public static final int waketone_select_dialog=0x7f03000b;
     }
     public static final class menu {
         public static final int activity_main=0x7f070000;

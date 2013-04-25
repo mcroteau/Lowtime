@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 
@@ -32,7 +34,9 @@ public class WakeToneIntent extends Activity{
 	@SuppressLint("UseSparseArrays")
 	private Map<Integer, Map<String, Object>> lookup = new HashMap<Integer, Map<String, Object>>();
 	
-	private LinearLayout layout;
+//	private LinearLayout layout;
+	private TableLayout layout;
+	
 	private List<CheckBox> radioButtons; 
 
 	private static Ringtone ringtone;
@@ -50,22 +54,30 @@ public class WakeToneIntent extends Activity{
     	ringtoneMgr.setType(RingtoneManager.TYPE_ALARM);
     	Cursor alarmsCursor = ringtoneMgr.getCursor();
     	
-    	layout = (LinearLayout) findViewById(R.id.waketone);
+//    	layout = (LinearLayout) findViewById(R.id.waketone);
+    	layout = (TableLayout) findViewById(R.id.waketone);
         layout.setOrientation(LinearLayout.VERTICAL);
 
     	int count = 0;
     	radioButtons = new ArrayList<CheckBox>();    	
+    	
     	
     	while(!alarmsCursor.isAfterLast() && alarmsCursor.moveToNext()) {
 
     		int currentPosition = alarmsCursor.getPosition();
     		int elementsId = count + 2 + (count * 5);
     		
-            LinearLayout row = new LinearLayout(this);
-            row.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-    	    row.setOrientation(LinearLayout.HORIZONTAL);
+//          LinearLayout row = new LinearLayout(this);
+            
+    		TableRow trow = new TableRow(this); 
+            trow.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            
+//          row.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+//    	    row.setOrientation(LinearLayout.HORIZONTAL);
     	  
+            
     	    String ringtoneTitle = ringtoneMgr.getRingtone(currentPosition).getTitle(this);
+    	    
     	    
     	    CheckBox setToneButton = new CheckBox(this);
             setToneButton.setId(elementsId);
@@ -89,13 +101,7 @@ public class WakeToneIntent extends Activity{
                         settings.setWaketoneUri(uri.toString());
                         settings.setWaketone(tone);
                         settings.commit();
-                        
-//                        SharedPreferences.Editor editor = settings.edit();
-//                        editor.putString(LOWTIME_WAKETONE_URI, uri.toString());
-//                        editor.putString(LOWTIME_WAKETONE, tone);
-//                        editor.commit();
-
-                    	if(ringtone != null && ringtone.isPlaying())ringtone.stop();
+                                            	if(ringtone != null && ringtone.isPlaying())ringtone.stop();
                     	
                         startActivity(i);
                     }
@@ -103,15 +109,20 @@ public class WakeToneIntent extends Activity{
             });
             
             radioButtons.add(setToneButton);
-    	    row.addView(setToneButton, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+//    	    row.addView(setToneButton, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+            trow.addView(setToneButton, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     	    
             TextView title = new TextView(this);
     	    title.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
     	    title.setText(ringtoneTitle);
-    	    row.addView(title, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    	    
+//    	    row.addView(title, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    	    trow.addView(title, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    	    
     	    
     	    Button preview = new Button(this);
             preview.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            
             preview.setText("Preview");
             preview.setId(elementsId);
             preview.setOnClickListener(new View.OnClickListener() {
@@ -124,13 +135,16 @@ public class WakeToneIntent extends Activity{
                 }
             });
             
-            row.addView(preview);
+//            row.addView(preview);
+            trow.addView(preview);
+            
             lookup.put(elementsId, new HashMap<String, Object>());
             lookup.get(elementsId).put(TONE, ringtoneMgr.getRingtone(currentPosition).getTitle(this));
             lookup.get(elementsId).put(URI, ringtoneMgr.getRingtoneUri(currentPosition));
             
     	    count++;
-    	    layout.addView(row);
+    	    layout.addView(trow);
+    	    
         
     	}
     	
