@@ -47,7 +47,6 @@ public class WakeIntent extends Activity{
 	               + WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
 	               + WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
 
-        
         settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
         
         Calendar cal = Calendar.getInstance();
