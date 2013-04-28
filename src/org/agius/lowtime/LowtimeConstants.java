@@ -43,4 +43,6 @@ public class LowtimeConstants {
     public static final String BUTTON_TEXT_COLOR = "#26272c";
     public static final float BUTTON_TEXT_SIZE = 13;
 	
+    public static final String UNSET = "Unset";
+    
 }

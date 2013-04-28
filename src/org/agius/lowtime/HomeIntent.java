@@ -13,7 +13,6 @@ import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,18 +25,21 @@ import org.agius.lowtime.domain.LowtimeSettings;
 
 import static org.agius.lowtime.LowtimeConstants.*;
 
+
 @SuppressLint("SimpleDateFormat")
 public class HomeIntent  extends Activity{
 
-	private TextView lowtime;
-	private TextView lowtimeTitle;
-	private TextView lowtimeStatus;
-	private TextView lowtimeRangeMinutes;
+	private TextView alarm;
+	private TextView range;
+	private TextView waketone;
+	private TextView snooze;
+	private TextView timerange;
 	
-	private TableRow lowtimeAlarmRow;
-	private TableRow rangeRow;
-	private TableRow createRow;
-	private TableRow editRow;
+	private TextView status;
+	
+	private TableRow valuesRow;
+	private TableRow welcomeRow;
+	
 	
 	private Button hideButton;
 	private Button toggleButton;
@@ -55,20 +57,23 @@ public class HomeIntent  extends Activity{
         	System.out.println("running");
     	
         settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
-    	
-        lowtimeAlarmRow = (TableRow) findViewById(R.id.lowtimeAlarmRow);
-        rangeRow = (TableRow) findViewById(R.id.rangeRow);
-//        createRow = (TableRow) findViewById(R.id.createRow);
-        editRow = (TableRow) findViewById(R.id.editRow);
+
+        alarm = (TextView) findViewById(R.id.alarm);
+        range = (TextView) findViewById(R.id.range);
+        waketone = (TextView) findViewById(R.id.waketone);
+        snooze = (TextView) findViewById(R.id.snooze);
+        timerange = (TextView) findViewById(R.id.timerange);
         
-        lowtime = (TextView) findViewById(R.id.lowtime);
-        lowtimeTitle = (TextView) findViewById(R.id.lowtimeTitle);
-        lowtimeStatus = (TextView) findViewById(R.id.lowtimeStatus);
-        lowtimeRangeMinutes = (TextView) findViewById(R.id.lowtimeRangeMinutes);
+        status = (TextView) findViewById(R.id.status);
+        welcomeRow = (TableRow) findViewById(R.id.welcome_row);
+        valuesRow = (TableRow) findViewById(R.id.values_row);
+        
         
         resetValues();
+        resetValuesUnset();
     	initializeLowtimeButtons();
     	reinitializeView();
+    	
     }
     
 
@@ -99,6 +104,9 @@ public class HomeIntent  extends Activity{
     
     private void displayLowtimeSetView(){
     	
+    	valuesRow.setVisibility(View.VISIBLE);
+    	welcomeRow.setVisibility(View.GONE);
+    	
         Calendar lowtimeCalendar = Calendar.getInstance();
         lowtimeCalendar.set(Calendar.HOUR_OF_DAY, settings.getHour());
         lowtimeCalendar.set(Calendar.MINUTE, settings.getMinutes());
@@ -114,45 +122,55 @@ public class HomeIntent  extends Activity{
         String formattedTime = new SimpleDateFormat("hh:mm a").format(date);	
         String formattedTimePre = new SimpleDateFormat("hh:mm a").format(datePre);     
         
-        lowtime.setText(formattedTime);
-        lowtimeRangeMinutes.setText(settings.getRange() + " mins    " + formattedTimePre + " - " + formattedTime);
+        alarm.setText(formattedTime);
+        alarm.setBackgroundColor(Color.TRANSPARENT);
         
-//        editRow.setVisibility(View.VISIBLE);
-//        lowtimeAlarmRow.setVisibility(View.VISIBLE);
-//        rangeRow.setVisibility(View.VISIBLE);
-//    	createRow.setVisibility(View.GONE);
+        range.setText(settings.getRange() + " Minutes");
+        range.setBackgroundColor(Color.TRANSPARENT);
+        
+        waketone.setText(settings.getWaketone());
+        range.setBackgroundColor(Color.TRANSPARENT);
+        
+        snooze.setText(settings.getSnoozeDuration() + " Minutes");
+        snooze.setBackgroundColor(Color.TRANSPARENT);
+        
+        timerange.setText(formattedTimePre + "-" + formattedTime);
+        timerange.setBackgroundColor(Color.TRANSPARENT);
+        
+        
     	if(settings.isActive()){
     		setActiveViewState();
     	}else{
     		setInactiveViewState();
     	}
+    	
     }
     
     
     private void displayLowtimeUnsetView(){
 
-//    	createRow.setVisibility(View.VISIBLE);
-//        editRow.setVisibility(View.GONE);
-//        lowtimeAlarmRow.setVisibility(View.GONE);
-//        rangeRow.setVisibility(View.GONE);
-        
+    	valuesRow.setVisibility(View.GONE);
+    	welcomeRow.setVisibility(View.VISIBLE);
+    	
         if(settings.isActive()){
     		setActiveViewState();
     	}else{
     		setInactiveViewState();
     	}
+        
     }
     
     
     private void setActiveViewState(){
-        lowtimeStatus.setText(LOWTIME_ACTIVE_LABEL);
-        lowtimeStatus.setBackgroundColor(Color.parseColor(ACTIVE_COLOR));
+        status.setText(LOWTIME_ACTIVE_LABEL);
+        status.setBackgroundColor(Color.parseColor(ACTIVE_COLOR));
         toggleButton.setText(LOWTIME_BUTTON_DISABLE);
     }
     
+    
     private void setInactiveViewState(){
-        lowtimeStatus.setText(LOWTIME_INACTIVE_LABEL);
-        lowtimeStatus.setBackgroundColor(Color.parseColor(INACTIVE_COLOR));
+    	status.setText(LOWTIME_INACTIVE_LABEL);
+    	status.setBackgroundColor(Color.parseColor(INACTIVE_COLOR));
         toggleButton.setText(LOWTIME_BUTTON_ENABLE);
     }
     
@@ -175,7 +193,6 @@ public class HomeIntent  extends Activity{
     private void setAlarm(){
 
         Calendar cal = Calendar.getInstance();
-        Calendar calendar = Calendar.getInstance();
         
         cal.setTimeInMillis(System.currentTimeMillis());
         cal.set(Calendar.HOUR_OF_DAY, settings.getHour());
@@ -192,33 +209,52 @@ public class HomeIntent  extends Activity{
         AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
         
-        
     }
+    
     
     private void updateStatus(){
 
     	if(serviceRunning())
     		stopService(new Intent(HomeIntent.this, TheService.class));
     	
-    	String status = LOWTIME_ACTIVE_LABEL;
+    	String statusString = LOWTIME_ACTIVE_LABEL;
     	String buttonText = LOWTIME_BUTTON_DISABLE;
     	if(settings.isActive()){
     		settings.setActive(false);
-    		status = LOWTIME_INACTIVE_LABEL;
-    		lowtimeStatus.setBackgroundColor(Color.parseColor(ACTIVE_COLOR));
+    		statusString = LOWTIME_INACTIVE_LABEL;
+    		status.setBackgroundColor(Color.parseColor(INACTIVE_COLOR));
     		buttonText = LOWTIME_BUTTON_ENABLE;
         	stopService(new Intent(HomeIntent.this, TheService.class));
     	}else{
     		settings.setActive(true);
-    		lowtimeStatus.setBackgroundColor(Color.parseColor(INACTIVE_COLOR));
+    		status.setBackgroundColor(Color.parseColor(ACTIVE_COLOR));
         	startService(new Intent(HomeIntent.this, TheService.class));
     	}    	
 
-        lowtimeStatus.setText(status);
+    	status.setText(statusString);
         toggleButton.setText(buttonText);
         
-        //saves state
         settings.commit();
+    }
+    
+    
+    private void resetValuesUnset(){
+    	
+        alarm.setText(UNSET);
+        alarm.setBackgroundColor(Color.parseColor(INACTIVE_COLOR));
+        
+        range.setText(UNSET);
+        range.setBackgroundColor(Color.parseColor(INACTIVE_COLOR));
+        
+        waketone.setText(UNSET);
+        waketone.setBackgroundColor(Color.parseColor(INACTIVE_COLOR));
+        
+        snooze.setText(UNSET);
+        snooze.setBackgroundColor(Color.parseColor(INACTIVE_COLOR));
+        
+        timerange.setText(UNSET);   
+        timerange.setBackgroundColor(Color.parseColor(INACTIVE_COLOR));
+        	
     }
     
     
@@ -249,15 +285,17 @@ public class HomeIntent  extends Activity{
             }
         });	  
         
-//        createButton = (Button) findViewById(R.id.createButton);
-//        createButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//			public void onClick(View v) {
-//                Intent i = new Intent(HomeIntent.this, LowtimeSettingIntent.class);
-//                startActivity(i);
-//            }
-//        });
+        createButton = (Button) findViewById(R.id.createButton);
+        createButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+			public void onClick(View v) {
+                Intent i = new Intent(HomeIntent.this, LowtimeSettingIntent.class);
+                startActivity(i);
+            }
+        });
+        
     }
+    
     
     /*
      * http://stackoverflow.com/questions/600207/android-check-if-a-service-is-running

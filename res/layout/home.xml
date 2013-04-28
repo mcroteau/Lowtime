@@ -9,29 +9,31 @@
 			 android:paddingBottom="5dp"
 	    	 android:background="@drawable/mainbackground" >
 		
-	<TableRow>
+	<TableRow android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:gravity="center">
+	          
 	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/lowtimeTitle"
+	        android:id="@+id/title"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:gravity="center"
 	        android:layout_marginBottom="10dp"
 	        android:textSize="48sp"
-	        android:layout_span="4"
 	        android:textStyle="italic"
 	        android:textColor="#fefefe"
 	        android:text="Lowtime" />
     </TableRow>
     
-	<TableRow>
-	    <TextView android:layout_width="wrap_content"
-	        	  android:layout_height="wrap_content"/>
-	    
+	
+	<TableRow android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:gravity="center">
+ 
 	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/lowtimeStatus"
+	        android:id="@+id/status"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_span="2"
 	        android:textSize="20sp"
 	        android:background="#ff2309"
 			android:paddingLeft="10dp"
@@ -42,251 +44,273 @@
 			android:gravity="center"
 			android:textStyle="normal"
 	        android:text="INACTIVE" />
-	    
-	    <TextView android:layout_width="wrap_content"
-	        	  android:layout_height="wrap_content"/>
-	    
-	    
+	   
    	</TableRow>
    	
 	
+	
+	<!--  BEGIN LOWTIME VALUES SET  -->
+	<TableRow android:id="@+id/values_row" 
+	    	  android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:gravity="center"
+	          android:visibility="gone">
+	    
+	    <TableLayout android:id="@+id/values_table"
+					 android:layout_width="fill_parent"
+					 android:layout_height="fill_parent">
 		
-	<TableRow android:id="@+id/lowtimeAlarmRow"
-	    	  android:paddingTop="20dp"
-	    	  android:paddingBottom="10dp">
-	    
-	    
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/lowtimeAlarmLabel"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="right"
-	        android:textColor="#efefef"
-	        android:textSize="13sp"
-	        android:textStyle="bold"
-		    android:layout_span="2"
-	        android:text="Alarm Time : " />
-	    
-	    
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/lowtimeAlarm"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="left"
-	        android:paddingLeft="10dp"
-	        android:textColor="#fefefe"
-	        android:textSize="15sp"
-			android:textStyle="normal"
-		    android:layout_span="2"
-	        android:text="5:00 am" />
-	    
+	        <TableRow android:id="@+id/alarmRow"
+			    	  android:paddingTop="20dp"
+			    	  android:paddingBottom="10dp">
+			    
+			    <org.agius.lowtime.custom.RobotoTextView
+			        android:id="@+id/alarmLabel"
+			        android:layout_width="0dip"
+					android:layout_weight="1"
+			        android:layout_height="wrap_content"
+			        android:gravity="right|center_vertical"
+			        android:textColor="#efefef"
+			        android:textSize="13sp"
+			        android:textStyle="bold"
+			        android:text="Alarm Time : " />
+			    
+			    <org.agius.lowtime.custom.RobotoTextView
+			        android:id="@+id/alarm"
+			        android:layout_width="0dip"
+					android:layout_weight="1"
+			        android:layout_height="wrap_content"
+			        android:gravity="left|center_vertical"
+			        android:paddingLeft="10dp"
+			        android:textColor="#fefefe"
+			        android:textSize="15sp"
+					android:textStyle="normal"
+			        android:text="5:00 am" />
+			    
+			</TableRow>
+			
+			<TableRow android:id="@+id/rangeRow"
+			    	  android:paddingTop="10dp"
+			    	  android:paddingBottom="10dp">
+			    
+			    <org.agius.lowtime.custom.RobotoTextView
+			        android:id="@+id/rangeLabel"
+			        android:layout_width="0dip"
+					android:layout_weight="1"
+			        android:layout_height="wrap_content"
+			        android:gravity="right|center_vertical"
+			        android:textColor="#efefef"
+			        android:textSize="13sp"
+			        android:textStyle="bold"
+			        android:text="Range : " />
+			    
+			    <org.agius.lowtime.custom.RobotoTextView
+			        android:id="@+id/range"
+			        android:layout_width="0dip"
+					android:layout_weight="1"
+			        android:layout_height="wrap_content"
+			        android:gravity="left|center_vertical"
+			        android:paddingLeft="10dp"
+			        android:textColor="#fefefe"
+			        android:textSize="15sp"
+					android:textStyle="normal"
+			        android:text="15 Minutes" />	    
+			        
+			</TableRow>
+			
+			
+		
+			<TableRow android:id="@+id/waketoneRow"
+			    	  android:paddingTop="10dp"
+			    	  android:paddingBottom="10dp">
+			    
+			    <org.agius.lowtime.custom.RobotoTextView
+			        android:id="@+id/waketoneLabel"
+			        android:layout_width="0dip"
+					android:layout_weight="1"
+			        android:layout_height="wrap_content"
+			        android:gravity="right|center_vertical"
+			        android:textColor="#efefef"
+			        android:textSize="13sp"
+			        android:textStyle="bold"
+			        android:text="Wake Tone : " />
+			    
+			    <org.agius.lowtime.custom.RobotoTextView
+			        android:id="@+id/waketone"
+			        android:layout_width="0dip"
+					android:layout_weight="1"
+			        android:layout_height="wrap_content"
+			        android:gravity="left|center_vertical"
+			        android:paddingLeft="10dp"
+			        android:textColor="#fefefe"
+			        android:textSize="15sp"
+					android:textStyle="normal"
+			        android:text="Simple Tone 1" />	    
+			        
+			</TableRow>
+				
+			
+		
+			<TableRow android:id="@+id/snoozeRow"
+			    	  android:paddingTop="10dp"
+			    	  android:paddingBottom="10dp">
+			    
+			    <org.agius.lowtime.custom.RobotoTextView
+			        android:id="@+id/snoozeLabel"
+			        android:layout_width="0dip"
+					android:layout_weight="1"
+			        android:layout_height="wrap_content"
+			        android:gravity="right|center_vertical"
+			        android:textColor="#efefef"
+			        android:textSize="13sp"
+			        android:textStyle="bold"
+			        android:text="Snooze Duration : " />
+			    
+			    <org.agius.lowtime.custom.RobotoTextView
+			        android:id="@+id/snooze"
+			        android:layout_width="0dip"
+					android:layout_weight="1"
+			        android:layout_height="wrap_content"
+			        android:gravity="left|center_vertical"
+			        android:paddingLeft="10dp"
+			        android:textColor="#fefefe"
+			        android:textSize="15sp"
+					android:textStyle="normal"
+			        android:text="10 Minutes" />	    
+			        
+			</TableRow>	
+			
+			
+			
+		
+			<TableRow android:id="@+id/timerangeRow"
+			    	  android:paddingTop="10dp"
+			    	  android:paddingBottom="10dp">
+			    
+			    <org.agius.lowtime.custom.RobotoTextView
+			        android:id="@+id/timerangeLabel"
+			        android:layout_width="0dip"
+					android:layout_weight="1"
+			        android:layout_height="wrap_content"
+			        android:gravity="right|center_vertical"
+			        android:textColor="#efefef"
+			        android:textSize="13sp"
+			        android:textStyle="bold"
+			        android:text="Time Range : " />
+			    
+			    <org.agius.lowtime.custom.RobotoTextView
+			        android:id="@+id/timerange"
+			        android:layout_width="0dip"
+					android:layout_weight="1"
+			        android:layout_height="wrap_content"
+			        android:gravity="left|center_vertical"
+			        android:paddingLeft="10dp"
+			        android:textColor="#fefefe"
+			        android:textSize="15sp"
+			        android:text="5:45 am - 6:00 am" />	    
+			        
+			</TableRow>
+			
+				
+			<TableRow android:id="@+id/editRow"
+			    	  android:paddingTop="25dp"
+			    	  android:paddingBottom="15dp">
+			    
+			    <org.agius.lowtime.custom.RobotoButton
+				        android:id="@+id/editButton"
+				        android:layout_height="wrap_content"
+				        android:layout_width="0dp"
+					android:layout_weight="1"
+				        android:text="Edit" />
+			    
+			    <org.agius.lowtime.custom.RobotoButton
+				        android:id="@+id/toggleButton"
+				        android:layout_height="wrap_content"
+				        android:layout_width="0dp"
+					android:layout_weight="1"
+				        android:text="Turn Off" />
+			</TableRow>	       
+			 
+	    </TableLayout>
 	    
 	</TableRow>
-	
-	
-	<TableRow android:id="@+id/rangeRow"
-	    	  android:paddingTop="10dp"
-	    	  android:paddingBottom="10dp">
-	    
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/rangeLabel"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="right"
-	        android:textColor="#efefef"
-	        android:textSize="13sp"
-	        android:textStyle="bold"
-		    android:layout_span="2"
-	        android:text="Range : " />
-	    
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/range"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="left"
-	        android:paddingLeft="10dp"
-	        android:textColor="#fefefe"
-	        android:textSize="15sp"
-			android:textStyle="normal"
-		    android:layout_span="2"
-	        android:text="15 Minutes" />	    
-	        
-	</TableRow>
-	
-	
+	<!--  END OF LOWETIME VALUES -->	
 
-	<TableRow android:id="@+id/wakeToneRow"
-	    	  android:paddingTop="10dp"
-	    	  android:paddingBottom="10dp">
-	    
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/wakeToneLabel"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="right"
-	        android:textColor="#efefef"
-	        android:textSize="13sp"
-	        android:textStyle="bold"
-		    android:layout_span="2"
-	        android:text="Wake Tone : " />
-	    
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/wakeTone"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="left"
-	        android:paddingLeft="10dp"
-	        android:textColor="#fefefe"
-	        android:textSize="15sp"
-			android:textStyle="normal"
-		    android:layout_span="2"
-	        android:text="Simple Tone 1" />	    
-	        
-	</TableRow>
-		
 	
+	
+	<TableRow android:id="@+id/welcome_row" 
+	    	  android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:gravity="center">
+	    
+	    <TableLayout android:id="@+id/welcome_table"
+					 android:layout_width="wrap_content"
+					 android:layout_height="wrap_content">
+	
+			<TableRow android:id="@+id/welcomeTextRow1"> 
+			    <org.agius.lowtime.custom.RobotoTextView
+			        android:id="@+id/welcomeText1"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textSize="18sp"
+			        android:layout_marginTop="20dp"
+					android:textColor="#fefefe"
+			        android:textStyle="normal"
+			        android:gravity="left|bottom"
+			        android:paddingLeft="20dp"
+			        android:paddingRight="20dp"
+			        android:text="Welcome to Lowtime, a new take on the Alarm Clock."/>
+		    </TableRow>
+		    
+			
+			<TableRow android:id="@+id/createRow"
+			    	  android:layout_marginBottom="20dp"
+			    	  android:layout_marginTop="15dp">
+				
+			    <org.agius.lowtime.custom.RobotoButton
+			        android:id="@+id/createButton"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="center"
+			        android:text="Set Lowtime" />
+			    
+			</TableRow>	  
+			
+		    <TableRow android:id="@+id/welcomeTextRow2">
+			    <org.agius.lowtime.custom.RobotoTextView
+			        android:id="@+id/welcomeText2"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textSize="18sp"
+					android:textColor="#fefefe"
+			        android:textStyle="normal"
+			        android:gravity="left|bottom"
+			        android:paddingTop="20dp"
+			        android:paddingLeft="20dp"
+			        android:paddingRight="20dp"
+			        android:text="For more information about the app and instructions on how to use...."/>   
+			</TableRow>
+			
+			
+			
+			<TableRow android:id="@+id/howToRow"
+			    	  android:layout_marginTop="5dp">
+				
+			    <org.agius.lowtime.custom.RobotoButton
+			        android:id="@+id/howToUseButton"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="center"
+			        android:text="How to Use" />
+			    
+			</TableRow>
+			  
+			
+	    </TableLayout>
+	
+	</TableRow>
 
-	<TableRow android:id="@+id/snoozeDurationRow"
-	    	  android:paddingTop="10dp"
-	    	  android:paddingBottom="10dp">
-	    
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/snoozeDurationLabel"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="right"
-	        android:textColor="#efefef"
-	        android:textSize="13sp"
-	        android:textStyle="bold"
-		    android:layout_span="2"
-	        android:text="Snooze Duration : " />
-	    
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/snoozeDuration"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="left"
-	        android:paddingLeft="10dp"
-	        android:textColor="#fefefe"
-	        android:textSize="15sp"
-			android:textStyle="normal"
-		    android:layout_span="2"
-	        android:text="10 Minutes" />	    
-	        
-	</TableRow>	
 	
-	
-	
-
-	<TableRow android:id="@+id/timeRangeRow"
-	    	  android:paddingTop="10dp"
-	    	  android:paddingBottom="10dp">
-	    
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/lowtimeRangeLabel"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="right"
-	        android:textColor="#efefef"
-	        android:textSize="13sp"
-	        android:textStyle="bold"
-		    android:layout_span="2"
-	        android:text="Time Range : " />
-	    
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/lowtimeRangeMinutes"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="left"
-	        android:paddingLeft="10dp"
-	        android:textColor="#fefefe"
-	        android:textSize="15sp"
-		    android:layout_span="2"
-	        android:text="5:45 am - 6:00 am" />	    
-	        
-	</TableRow>
-	
-		
-	<TableRow android:id="@+id/editRow"
-	    	  android:paddingTop="25dp"
-	    	  android:paddingBottom="15dp">
-	    
-	    
-	    <org.agius.lowtime.custom.RobotoButton
-		        android:id="@+id/editButton"
-		        android:layout_height="wrap_content"
-		        android:layout_width="wrap_content"
-		        android:layout_span="2"
-		        android:text="Edit" />
-	
-	    
-	    <org.agius.lowtime.custom.RobotoButton
-		        android:id="@+id/toggleButton"
-		        android:layout_height="wrap_content"
-		        android:layout_width="wrap_content"
-		        android:layout_span="2"
-		        android:text="Turn Off" />
-	    
-	</TableRow>
-	
-	<!-- 
-	
-	<TableRow android:id="@+id/welcomeTextRow1"> 
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/welcomeText1"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_span="4"
-	        android:textSize="18sp"
-	        android:layout_marginTop="20dp"
-			android:textColor="#fefefe"
-	        android:textStyle="normal"
-	        android:text="Welcome to Lowtime, a new take on the Alarm Clock."/>
-    </TableRow>
-    
-    <TableRow android:id="@+id/welcomeTextRow2">
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/welcomeText2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_span="4"
-	        android:textSize="18sp"
-	        android:layout_marginTop="20dp"
-	        android:layout_marginBottom="10dp"
-			android:textColor="#fefefe"
-	        android:textStyle="normal"
-	        android:text="For more information about the app and instructions on how to use...."/>   
-	</TableRow>
-	
-	
-	
-	<TableRow android:id="@+id/howToRow"
-	    	  android:layout_marginTop="20dp">
-		
-	    <org.agius.lowtime.custom.RobotoButton
-	        android:id="@+id/howToUseButton"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center"
-	        android:layout_span="4"
-	        android:text="How to Use" />
-	    
-	</TableRow>
-	
-	<TableRow android:id="@+id/createRow"
-	    	  android:layout_marginTop="20dp">
-		
-	    <org.agius.lowtime.custom.RobotoButton
-	        android:id="@+id/createButton"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center"
-	        android:layout_span="4"
-	        android:text="Set Lowtime" />
-	    
-	</TableRow>
-	
-	 -->
 	
 </TableLayout>
 

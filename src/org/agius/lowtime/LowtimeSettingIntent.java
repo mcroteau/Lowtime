@@ -48,15 +48,21 @@ import android.widget.TimePicker;
 @SuppressLint("UseSparseArrays")
 public class LowtimeSettingIntent extends Activity {
 
-	TextView waketoneView; 
-	TimePicker timePicker;
-	private Spinner minutesSpinner;
-	Map<Integer, Integer> minuteOptionsLookup;
+	private TextView waketoneText; 
+	private TimePicker timePicker;
+	
+	private Spinner rangeSpinner;
+	private TextView rangeText;
+	
+	private Spinner snoozeDurationSpinner;
+	private TextView snoozeDurationText;
+	
+	private Map<Integer, Integer> minuteOptionsLookup;
     
 	private LowtimeSettings settings;
 	private static Ringtone ringtone;
 	
-	private ArrayList<CheckBox> radioButtons;
+	private ArrayList<CheckBox> checkBoxes;
 	
 	@SuppressLint("UseSparseArrays")
 	private Map<Integer, Map<String, Object>> lookup = new HashMap<Integer, Map<String, Object>>();
@@ -70,10 +76,13 @@ public class LowtimeSettingIntent extends Activity {
         
         try {
 	    	
-            settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
-
         	setupOptionsLookup();
-	        timePicker = (TimePicker) findViewById(R.id.lowtimetime);
+	       
+            settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
+        	timePicker = (TimePicker) findViewById(R.id.lowtimetime);
+	        waketoneText = (TextView) findViewById(R.id.waketone_value);
+	        rangeText = (TextView) findViewById(R.id.range_value);
+	        snoozeDurationText = (TextView) findViewById(R.id.snooze_duration_value); 
 	        
 	        final Dialog waketoneDialog = createWaketoneDialog();
 	        Button waketoneButton = (Button) findViewById(R.id.set_waketone_button);
@@ -92,14 +101,20 @@ public class LowtimeSettingIntent extends Activity {
 				public void onClick(View v) {
 	            	
 	    			final Dialog dialog = new Dialog(LowtimeSettingIntent.this);
-	    			dialog.requestWindowFeature(dialog.getWindow().FEATURE_NO_TITLE); 
+					dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
 	    			dialog.setContentView(R.layout.range_select_dialog);
 	     	     
 	    			Button dialogButton = (Button) dialog.findViewById(R.id.set_range);
-	    			
+	    	        rangeSpinner = (Spinner) dialog.findViewById(R.id.range_spinner);
+	    	        
 	    			dialogButton.setOnClickListener(new View.OnClickListener() {
 	    				@Override
 	    				public void onClick(View v) {
+	    					int range = Integer.parseInt(rangeSpinner.getSelectedItem().toString());
+		                    settings.setRange(range);
+		                    settings.commit();
+		                    rangeText.setText(rangeSpinner.getSelectedItem().toString() + " Minutes");
+		                    rangeText.setBackgroundColor(Color.TRANSPARENT);
 	    					dialog.dismiss();
 	    				}
 	    			});
@@ -116,14 +131,21 @@ public class LowtimeSettingIntent extends Activity {
 				public void onClick(View v) {
 	            	
 	    			final Dialog dialog = new Dialog(LowtimeSettingIntent.this);
-	    			dialog.requestWindowFeature(dialog.getWindow().FEATURE_NO_TITLE); 
+	    			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
 	    			dialog.setContentView(R.layout.snooze_select_dialog);
 	     	     
 	    			Button dialogButton = (Button) dialog.findViewById(R.id.set_snooze_duration);
-	    			
+	    			snoozeDurationSpinner = (Spinner) dialog.findViewById(R.id.snooze_duration_spinner);
+	    	        
 	    			dialogButton.setOnClickListener(new View.OnClickListener() {
 	    				@Override
 	    				public void onClick(View v) {
+	    					int snoozeDuration = Integer.parseInt(snoozeDurationSpinner.getSelectedItem().toString());
+		                    settings.setSnoozeDuration(snoozeDuration);
+		                    settings.commit();
+		                    snoozeDurationText.setText(snoozeDurationSpinner.getSelectedItem().toString() + " Minutes");
+		                    snoozeDurationText.setBackgroundColor(Color.TRANSPARENT);
+		                    
 	    					dialog.dismiss();
 	    				}
 	    			});
@@ -138,18 +160,23 @@ public class LowtimeSettingIntent extends Activity {
 	            @Override
 				public void onClick(View v) {
 	            	
-	            	if(!settings.getWaketone().equals("")){
-	                    
+	            	Integer range = settings.getRange();
+	            	Integer snooze = settings.getSnoozeDuration();
+	            	
+	            	if(
+//	            			!settings.getWaketone().equals("") 
+//	            			&& 
+	            			range != null && snooze != null){
+	            			
+
 	                    int lowtimeHour = timePicker.getCurrentHour();
 	                    int lowtimeMinute = timePicker.getCurrentMinute();
-	                    int lowtimeMinuteDifference = Integer.parseInt(minutesSpinner.getSelectedItem().toString());
 	                    
 	                    settings.setHour(lowtimeHour);
 	                    settings.setMinutes(lowtimeMinute);
-	                    settings.setRange(lowtimeMinuteDifference);
+	                    
 	                    settings.setActive(true);
 	                    settings.commit();
-	                    
 	                    
 		                Intent i = new Intent(LowtimeSettingIntent.this, HomeIntent.class);
 		                startActivity(i);
@@ -158,7 +185,7 @@ public class LowtimeSettingIntent extends Activity {
 
 	            		AlertDialog.Builder builder = new AlertDialog.Builder(LowtimeSettingIntent.this);
 
-	            		builder.setMessage("Your \"Wakeup Tone\" needs to be set")
+	            		builder.setMessage("Make sure that \"Wakeup Tone\", \"Range\" & \"Snooze Duration\" are set")
 	            		       .setTitle("")
 	            		       .setCancelable(true)
 	            		       .setPositiveButton("OK", new OnClickListener(){
@@ -187,8 +214,6 @@ public class LowtimeSettingIntent extends Activity {
 	        });
 	        
 
-//	        minutesSpinner = (Spinner) findViewById(R.id.minutes);
-	        waketoneView = (TextView) findViewById(R.id.waketone);
 	        
 	        reinitializeView();
             
@@ -203,6 +228,7 @@ public class LowtimeSettingIntent extends Activity {
     
     
     private Dialog createWaketoneDialog(){
+    	
     	final Dialog dialog = new Dialog(LowtimeSettingIntent.this);
 		dialog.requestWindowFeature(dialog.getWindow().FEATURE_NO_TITLE); 
 		dialog.setContentView(R.layout.waketone_select_dialog);
@@ -212,7 +238,7 @@ public class LowtimeSettingIntent extends Activity {
     	int ringtoneCount = 0; 	
     	
     	TableLayout tableLayout = (TableLayout) dialog.findViewById(R.id.waketone_select_table);
-    	radioButtons = new ArrayList<CheckBox>();    
+    	checkBoxes = new ArrayList<CheckBox>();    
 
         RingtoneManager ringtoneMgr = new RingtoneManager(getApplicationContext());
     	ringtoneMgr.setType(RingtoneManager.TYPE_ALARM);
@@ -242,14 +268,13 @@ public class LowtimeSettingIntent extends Activity {
                 @Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-
-                    	processRadioButtonClick(buttonView);
-                    	int id = buttonView.getId();
+                    	processCheckBoxClick(buttonView);
+                        if(ringtone != null && ringtone.isPlaying())ringtone.stop();
                     }
                 }   
             });
 
-            radioButtons.add(toneCheckbox);
+            checkBoxes.add(toneCheckbox);
             row.addView(toneCheckbox, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     	    
             TextView title = new TextView(LowtimeSettingIntent.this);
@@ -291,7 +316,43 @@ public class LowtimeSettingIntent extends Activity {
     	dialogButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				dialog.dismiss();
+				
+				CheckBox checkbox = getCheckedCheckBox();
+				if(checkbox == null){
+					
+            		AlertDialog.Builder builder = new AlertDialog.Builder(LowtimeSettingIntent.this);
+
+            		builder.setMessage("Please select a \"Wakeup Tone\"")
+            		       .setTitle("")
+            		       .setCancelable(true)
+            		       .setPositiveButton("OK", new OnClickListener(){
+								@Override
+								public void onClick(DialogInterface dialogInterface, int arg1) {
+									dialogInterface.dismiss();
+								}
+            		       });
+
+            		AlertDialog dialog = builder.create();
+            		dialog.show();
+					
+				}else{
+	            	int id = checkbox.getId();
+	                String tone = lookup.get(id).get(TONE).toString();
+	                Uri uri = (Uri) lookup.get(id).get(URI);
+
+	                waketoneText.setText(tone);
+
+	                settings.setWaketoneUri(uri.toString());
+	                settings.setWaketone(tone);
+	                settings.commit();
+	                
+	                if(ringtone != null && ringtone.isPlaying())ringtone.stop();
+	            	
+					dialog.dismiss();
+					
+				}
+
+                                    
 			}
 		});
     	
@@ -300,10 +361,21 @@ public class LowtimeSettingIntent extends Activity {
     }
     
     
-    private void processRadioButtonClick(CompoundButton checkboxView){
-        for (CheckBox checkbox : radioButtons){
+    private void processCheckBoxClick(CompoundButton checkboxView){
+        for (CheckBox checkbox : checkBoxes){
             if (checkbox != checkboxView ) checkbox.setChecked(false);
         }
+    }
+    
+    
+    private CheckBox getCheckedCheckBox(){
+    	CheckBox checkedCheckBox = null;
+        for (CheckBox checkbox : checkBoxes){
+            if (checkbox.isChecked()){
+            	checkedCheckBox = checkbox;
+            }
+        }	
+        return checkedCheckBox;
     }
     
     
@@ -325,7 +397,7 @@ public class LowtimeSettingIntent extends Activity {
     
     
     public void addListenerOnSpinnerItemSelection() {
-    	minutesSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(settings.getSettings()));
+    	rangeSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(settings.getSettings()));
     }
     
 
@@ -344,11 +416,27 @@ public class LowtimeSettingIntent extends Activity {
         	timePicker.setCurrentHour(settings.getHour());
         	timePicker.setCurrentMinute(settings.getMinutes());
         	System.out.println("SETTINGS SETUP -> SET SPINNER " + settings.getRange() + "  :  " + minuteOptionsLookup.get(settings.getRange()));
-        	minutesSpinner.setSelection(minuteOptionsLookup.get(settings.getRange()));
+        	
+        	rangeSpinner.setSelection(minuteOptionsLookup.get(settings.getRange()));
         }
         
         if(!settings.getWaketone().equals("")){
-            waketoneView.setText(settings.getWaketone());
+        	waketoneText.setText(settings.getWaketone());
+        	waketoneText.setBackgroundColor(Color.TRANSPARENT);
+        }
+        
+        
+        Integer range = settings.getRange();
+        if(range != null && rangeText != null && range > 0){
+        	rangeText.setText(range.toString() + " Minutes");
+        	rangeText.setBackgroundColor(Color.TRANSPARENT);
+        }
+        
+
+        Integer snooze = settings.getSnoozeDuration();
+        if(snooze != null && snoozeDurationText != null && snooze > 0){
+        	snoozeDurationText.setText(snooze.toString() + " Minutes");
+        	snoozeDurationText.setBackgroundColor(Color.TRANSPARENT);
         }
         
     }

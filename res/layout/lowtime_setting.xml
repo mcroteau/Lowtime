@@ -65,7 +65,7 @@
 	        
 	        <TableRow>
 	            <org.agius.lowtime.custom.RobotoTextView
-			        android:id="@+id/wakeToneLabel"
+			        android:id="@+id/waketoneLabel"
 			        android:layout_height="wrap_content"
 			        android:gravity="right|center_vertical"
 			        android:textColor="#efefef"
@@ -76,16 +76,19 @@
 			        android:text="Wake Tone : " />
 			    
 			    <org.agius.lowtime.custom.RobotoTextView
-			        android:id="@+id/wakeTone"
+			        android:id="@+id/waketone_value"
 			        android:layout_height="wrap_content"
 			        android:gravity="left|center_vertical"
 			        android:paddingLeft="10dp"
 			        android:textColor="#fefefe"
+	        		android:background="#ff2309"
 			        android:textSize="15sp"
 					android:textStyle="normal"
 			        android:layout_width="0dip"
 					android:layout_weight="1"
-			        android:text="Simple Tone" />	
+					android:paddingTop="3dp"
+					android:paddingBottom="3dp"
+			        android:text="Unset" />	
 			    
 			    <org.agius.lowtime.custom.RobotoButton
 			        android:id="@+id/set_waketone_button"
@@ -110,16 +113,19 @@
 			        android:text="Range : " />
 			    
 			    <org.agius.lowtime.custom.RobotoTextView
-			        android:id="@+id/range"
+			        android:id="@+id/range_value"
 			        android:layout_height="wrap_content"
 			        android:gravity="left|center_vertical"
 			        android:paddingLeft="10dp"
 			        android:textColor="#fefefe"
+	        		android:background="#ff2309"
 			        android:textSize="15sp"
 					android:textStyle="normal"
 			        android:layout_width="0dip"
 					android:layout_weight="1"
-			        android:text="15 Minutes" />	
+					android:paddingTop="3dp"
+					android:paddingBottom="3dp"
+			        android:text="Unset" />	
 			    
 			    <org.agius.lowtime.custom.RobotoButton
 			        android:id="@+id/set_range_button"
@@ -145,7 +151,7 @@
 			        android:text="Snooze Duration : " />
 			    
 			    <org.agius.lowtime.custom.RobotoTextView
-			        android:id="@+id/range"
+			        android:id="@+id/snooze_duration_value"
 			        android:layout_height="wrap_content"
 			        android:gravity="left|center_vertical"
 			        android:paddingLeft="10dp"
@@ -157,7 +163,7 @@
 					android:layout_weight="1"
 					android:paddingTop="3dp"
 					android:paddingBottom="3dp"
-			        android:text="UNSET" />	
+			        android:text="Unset" />	
 			    
 			    <org.agius.lowtime.custom.RobotoButton
 			        android:id="@+id/set_snooze_duration_button"

@@ -13,6 +13,7 @@ public class LowtimeSettings {
 	private boolean active;
 	private String waketone;
 	private String waketoneUri;
+	private int snoozeDuration;
 	private boolean lowtimeLaunched;
 	private SharedPreferences settings;
 	SharedPreferences.Editor editor; 
@@ -73,6 +74,14 @@ public class LowtimeSettings {
 		this.waketoneUri = waketoneUri;
 	}
 	
+	public int getSnoozeDuration() {
+		return snoozeDuration;
+	}
+
+	public void setSnoozeDuration(int snoozeDuration) {
+		this.snoozeDuration = snoozeDuration;
+	}
+	
 	public boolean isLowtimeLaunched() {
 		return lowtimeLaunched;
 	}
@@ -92,7 +101,7 @@ public class LowtimeSettings {
 	
 	
 	public boolean settingsSet(){
-		return (settings != null && minutes != 0);
+		return (settings != null && minutes != 0 && range != 0 && snoozeDuration != 0);
 	}
 
 	public void reinitialize(SharedPreferences settings){

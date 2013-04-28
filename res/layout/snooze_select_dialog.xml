@@ -38,7 +38,7 @@
 	    
 	    <TableRow>
 	        
-		    <Spinner android:id="@+id/minutes"
+		    <Spinner android:id="@+id/snooze_duration_spinner"
 		        android:layout_width="fill_parent"
 		        android:layout_height="fill_parent"
 		        android:entries="@array/lowtime_minute_select"
