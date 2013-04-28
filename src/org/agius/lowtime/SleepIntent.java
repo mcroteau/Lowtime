@@ -35,7 +35,7 @@ public class SleepIntent extends Activity {
 			               + WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
 			               + WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         
-        stopService(new Intent(SleepIntent.this, TheService.class));        
+        stopService(new Intent(SleepIntent.this, LowtimeService.class));        
         settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
         
         Calendar cal = Calendar.getInstance();
@@ -45,14 +45,6 @@ public class SleepIntent extends Activity {
         currentTime = (RobotoTextView) findViewById(R.id.current_time);
         currentTime.setText(formattedTime);
         
-        
-//        Button offButton = (Button) findViewById(R.id.turnoff);
-//        offButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                stopService(new Intent(SleepIntent.this, TheService.class));
-//            	finish();
-//            }
-//        });
         
         Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         for(int m = 0; m < 3; m++){
@@ -64,32 +56,21 @@ public class SleepIntent extends Activity {
         snoozeButton.setOnClickListener(new View.OnClickListener() {
             @Override
 			public void onClick(View v) {
-                stopService(new Intent(SleepIntent.this, TheService.class));
-                startService(new Intent(SleepIntent.this, TheService.class));
-            	/* New logic to reset lowtime, increase by snooze duration, then restart service */
-
-    	        Calendar currentCalendar = Calendar.getInstance();
-            	int hour = currentCalendar.get(Calendar.HOUR_OF_DAY);
-            	int min = currentCalendar.get(Calendar.MINUTE);
-            	
-            	//increase by snooze amount
-            	int snoozed = min + settings.getSnoozeDuration();
-
-            	settings.setLowtimeLaunched(false);
-            	settings.setHour(hour);
-            	settings.setMinutes(snoozed);
-            	settings.commit();
-            	finish();
+                stopService(new Intent(SleepIntent.this, LowtimeService.class));
+                startService(new Intent(SleepIntent.this, LowtimeService.class));
+                finish();
             }
         });
         
     }
+    
     
     @Override
     protected void onRestart() {
         super.onRestart();  
         settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
     }
+    
     
     @Override
     public void onStart(){
@@ -103,6 +84,5 @@ public class SleepIntent extends Activity {
     	super.onStop();
     	active = false;
     }
-    
-    
+       
 }

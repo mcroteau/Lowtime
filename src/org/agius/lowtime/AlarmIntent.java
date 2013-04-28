@@ -24,10 +24,11 @@ import android.view.WindowManager;
 import org.agius.lowtime.custom.RobotoTextView;
 import org.agius.lowtime.custom.RobotoButton;
 
+
+
 import static org.agius.lowtime.LowtimeConstants.*;
 
-
-public class WakeIntent extends Activity{
+public class AlarmIntent extends Activity{
 
 	static boolean active = false;	
 	
@@ -47,6 +48,7 @@ public class WakeIntent extends Activity{
 	               + WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
 	               + WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
 
+        
         
         settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
         
@@ -88,14 +90,14 @@ public class WakeIntent extends Activity{
             @Override
 			public void onClick(View v) {
             	while(serviceRunning()){
-                    stopService(new Intent(WakeIntent.this, LowtimeService.class));
+                    stopService(new Intent(AlarmIntent.this, LowtimeService.class));
             	}
             	settings.setActive(false);
             	settings.setLowtimeLaunched(false);
             	settings.commit();
 
-                Intent intent = new Intent(WakeIntent.this, AlarmIntent.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(WakeIntent.this, ALARM_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                Intent intent = new Intent(AlarmIntent.this, AlarmIntent.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(AlarmIntent.this, ALARM_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
                 AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
                 alarmManager.cancel(pendingIntent);
                 
@@ -109,10 +111,35 @@ public class WakeIntent extends Activity{
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
 			public void onClick(View v) {
-                stopService(new Intent(WakeIntent.this, LowtimeService.class));
+                stopService(new Intent(AlarmIntent.this, LowtimeService.class));
             	settings.setLowtimeLaunched(false);
             	player.stop();
-                startService(new Intent(WakeIntent.this, LowtimeService.class));
+            	
+            	
+            	/* New logic to reset lowtime, increase by snooze duration, then restart service */
+
+    	        Calendar currentCalendar = Calendar.getInstance();
+            	int hour = currentCalendar.get(Calendar.HOUR_OF_DAY);
+            	int min = currentCalendar.get(Calendar.MINUTE);
+            	
+            	//increase by snooze amount
+            	int snoozed = min + settings.getSnoozeDuration();
+   
+            	if(snoozed >= 60){
+            		snoozed = snoozed - 60;
+            		if(hour == 24){
+            			hour = 1;
+            		}else{
+            			hour++;
+            		}
+            	}
+
+            	settings.setLowtimeLaunched(false);
+            	settings.setHour(hour);
+            	settings.setMinutes(snoozed);
+            	settings.commit();
+            	
+                startService(new Intent(AlarmIntent.this, LowtimeService.class));
             	finish();
             }
         });

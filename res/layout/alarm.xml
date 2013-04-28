@@ -1,11 +1,57 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" 
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:orientation="vertical"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_gravity="center_vertical|center_horizontal"
+			android:background="@drawable/wake_background">
 
-	<Button android:id="@+id/stopAlarm"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="Stop"/>
+    <org.agius.lowtime.custom.RobotoTextView
+        android:id="@+id/wake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="40dp"
+        android:textColor="#393a3e"
+        android:textSize="50sp"
+        android:textStyle="italic"
+        android:text="GET UP!"/>
+
+    <org.agius.lowtime.custom.RobotoTextView
+        android:id="@+id/current_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="25dp"
+        android:textColor="#393a3e"
+        android:textSize="70sp"
+        android:textStyle="normal"
+        android:text="06:45 AM"/>
+    
+    <LinearLayout android:layout_height="wrap_content"
+        		  android:layout_width="fill_parent"
+        		  android:orientation="horizontal"
+        		  android:layout_gravity="center"
+        		  android:gravity="center">
+        
+	    <org.agius.lowtime.custom.RobotoButton
+	        android:id="@+id/snooze"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:layout_marginRight="10dp"
+	        android:text="Snooze"/>
 	
-</RelativeLayout>
+	    <org.agius.lowtime.custom.RobotoButton
+	        android:id="@+id/turnoff"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:layout_marginLeft="10dp"
+	        android:text="Turn Off" />
+    
+    </LinearLayout>
+    
+</LinearLayout>

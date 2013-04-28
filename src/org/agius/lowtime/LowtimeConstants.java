@@ -45,5 +45,6 @@ public class LowtimeConstants {
     public static final float BUTTON_TEXT_SIZE = 13;
 	
     public static final String UNSET = "Unset";
+    public static final int ALARM_ID = 826056143;
     
 }

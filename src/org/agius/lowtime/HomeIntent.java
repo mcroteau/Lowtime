@@ -98,8 +98,8 @@ public class HomeIntent  extends Activity{
     
     
     private void restartService(){
-        stopService(new Intent(HomeIntent.this, TheService.class));
-        startService(new Intent(HomeIntent.this, TheService.class));
+        stopService(new Intent(HomeIntent.this, LowtimeService.class));
+        startService(new Intent(HomeIntent.this, LowtimeService.class));
     }
     
     
@@ -207,10 +207,10 @@ public class HomeIntent  extends Activity{
             cal.add(Calendar.DATE, 1);  
         }
  
-        Intent intent = new Intent(this, WakeIntent.class);
+        Intent intent = new Intent(this, AlarmIntent.class);
         intent.putExtra("onetime", Boolean.TRUE);
         
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, ALARM_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
         
@@ -220,7 +220,7 @@ public class HomeIntent  extends Activity{
     private void updateStatus(){
 
     	if(serviceRunning())
-    		stopService(new Intent(HomeIntent.this, TheService.class));
+    		stopService(new Intent(HomeIntent.this, LowtimeService.class));
     	
     	String statusString = LOWTIME_ACTIVE_LABEL;
     	String buttonText = LOWTIME_BUTTON_DISABLE;
@@ -229,11 +229,11 @@ public class HomeIntent  extends Activity{
     		statusString = LOWTIME_INACTIVE_LABEL;
     		status.setBackgroundColor(Color.parseColor(INACTIVE_COLOR));
     		buttonText = LOWTIME_BUTTON_ENABLE;
-        	stopService(new Intent(HomeIntent.this, TheService.class));
+        	stopService(new Intent(HomeIntent.this, LowtimeService.class));
     	}else{
     		settings.setActive(true);
     		status.setBackgroundColor(Color.parseColor(ACTIVE_COLOR));
-        	startService(new Intent(HomeIntent.this, TheService.class));
+        	startService(new Intent(HomeIntent.this, LowtimeService.class));
     	}    	
 
     	status.setText(statusString);
@@ -308,7 +308,7 @@ public class HomeIntent  extends Activity{
     private boolean serviceRunning() {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (TheService.class.getName().equals(service.service.getClassName())) {
+            if (LowtimeService.class.getName().equals(service.service.getClassName())) {
                 return true;
             }
         }
