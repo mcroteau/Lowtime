@@ -15,6 +15,7 @@ public class LowtimeConstants {
 	public static final String LOWTIME_MINUTES = "minutes";
 	public static final String LOWTIME_ACTIVE = "active";
 	public static final String LOWTIME_RANGE = "range";
+	public static final String LOWTIME_SNOOZE = "snooze";
 	
 	public static final String LOWTIME_ACTIVE_LABEL = "ACTIVE";
 	public static final String LOWTIME_INACTIVE_LABEL = "INACTIVE";

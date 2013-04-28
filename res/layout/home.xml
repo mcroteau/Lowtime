@@ -1,7 +1,8 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     		 xmlns:tools="http://schemas.android.com/tools"
 			 android:layout_width="fill_parent"
 			 android:layout_height="fill_parent"
+    		 android:orientation="vertical"
 			 android:stretchColumns="*"
 			 android:paddingTop="0dp"
 			 android:paddingLeft="20dp"
@@ -9,52 +10,43 @@
 			 android:paddingBottom="5dp"
 	    	 android:background="@drawable/mainbackground" >
 		
-	<TableRow android:layout_width="wrap_content"
-	          android:layout_height="wrap_content"
-	          android:gravity="center">
 	          
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/title"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:gravity="center"
-	        android:layout_marginBottom="10dp"
-	        android:textSize="48sp"
-	        android:textStyle="italic"
-	        android:textColor="#fefefe"
-	        android:text="Lowtime" />
-    </TableRow>
-    
-	
-	<TableRow android:layout_width="wrap_content"
-	          android:layout_height="wrap_content"
-	          android:gravity="center">
- 
-	    <org.agius.lowtime.custom.RobotoTextView
-	        android:id="@+id/status"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textSize="20sp"
-	        android:background="#ff2309"
-			android:paddingLeft="10dp"
-			android:paddingRight="10dp"
-			android:paddingTop="5dp"
-			android:paddingBottom="5dp"
-			android:textColor="#ffffff"
-			android:gravity="center"
-			android:textStyle="normal"
-	        android:text="INACTIVE" />
+    <org.agius.lowtime.custom.RobotoTextView
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:textSize="48sp"
+        android:textStyle="italic"
+        android:textColor="#fefefe"
+        android:text="Lowtime" />
+   
+
+    <org.agius.lowtime.custom.RobotoTextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:background="#ff2309"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp"
+		android:paddingTop="5dp"
+		android:paddingBottom="5dp"
+		android:textColor="#ffffff"
+		android:gravity="center|center_horizontal"
+		android:layout_gravity="center_horizontal"
+		android:textStyle="normal"
+        android:text="INACTIVE" />
 	   
-   	</TableRow>
-   	
+
 	
 	
 	<!--  BEGIN LOWTIME VALUES SET  -->
 	<TableRow android:id="@+id/values_row" 
-	    	  android:layout_width="wrap_content"
+	    	  android:layout_width="fill_parent"
 	          android:layout_height="wrap_content"
-	          android:gravity="center"
-	          android:visibility="gone">
+	          android:gravity="center">
 	    
 	    <TableLayout android:id="@+id/values_table"
 					 android:layout_width="fill_parent"
@@ -83,7 +75,7 @@
 			        android:gravity="left|center_vertical"
 			        android:paddingLeft="10dp"
 			        android:textColor="#fefefe"
-			        android:textSize="15sp"
+			        android:textSize="14sp"
 					android:textStyle="normal"
 			        android:text="5:00 am" />
 			    
@@ -112,7 +104,7 @@
 			        android:gravity="left|center_vertical"
 			        android:paddingLeft="10dp"
 			        android:textColor="#fefefe"
-			        android:textSize="15sp"
+			        android:textSize="14sp"
 					android:textStyle="normal"
 			        android:text="15 Minutes" />	    
 			        
@@ -143,7 +135,7 @@
 			        android:gravity="left|center_vertical"
 			        android:paddingLeft="10dp"
 			        android:textColor="#fefefe"
-			        android:textSize="15sp"
+			        android:textSize="14sp"
 					android:textStyle="normal"
 			        android:text="Simple Tone 1" />	    
 			        
@@ -174,7 +166,7 @@
 			        android:gravity="left|center_vertical"
 			        android:paddingLeft="10dp"
 			        android:textColor="#fefefe"
-			        android:textSize="15sp"
+			        android:textSize="14sp"
 					android:textStyle="normal"
 			        android:text="10 Minutes" />	    
 			        
@@ -206,7 +198,7 @@
 			        android:gravity="left|center_vertical"
 			        android:paddingLeft="10dp"
 			        android:textColor="#fefefe"
-			        android:textSize="15sp"
+			        android:textSize="14sp"
 			        android:text="5:45 am - 6:00 am" />	    
 			        
 			</TableRow>
@@ -311,6 +303,5 @@
 	</TableRow>
 
 	
-	
-</TableLayout>
+</LinearLayout>
 

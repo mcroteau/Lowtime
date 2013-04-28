@@ -123,6 +123,7 @@ public class LowtimeSettings {
 	        setHour(settings.getInt(LOWTIME_HOUR, 0));
 	        setMinutes(settings.getInt(LOWTIME_MINUTES, 0));
 	        setActive(settings.getBoolean(LOWTIME_ACTIVE, false));
+	        setSnoozeDuration(settings.getInt(LOWTIME_SNOOZE, 0));
         }
 	}
 	
@@ -133,6 +134,7 @@ public class LowtimeSettings {
 		editor.putInt(LOWTIME_HOUR, getHour());
 		editor.putInt(LOWTIME_MINUTES, getMinutes());
 		editor.putBoolean(LOWTIME_ACTIVE, isActive());		
+		editor.putInt(LOWTIME_SNOOZE, getSnoozeDuration());
 	}
 	
 }

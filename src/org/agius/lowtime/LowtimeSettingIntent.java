@@ -106,6 +106,8 @@ public class LowtimeSettingIntent extends Activity {
 	     	     
 	    			Button dialogButton = (Button) dialog.findViewById(R.id.set_range);
 	    	        rangeSpinner = (Spinner) dialog.findViewById(R.id.range_spinner);
+	    	        if(settings.getRange() > 0)
+	    	        	rangeSpinner.setSelection(minuteOptionsLookup.get(settings.getRange()));
 	    	        
 	    			dialogButton.setOnClickListener(new View.OnClickListener() {
 	    				@Override
@@ -136,7 +138,10 @@ public class LowtimeSettingIntent extends Activity {
 	     	     
 	    			Button dialogButton = (Button) dialog.findViewById(R.id.set_snooze_duration);
 	    			snoozeDurationSpinner = (Spinner) dialog.findViewById(R.id.snooze_duration_spinner);
+	    			if(settings.getSnoozeDuration() > 0)
+	    				snoozeDurationSpinner.setSelection(minuteOptionsLookup.get(settings.getSnoozeDuration()));
 	    	        
+	    			
 	    			dialogButton.setOnClickListener(new View.OnClickListener() {
 	    				@Override
 	    				public void onClick(View v) {
@@ -416,8 +421,6 @@ public class LowtimeSettingIntent extends Activity {
         	timePicker.setCurrentHour(settings.getHour());
         	timePicker.setCurrentMinute(settings.getMinutes());
         	System.out.println("SETTINGS SETUP -> SET SPINNER " + settings.getRange() + "  :  " + minuteOptionsLookup.get(settings.getRange()));
-        	
-        	rangeSpinner.setSelection(minuteOptionsLookup.get(settings.getRange()));
         }
         
         if(!settings.getWaketone().equals("")){

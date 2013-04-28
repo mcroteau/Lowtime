@@ -1,13 +1,17 @@
 package org.agius.lowtime;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.agius.lowtime.domain.LowtimeSettings;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -15,8 +19,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.TextView;
+import org.agius.lowtime.custom.RobotoTextView;
+import org.agius.lowtime.custom.RobotoButton;
+
 
 
 import static org.agius.lowtime.LowtimeConstants.*;
@@ -25,12 +30,14 @@ public class WakeIntent extends Activity{
 
 	static boolean active = false;	
 	
+	private RobotoTextView currentTime;
 	private MediaPlayer player;
 	private LowtimeSettings settings;
 	
     long count = 0;
 	
-    @Override
+    @SuppressLint("SimpleDateFormat")
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wake);
@@ -43,10 +50,12 @@ public class WakeIntent extends Activity{
         
         settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
         
-        TextView wakeText = (TextView)findViewById(R.id.wake);
-        Typeface face= Typeface.createFromAsset(getAssets(), "fonts/Roboto-Black.ttf");
-
-        wakeText.setTypeface(face);
+        Calendar cal = Calendar.getInstance();
+        Date datePre = cal.getTime();
+        String formattedTime = new SimpleDateFormat("hh:mm a").format(datePre);	
+        
+        currentTime = (RobotoTextView) findViewById(R.id.current_time);
+        currentTime.setText(formattedTime);
         
         try {
         	
@@ -74,7 +83,7 @@ public class WakeIntent extends Activity{
     	}        
         
 	    
-        Button offButton = (Button) findViewById(R.id.turnoff);
+        RobotoButton offButton = (RobotoButton) findViewById(R.id.turnoff);
         offButton.setOnClickListener(new View.OnClickListener() {
             @Override
 			public void onClick(View v) {
@@ -90,14 +99,39 @@ public class WakeIntent extends Activity{
         });
         
         
-        Button backButton = (Button) findViewById(R.id.snooze);
+        RobotoButton backButton = (RobotoButton) findViewById(R.id.snooze);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
 			public void onClick(View v) {
                 stopService(new Intent(WakeIntent.this, TheService.class));
-                startService(new Intent(WakeIntent.this, TheService.class));
             	settings.setLowtimeLaunched(false);
             	player.stop();
+            	
+            	
+            	/* New logic to reset lowtime, increase by snooze duration, then restart service */
+
+    	        Calendar currentCalendar = Calendar.getInstance();
+            	int hour = currentCalendar.get(Calendar.HOUR_OF_DAY);
+            	int min = currentCalendar.get(Calendar.MINUTE);
+            	
+            	//increase by snooze amount
+            	int snoozed = min + settings.getSnoozeDuration();
+   
+            	if(snoozed >= 60){
+            		snoozed = snoozed - 60;
+            		if(hour == 24){
+            			hour = 1;
+            		}else{
+            			hour++;
+            		}
+            	}
+
+            	settings.setLowtimeLaunched(false);
+            	settings.setHour(hour);
+            	settings.setMinutes(snoozed);
+            	settings.commit();
+            	
+                startService(new Intent(WakeIntent.this, TheService.class));
             	finish();
             }
         });

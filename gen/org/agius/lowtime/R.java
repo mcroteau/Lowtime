@@ -38,6 +38,7 @@ public final class R {
         public static final int cancel=0x7f080042;
         public static final int createButton=0x7f08001c;
         public static final int createRow=0x7f08001b;
+        public static final int current_time=0x7f080049;
         public static final int difference=0x7f080037;
         public static final int editButton=0x7f080015;
         public static final int editRow=0x7f080014;
@@ -73,7 +74,6 @@ public final class R {
         public static final int set_waketone=0x7f080053;
         public static final int set_waketone_button=0x7f08003d;
         public static final int settingsText=0x7f08003a;
-        public static final int sleep=0x7f080049;
         public static final int sleeptone=0x7f08004a;
         public static final int snooze=0x7f080010;
         public static final int snoozeDuration=0x7f08002b;

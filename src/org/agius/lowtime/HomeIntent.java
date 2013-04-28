@@ -85,6 +85,7 @@ public class HomeIntent  extends Activity{
     	if(settings.settingsSet()){
     		if(settings.isActive()){
         		setActiveViewState();
+        		setSettingsValues();
     			restartService();
     		}else{
         		setInactiveViewState();
@@ -107,6 +108,18 @@ public class HomeIntent  extends Activity{
     	valuesRow.setVisibility(View.VISIBLE);
     	welcomeRow.setVisibility(View.GONE);
     	
+    	setSettingsValues();
+        
+    	if(settings.isActive()){
+    		setActiveViewState();
+    	}else{
+    		setInactiveViewState();
+    	}
+    	
+    }
+    
+    
+    private void setSettingsValues(){
         Calendar lowtimeCalendar = Calendar.getInstance();
         lowtimeCalendar.set(Calendar.HOUR_OF_DAY, settings.getHour());
         lowtimeCalendar.set(Calendar.MINUTE, settings.getMinutes());
@@ -129,21 +142,13 @@ public class HomeIntent  extends Activity{
         range.setBackgroundColor(Color.TRANSPARENT);
         
         waketone.setText(settings.getWaketone());
-        range.setBackgroundColor(Color.TRANSPARENT);
+        waketone.setBackgroundColor(Color.TRANSPARENT);
         
         snooze.setText(settings.getSnoozeDuration() + " Minutes");
         snooze.setBackgroundColor(Color.TRANSPARENT);
         
         timerange.setText(formattedTimePre + "-" + formattedTime);
         timerange.setBackgroundColor(Color.TRANSPARENT);
-        
-        
-    	if(settings.isActive()){
-    		setActiveViewState();
-    	}else{
-    		setInactiveViewState();
-    	}
-    	
     }
     
     

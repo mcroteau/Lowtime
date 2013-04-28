@@ -2,6 +2,10 @@ package org.agius.lowtime;
 
 import static org.agius.lowtime.LowtimeConstants.LOWTIME_SETTINGS;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.agius.lowtime.R;
 import org.agius.lowtime.domain.LowtimeSettings;
 
@@ -12,13 +16,15 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
+import org.agius.lowtime.custom.RobotoTextView;
+import org.agius.lowtime.custom.RobotoButton;
 
 
 public class SleepIntent extends Activity {
 
 	static boolean active = false;
 	private LowtimeSettings settings;
+	private RobotoTextView currentTime;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,14 @@ public class SleepIntent extends Activity {
         
         stopService(new Intent(SleepIntent.this, TheService.class));        
         settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
+        
+        Calendar cal = Calendar.getInstance();
+        Date datePre = cal.getTime();
+        String formattedTime = new SimpleDateFormat("hh:mm a").format(datePre);	
+        
+        currentTime = (RobotoTextView) findViewById(R.id.current_time);
+        currentTime.setText(formattedTime);
+        
         
 //        Button offButton = (Button) findViewById(R.id.turnoff);
 //        offButton.setOnClickListener(new View.OnClickListener() {
@@ -46,12 +60,25 @@ public class SleepIntent extends Activity {
         }
 
      
-        Button snoozeButton = (Button) findViewById(R.id.snooze);
+        RobotoButton snoozeButton = (RobotoButton) findViewById(R.id.snooze);
         snoozeButton.setOnClickListener(new View.OnClickListener() {
             @Override
 			public void onClick(View v) {
                 stopService(new Intent(SleepIntent.this, TheService.class));
                 startService(new Intent(SleepIntent.this, TheService.class));
+            	/* New logic to reset lowtime, increase by snooze duration, then restart service */
+
+    	        Calendar currentCalendar = Calendar.getInstance();
+            	int hour = currentCalendar.get(Calendar.HOUR_OF_DAY);
+            	int min = currentCalendar.get(Calendar.MINUTE);
+            	
+            	//increase by snooze amount
+            	int snoozed = min + settings.getSnoozeDuration();
+
+            	settings.setLowtimeLaunched(false);
+            	settings.setHour(hour);
+            	settings.setMinutes(snoozed);
+            	settings.commit();
             	finish();
             }
         });
