@@ -24,8 +24,6 @@ import android.view.WindowManager;
 import org.agius.lowtime.custom.RobotoTextView;
 import org.agius.lowtime.custom.RobotoButton;
 
-
-
 import static org.agius.lowtime.LowtimeConstants.*;
 
 public class AlarmIntent extends Activity{
@@ -80,9 +78,7 @@ public class AlarmIntent extends Activity{
         		 player.start();
         	}
         	
-    	} catch(Exception e) {
-    		
-    	}        
+    	} catch(Exception e) {}        
         
 	    
         RobotoButton offButton = (RobotoButton) findViewById(R.id.turnoff);
@@ -95,20 +91,17 @@ public class AlarmIntent extends Activity{
             	settings.setActive(false);
             	settings.setLowtimeLaunched(false);
             	settings.commit();
-
-                Intent intent = new Intent(AlarmIntent.this, AlarmIntent.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(AlarmIntent.this, ALARM_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-                AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
-                alarmManager.cancel(pendingIntent);
                 
+            	disableAlarm();
+            	
             	player.stop();
             	finish();
             }
         });
         
         
-        RobotoButton backButton = (RobotoButton) findViewById(R.id.snooze);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        RobotoButton snooze = (RobotoButton) findViewById(R.id.snooze);
+        snooze.setOnClickListener(new View.OnClickListener() {
             @Override
 			public void onClick(View v) {
                 stopService(new Intent(AlarmIntent.this, LowtimeService.class));
@@ -117,7 +110,6 @@ public class AlarmIntent extends Activity{
             	
             	
             	/* New logic to reset lowtime, increase by snooze duration, then restart service */
-
     	        Calendar currentCalendar = Calendar.getInstance();
             	int hour = currentCalendar.get(Calendar.HOUR_OF_DAY);
             	int min = currentCalendar.get(Calendar.MINUTE);
@@ -139,12 +131,23 @@ public class AlarmIntent extends Activity{
             	settings.setMinutes(snoozed);
             	settings.commit();
             	
+//            	disableAlarm();
+            	
                 startService(new Intent(AlarmIntent.this, LowtimeService.class));
             	finish();
             }
         });
-        
     }
+    
+    
+    
+    public void disableAlarm(){
+        Intent intent = new Intent(AlarmIntent.this, AlarmIntent.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(AlarmIntent.this, ALARM_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+    }
+    
     
     
     

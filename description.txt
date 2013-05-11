@@ -1,0 +1,12 @@
+Lowtime is putting a new spin on the Alarm Clock.   
+
+Have you ever been half asleep in the middle of the night, and unsure of what time it was had to either turn on a light, open your eyes, sit upright... and readjust yourself just to discover that you still had 3 hours until it was time to get up?  If so, you might have experienced the same frustration as we have.  Lowtime helps you avoid situations like these.  With Lowtime set, give your phone a quick shake and you recieve immediate feedback alerting you if it is close to .  
+
+Example : 
+Let's say you want to wake up anytime between 5:30am and 6:00am.  You would first set the Alarm time to 6:00am, the range to 30 mins then activate.  Once activated, a quick shake of the phone will let you know if you are within the time range defined.
+
+
+
+Lowtime is a simple Alarm Clock with a bonus feature, a responsive time range indicator. 
+
+Have you ever been half asleep in the middle of the night, and unsure of what time it was had to either turn on a light, open your eyes, sit upright... and readjust yourself just to discover that you still had 3 hours until it was time to get up?  If so, you might have experienced the same frustration as others have.  With Lowtime set, give your phone a quick shake and you recieve immediate feedback alerting you if it is either time to get up or if its ok to roll back over.

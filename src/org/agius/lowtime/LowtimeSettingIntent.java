@@ -346,7 +346,8 @@ public class LowtimeSettingIntent extends Activity {
 	                Uri uri = (Uri) lookup.get(id).get(URI);
 
 	                waketoneText.setText(tone);
-
+	                waketoneText.setBackgroundColor(Color.TRANSPARENT);
+	                
 	                settings.setWaketoneUri(uri.toString());
 	                settings.setWaketone(tone);
 	                settings.commit();

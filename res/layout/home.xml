@@ -41,7 +41,6 @@
 	   
 
 	
-	
 	<!--  BEGIN LOWTIME VALUES SET  -->
 	<TableRow android:id="@+id/values_row" 
 	    	  android:layout_width="fill_parent"
@@ -212,14 +211,14 @@
 				        android:id="@+id/editButton"
 				        android:layout_height="wrap_content"
 				        android:layout_width="0dp"
-					android:layout_weight="1"
+					    android:layout_weight="1"
 				        android:text="Edit" />
 			    
 			    <org.agius.lowtime.custom.RobotoButton
 				        android:id="@+id/toggleButton"
 				        android:layout_height="wrap_content"
 				        android:layout_width="0dp"
-					android:layout_weight="1"
+					    android:layout_weight="1"
 				        android:text="Turn Off" />
 			</TableRow>	       
 			 
@@ -285,11 +284,11 @@
 			
 			
 			
-			<TableRow android:id="@+id/howToRow"
+			<TableRow android:id="@+id/howtoRow"
 			    	  android:layout_marginTop="5dp">
 				
 			    <org.agius.lowtime.custom.RobotoButton
-			        android:id="@+id/howToUseButton"
+			        android:id="@+id/howtoButton"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_gravity="center"

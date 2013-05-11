@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
@@ -17,7 +18,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -41,7 +44,7 @@ public class HomeIntent  extends Activity{
 	private TableRow welcomeRow;
 	
 	
-	private Button hideButton;
+	private Button howtoButton;
 	private Button toggleButton;
 	private Button createButton;
 	
@@ -273,13 +276,28 @@ public class HomeIntent  extends Activity{
             }
         });
         
-//        hideButton = (Button) findViewById(R.id.hideButton);
-//        hideButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//			public void onClick(View v) {
-//            	moveTaskToBack(true);
-//            }
-//        });
+        howtoButton = (Button) findViewById(R.id.howtoButton);
+        howtoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+			public void onClick(View v) {
+            	
+    			final Dialog dialog = new Dialog(HomeIntent.this);
+				dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
+    			dialog.setContentView(R.layout.howto_dialog);
+     	     
+    			Button dialogButton = (Button) dialog.findViewById(R.id.close);
+    	    
+    			dialogButton.setOnClickListener(new View.OnClickListener() {
+    				@Override
+    				public void onClick(View v) {
+    					dialog.dismiss();
+    				}
+    			});
+     
+    			dialog.show();
+            	
+            }
+        });
         
         
         toggleButton = (Button) findViewById(R.id.toggleButton);
