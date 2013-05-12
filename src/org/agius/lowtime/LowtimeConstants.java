@@ -9,6 +9,9 @@ public class LowtimeConstants {
 	
 	public static final String LOWTIME_SETTINGS = "LOWTIME_SETTINGS";
 	
+	public static final int MAX_RANDOM = 5000;
+	public static final int INACTIVE_ID = 5001;
+	
 	public static final String LOWTIME_WAKETONE_URI = "uri";
 	public static final String LOWTIME_WAKETONE = "waketone";
 	public static final String LOWTIME_HOUR = "hour";
@@ -16,6 +19,7 @@ public class LowtimeConstants {
 	public static final String LOWTIME_ACTIVE = "active";
 	public static final String LOWTIME_RANGE = "range";
 	public static final String LOWTIME_SNOOZE = "snooze";
+	public static final String LOWTIME_ALARM_ID = "alarmid";
 	
 	public static final String LOWTIME_ACTIVE_LABEL = "ACTIVE";
 	public static final String LOWTIME_INACTIVE_LABEL = "INACTIVE";

@@ -1,16 +1,21 @@
 package org.agius.lowtime;
 
+import static org.agius.lowtime.LowtimeConstants.*;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
+
+import org.agius.lowtime.domain.LowtimeSettings;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
-import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,13 +25,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import org.agius.lowtime.domain.LowtimeSettings;
-
-import static org.agius.lowtime.LowtimeConstants.*;
 
 
 @SuppressLint("SimpleDateFormat")
@@ -89,6 +89,7 @@ public class HomeIntent  extends Activity{
     		if(settings.isActive()){
         		setActiveViewState();
         		setSettingsValues();
+    			setAlarm();
     			restartService();
     		}else{
         		setInactiveViewState();
@@ -118,7 +119,6 @@ public class HomeIntent  extends Activity{
     	}else{
     		setInactiveViewState();
     	}
-    	
     }
     
     
@@ -211,13 +211,19 @@ public class HomeIntent  extends Activity{
         }
  
         Intent intent = new Intent(this, AlarmIntent.class);
-        intent.putExtra("onetime", Boolean.TRUE);
         
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, ALARM_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Random randomGenerator = new Random();
+        int alarmId = randomGenerator.nextInt(MAX_RANDOM);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
         
+        settings.setAlarmId(alarmId);
+        settings.commit();
+        
     }
+    
+ 
     
     
     private void updateStatus(){
@@ -346,6 +352,23 @@ public class HomeIntent  extends Activity{
         startActivity(i);
     }
     
+    private void showHelp(){
+		final Dialog dialog = new Dialog(HomeIntent.this);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
+		dialog.setContentView(R.layout.howto_dialog);
+	     
+		Button dialogButton = (Button) dialog.findViewById(R.id.close);
+    
+		dialogButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
+		dialog.show();    	
+    }
+    
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -353,8 +376,11 @@ public class HomeIntent  extends Activity{
             case R.id.menu_settings:
                 showSettings();
                 return true;
+            case R.id.menu_help:
+                showHelp();
+                return true;
         }
 		return false;
     }
-    
+
 }

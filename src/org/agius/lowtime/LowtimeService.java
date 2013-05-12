@@ -33,15 +33,13 @@ public class LowtimeService extends Service implements SensorEventListener {
     private WakeLock mWakeLock = null;
     private SensorManager mSensorManager = null;
 
-    private LowtimeSettings settings;
-	private boolean intentLaunched = false;
-
+	private LowtimeSettings settings;
+	
 	
     @Override
     public void onCreate() {
         super.onCreate();
 
-        intentLaunched = false;
         settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
         
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -60,10 +58,12 @@ public class LowtimeService extends Service implements SensorEventListener {
         
         try{
 
+    		
 			long now = System.currentTimeMillis();
 		    if ((now - mLastForce) > SHAKE_TIMEOUT) {
 		        mShakeCount = 0;
 		    }
+		    
 	
 		    if ((now - mLastTime) > TIME_THRESHOLD) {
 		    	  
@@ -75,7 +75,7 @@ public class LowtimeService extends Service implements SensorEventListener {
 		    	if (speed > FORCE_THRESHOLD) {
 		    		
 		    		if ((++mShakeCount >= SHAKE_COUNT) && (now - mLastShake > SHAKE_DURATION)) {
-		    			
+		    					    	        
 		    	        Calendar currentCalendar = Calendar.getInstance();
 		    	        Calendar lowtimeCalendar = Calendar.getInstance();
 		    	        lowtimeCalendar.set(Calendar.HOUR_OF_DAY, settings.getHour());
@@ -124,8 +124,8 @@ public class LowtimeService extends Service implements SensorEventListener {
 		        mLastY = event.values[SensorManager.DATA_Y];
 		        mLastZ = event.values[SensorManager.DATA_Z];
 		        
-		    }  	
-		    
+		    }  
+
 		}catch(Exception e){
 			
 		}
@@ -155,7 +155,6 @@ public class LowtimeService extends Service implements SensorEventListener {
         startForeground(Process.myPid(), new Notification());
         registerListener();
         mWakeLock.acquire();
-        intentLaunched = false;
         return START_STICKY;
     }
     

@@ -399,6 +399,7 @@ public class LowtimeSettingIntent extends Activity {
     	minuteOptionsLookup.put(50, 9);
     	minuteOptionsLookup.put(60, 10);
     	minuteOptionsLookup.put(90, 11);
+    	minuteOptionsLookup.put(1, 12);
     }
     
     

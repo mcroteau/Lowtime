@@ -15,6 +15,7 @@ public class LowtimeSettings {
 	private String waketoneUri;
 	private int snoozeDuration;
 	private boolean lowtimeLaunched;
+	private int alarmId;
 	private SharedPreferences settings;
 	SharedPreferences.Editor editor; 
 	
@@ -22,6 +23,7 @@ public class LowtimeSettings {
 	public LowtimeSettings(SharedPreferences settings){
 		this.settings = settings;
 		this.editor = settings.edit();
+		this.alarmId = INACTIVE_ID;
 		resetValues();
 	}
 	
@@ -90,6 +92,14 @@ public class LowtimeSettings {
 		this.lowtimeLaunched = lowtimeLaunched;
 	}
 
+	
+	public int getAlarmId() {
+		return alarmId;
+	}
+
+	public void setAlarmId(int alarmId) {
+		this.alarmId = alarmId;
+	}
 	
 	public SharedPreferences getSettings() {
 		return settings;

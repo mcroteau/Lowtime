@@ -3,6 +3,7 @@ package org.agius.lowtime;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 import org.agius.lowtime.domain.LowtimeSettings;
 
@@ -47,8 +48,9 @@ public class AlarmIntent extends Activity{
 	               + WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
 
         
-        
+
         settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
+        stopService(new Intent(AlarmIntent.this, LowtimeService.class));
         
         Calendar cal = Calendar.getInstance();
         Date datePre = cal.getTime();
@@ -57,6 +59,11 @@ public class AlarmIntent extends Activity{
         currentTime = (RobotoTextView) findViewById(R.id.current_time);
         currentTime.setText(formattedTime);
         
+        //set lowtime launched to prevent additional alarms to be initiated
+    	settings.setLowtimeLaunched(true);
+    	settings.commit();
+        
+    	
         try {
         	
             Uri uri = Uri.parse(settings.getWaketoneUri());
@@ -88,12 +95,18 @@ public class AlarmIntent extends Activity{
             	while(serviceRunning()){
                     stopService(new Intent(AlarmIntent.this, LowtimeService.class));
             	}
+                
+                Intent intent = new Intent(AlarmIntent.this, AlarmIntent.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(AlarmIntent.this, settings.getAlarmId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
+                alarmManager.cancel(pendingIntent);
+
             	settings.setActive(false);
             	settings.setLowtimeLaunched(false);
+            	settings.setAlarmId(INACTIVE_ID);
+            	
             	settings.commit();
                 
-            	disableAlarm();
-            	
             	player.stop();
             	finish();
             }
@@ -105,7 +118,6 @@ public class AlarmIntent extends Activity{
             @Override
 			public void onClick(View v) {
                 stopService(new Intent(AlarmIntent.this, LowtimeService.class));
-            	settings.setLowtimeLaunched(false);
             	player.stop();
             	
             	
@@ -126,14 +138,20 @@ public class AlarmIntent extends Activity{
             		}
             	}
 
+            	
+                Intent intent = new Intent(AlarmIntent.this, AlarmIntent.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(AlarmIntent.this, settings.getAlarmId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
+                alarmManager.cancel(pendingIntent);
+
+                settings.setAlarmId(INACTIVE_ID);
             	settings.setLowtimeLaunched(false);
             	settings.setHour(hour);
             	settings.setMinutes(snoozed);
             	settings.commit();
             	
-//            	disableAlarm();
-            	
                 startService(new Intent(AlarmIntent.this, LowtimeService.class));
+                
             	finish();
             }
         });
@@ -141,13 +159,13 @@ public class AlarmIntent extends Activity{
     
     
     
-    public void disableAlarm(){
-        Intent intent = new Intent(AlarmIntent.this, AlarmIntent.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(AlarmIntent.this, ALARM_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
-        alarmManager.cancel(pendingIntent);
-    }
-    
+//    public void disableAlarm(){
+//        Intent intent = new Intent(AlarmIntent.this, AlarmIntent.class);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(AlarmIntent.this, ALARM_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+//        AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
+//        alarmManager.cancel(pendingIntent);
+//    }
+//    
     
     
     
@@ -169,14 +187,12 @@ public class AlarmIntent extends Activity{
     @Override
     public void onStart(){
     	super.onStart();
-    	active = true;
     }
     
     
     @Override
     public void onStop(){
     	super.onStop();
-    	active = false;
     }
     
 }
