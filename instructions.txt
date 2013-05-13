@@ -8,7 +8,7 @@ Range : Number of minutes from the Alarm time in which you want to notified.
 Wake Tone : The tone that you want to play during the Alarm or if the time is within the range.
 Snooze Duration : Number of minutes ahead to reset the Alarm and Range to.
 
-Example : You want to get out of bed anytime between 5:30am and 6:00am.  Set the Alarm time for 6:00am and range for 15 minutes.  
+Example : You want to get out of bed anytime between 5:30am and 6:00am.  Set the Alarm time for 6:00am and range for 30 minutes.  
 
 Once activated, a shake of the phone will either launch the wake up tone or show a dark screen notifying you that its safe to go back to sleep.  
 
