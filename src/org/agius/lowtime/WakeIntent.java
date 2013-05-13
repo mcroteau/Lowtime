@@ -8,6 +8,8 @@ import org.agius.lowtime.custom.RobotoButton;
 import org.agius.lowtime.custom.RobotoTextView;
 import org.agius.lowtime.domain.LowtimeSettings;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
@@ -128,17 +130,20 @@ public class WakeIntent extends LowtimeBase {
 
     
     
+    
     @Override
-    public void onStart(){
-    	super.onStart();
-    	active = true;
+    protected void onStart() {
+        super.onStart();  
+        EasyTracker.getInstance().activityStart(this);
+//    	active = true;
     }
-    
-    
+
+
     @Override
-    public void onStop(){
+    protected void onStop(){
     	super.onStop();
-    	active = false;
+        EasyTracker.getInstance().activityStop(this);
+//    	active = false;
     }
     
 }

@@ -1,0 +1,24 @@
+HomeIntent 
+  on start*
+  on stop*
+ 
+AlarmIntent
+  on start*
+  on stop*
+ 
+LowtimeBase
+  on start*
+  on stop*
+
+LowtimeSettingsIntent
+  on start*
+  on stop*
+
+SleepIntent
+  on start*
+  on stop*
+  
+WakeIntent
+  on start*
+  on stop*
+  

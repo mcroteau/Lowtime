@@ -9,6 +9,8 @@ import java.util.Date;
 import org.agius.lowtime.custom.RobotoButton;
 import org.agius.lowtime.domain.LowtimeSettings;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
@@ -81,6 +83,7 @@ public class HomeIntent extends LowtimeBase {
     @Override
     protected void onStart() {
         super.onStart();  
+        EasyTracker.getInstance().activityStart(this);
     	settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
     	if(settings.settingsSet()){
     		if(settings.isActive()){
@@ -97,7 +100,12 @@ public class HomeIntent extends LowtimeBase {
     	}
 
     }
-    
+
+    @Override
+    protected void onStop(){
+    	super.onStop();
+        EasyTracker.getInstance().activityStop(this);
+    }
     
     
     private void restartService(){

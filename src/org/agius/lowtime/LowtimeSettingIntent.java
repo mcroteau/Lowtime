@@ -11,6 +11,8 @@ import java.util.Map;
 import org.agius.lowtime.custom.CustomOnItemSelectedListener;
 import org.agius.lowtime.domain.LowtimeSettings;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -402,14 +404,6 @@ public class LowtimeSettingIntent extends LowtimeBase {
     }
     
 
-    
-    
-    @Override
-    protected void onStart() {
-        super.onStart();  
-    	settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
-        reinitializeView();
-    }
 
     private void reinitializeView(){
     	
@@ -441,11 +435,6 @@ public class LowtimeSettingIntent extends LowtimeBase {
     }
     
     
-    @Override
-    protected void onStop() {
-        super.onStop();  
-    }  
-    
 
     private void showSettings(){
         Intent i = new Intent(LowtimeSettingIntent.this, LowtimeSettingIntent.class);
@@ -462,5 +451,24 @@ public class LowtimeSettingIntent extends LowtimeBase {
         }
 		return false;
     }
+    
+    
+    
+    @Override
+    protected void onStart() {
+        super.onStart();  
+    	settings.reinitialize(getSharedPreferences(LOWTIME_SETTINGS, 0));
+        EasyTracker.getInstance().activityStart(this);
+        reinitializeView();
+    }
+
+
+    @Override
+    protected void onStop(){
+    	super.onStop();
+        EasyTracker.getInstance().activityStop(this);
+    }
+    
+    
     
 }

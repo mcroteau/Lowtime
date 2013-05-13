@@ -8,6 +8,8 @@ import java.util.Random;
 
 import org.agius.lowtime.domain.LowtimeSettings;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -72,5 +74,18 @@ public class LowtimeBase extends Activity{
 		
 	}
 	
+	
+    @Override
+    protected void onStart() {
+        super.onStart();  
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop(){
+    	super.onStop();
+        EasyTracker.getInstance().activityStop(this);
+    }
+    
 	
 }
