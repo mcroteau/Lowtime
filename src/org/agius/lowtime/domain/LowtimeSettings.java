@@ -122,7 +122,7 @@ public class LowtimeSettings {
 	
 	
 	public boolean settingsSet(){
-		return (settings != null && minutes != 0 && range != 0 && snoozeDuration != 0);
+		return (settings != null && range != 0 && snoozeDuration != 0);
 	}
 
 	public void reinitialize(SharedPreferences settings){

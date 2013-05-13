@@ -1,0 +1,104 @@
+
+
+started 
+set lowtime - 9:40
+	snooze - 1min
+waited
+ALARM - 9:40
+	snoozed
+	alarm set 9:41
+waited
+ALARM - 9:41
+	snoozed
+	alarm set 9:43
+	closed app
+waited
+ALARM - 9:43
+	snoozed
+	shook app
+	LOWTIME
+		snoozed
+		alarm set 9:44
+waited
+ALARM - 9:44
+	snoozed
+	shook app
+	LOWTIME
+		snoozed
+		alarm set 9:45
+		closed app
+waited
+ALARM
+	snoozed
+	alarm set 9:46
+	EDIT ALARM
+		alarm set 9:47
+waited
+ALARM
+	turned off
+	EDIT ALARM
+		alarm set 9:48
+		closed app
+waited
+ALARM
+	turned off
+	EDIT ALARM
+		alarm set 9:52
+		closed app
+		locked screen
+SHOOK APP - 9:50
+	LOWTIME
+		snoozed
+		closed app
+		locked screen
+waited
+unlocked
+opened app
+closed app
+locked
+waited
+ALARM
+	snoozed
+	closed app
+	locked
+waited
+ALARM
+	turned off
+
+EDIT ALARM
+	set alarm 9:57
+	close app
+	lock
+shake
+LOWTIME
+	snooze
+shake
+LOWTIME
+	snooze	
+shake
+LOWTIME
+	turned off
+	turned on
+EDIT ALARM
+	set alarm 9:56
+	close app
+	lock
+wait
+ALARM
+	turn off
+	EDIT ALARM
+		set alarm 10:00
+		******* BUG *******
+		RETURNED TO HOME SCREEN WITH NO SETTINGS
+		* lowtime status says inactive
+		* alarm did not initiate
+
+NEW TEST PLAN
+1. set alarm
+2. turn off
+3. edit alarm
+
+
+	
+	
+
