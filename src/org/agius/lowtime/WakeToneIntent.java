@@ -101,7 +101,7 @@ public class WakeToneIntent extends Activity{
                         settings.setWaketoneUri(uri.toString());
                         settings.setWaketone(tone);
                         settings.commit();
-                                            	if(ringtone != null && ringtone.isPlaying())ringtone.stop();
+                        if(ringtone != null && ringtone.isPlaying())ringtone.stop();
                     	
                         startActivity(i);
                     }

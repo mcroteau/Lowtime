@@ -176,7 +176,7 @@ public class LowtimeSettingIntent extends LowtimeBase {
 	                    clearAlarm();
 	                    
 		                Intent i = new Intent(LowtimeSettingIntent.this, HomeIntent.class);
-		                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//		                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		                startActivity(i);
 		                
 	            	}else{
@@ -207,7 +207,7 @@ public class LowtimeSettingIntent extends LowtimeBase {
 	            @Override
 				public void onClick(View v) {
 	                Intent i = new Intent(LowtimeSettingIntent.this, HomeIntent.class);
-	                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//	                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	                startActivity(i);
 	            }
 	        });
