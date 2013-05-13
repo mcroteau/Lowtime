@@ -251,21 +251,7 @@
 			        android:paddingLeft="20dp"
 			        android:paddingRight="20dp"
 			        android:text="Welcome to Lowtime, a new take on the Alarm Clock."/>
-		    </TableRow>
-		    
-			
-			<TableRow android:id="@+id/createRow"
-			    	  android:layout_marginBottom="20dp"
-			    	  android:layout_marginTop="15dp">
-				
-			    <org.agius.lowtime.custom.RobotoButton
-			        android:id="@+id/createButton"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_gravity="center"
-			        android:text="Set Lowtime" />
-			    
-			</TableRow>	  
+		    </TableRow> 
 			
 		    <TableRow android:id="@+id/welcomeTextRow2">
 			    <org.agius.lowtime.custom.RobotoTextView
@@ -283,7 +269,6 @@
 			</TableRow>
 			
 			
-			
 			<TableRow android:id="@+id/howtoRow"
 			    	  android:layout_marginTop="5dp">
 				
@@ -296,6 +281,20 @@
 			    
 			</TableRow>
 			  
+			
+			
+			<TableRow android:id="@+id/createRow"
+			    	  android:layout_marginBottom="20dp"
+			    	  android:layout_marginTop="15dp">
+				
+			    <org.agius.lowtime.custom.RobotoButton
+			        android:id="@+id/createButton"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="center"
+			        android:text="Set Lowtime" />
+			    
+			</TableRow>	 
 			
 	    </TableLayout>
 	

@@ -22,6 +22,8 @@
 		        	android:layout_height="wrap_content" 
 				    android:orientation="vertical">
 				    
+	        
+	        
 			<TableRow android:layout_width="wrap_content"
 			    	  android:layout_height="wrap_content">
 			    	  
@@ -211,7 +213,7 @@
 				        android:textColor="#fefefe"
 				        android:textSize="14sp"
 				        android:layout_marginBottom="10dp"
-				        android:text="Set the Alarm time for 6:00am and range for 15 minutes." />	    
+				        android:text="Set the Alarm time for 6:00am and range for 30 minutes." />	    
 			
 				    
 				    <org.agius.lowtime.custom.RobotoTextView
@@ -246,6 +248,7 @@
 			        <org.agius.lowtime.custom.RobotoButton android:id="@+id/close"
 					    android:layout_width="wrap_content"
 					    android:layout_height="wrap_content"
+					    android:gravity="center_horizontal"
 					    android:text="Close"/>		    
 				    
 				</LinearLayout>

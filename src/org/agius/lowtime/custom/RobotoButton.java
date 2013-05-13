@@ -1,16 +1,12 @@
 package org.agius.lowtime.custom;
 
-import static org.agius.lowtime.LowtimeConstants.BLACK_FONT;
 import static org.agius.lowtime.LowtimeConstants.BOLD_FONT;
-import static org.agius.lowtime.LowtimeConstants.REGULAR_FONT;
-import static org.agius.lowtime.LowtimeConstants.THIN_FONT;
+import static org.agius.lowtime.LowtimeConstants.BUTTON_TEXT_SIZE;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.Button;
-
-import static org.agius.lowtime.LowtimeConstants.*;
 
 public class RobotoButton extends Button{
 

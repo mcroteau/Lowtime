@@ -41,8 +41,8 @@ public final class R {
         public static final int back=0x7f080042;
         public static final int cancel=0x7f080051;
         public static final int close=0x7f08003d;
-        public static final int createButton=0x7f08001e;
-        public static final int createRow=0x7f08001d;
+        public static final int createButton=0x7f080022;
+        public static final int createRow=0x7f080021;
         public static final int current_time=0x7f080001;
         public static final int difference=0x7f080046;
         public static final int editButton=0x7f080017;
@@ -51,8 +51,8 @@ public final class R {
         public static final int exampleLabel=0x7f080038;
         public static final int forth=0x7f080043;
         public static final int help=0x7f080036;
-        public static final int howtoButton=0x7f080022;
-        public static final int howtoRow=0x7f080021;
+        public static final int howtoButton=0x7f080020;
+        public static final int howtoRow=0x7f08001f;
         public static final int howtoScroll=0x7f080032;
         public static final int howto_description=0x7f080035;
         public static final int howtolayout=0x7f080033;
@@ -122,9 +122,9 @@ public final class R {
         public static final int waketone_select_table=0x7f08005c;
         public static final int waketone_value=0x7f08004b;
         public static final int welcomeText1=0x7f08001c;
-        public static final int welcomeText2=0x7f080020;
+        public static final int welcomeText2=0x7f08001e;
         public static final int welcomeTextRow1=0x7f08001b;
-        public static final int welcomeTextRow2=0x7f08001f;
+        public static final int welcomeTextRow2=0x7f08001d;
         public static final int welcome_row=0x7f080019;
         public static final int welcome_table=0x7f08001a;
         public static final int x_axis=0x7f08003e;

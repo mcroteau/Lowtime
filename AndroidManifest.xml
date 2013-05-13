@@ -33,7 +33,7 @@
 	    		  android:launchMode="singleTask"
             	  android:theme="@android:style/Theme.NoTitleBar"></activity>
 	    
-	    <activity android:name="LowtimeIntent"
+	    <activity android:name="org.agius.lowtime.LowtimeIntentOLD"
 	    		  android:alwaysRetainTaskState="false"
 	    		  android:launchMode="singleTask"
             	  android:theme="@android:style/Theme.NoTitleBar"></activity>

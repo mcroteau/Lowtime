@@ -1,7 +1,6 @@
 package org.agius.lowtime;
 
 import java.util.Calendar;
-import java.util.Date;
 import android.app.Notification;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -80,14 +79,6 @@ public class LowtimeService extends Service implements SensorEventListener {
 		    	        Calendar lowtimeCalendar = Calendar.getInstance();
 		    	        lowtimeCalendar.set(Calendar.HOUR_OF_DAY, settings.getHour());
 		    	        lowtimeCalendar.set(Calendar.MINUTE, settings.getMinutes());
-		    	        
-		    	        Date date = currentCalendar.getTime();
-		    	        Date lowtimeDate = lowtimeCalendar.getTime();
-		    	        
-		    	        long mills = date.getTime();
-		    	        long lowmills = lowtimeDate.getTime();
-		    	        long dif = lowmills - mills;
-		    	        long mins = (dif/1000) / 60;
 		    	        
 		    	        long currentMillis = currentCalendar.getTimeInMillis();
 		    	        long lowtimeMillis = lowtimeCalendar.getTimeInMillis();

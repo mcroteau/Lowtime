@@ -5,19 +5,15 @@ import static org.agius.lowtime.LowtimeConstants.TONE;
 import static org.agius.lowtime.LowtimeConstants.URI;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.agius.lowtime.custom.CustomOnItemSelectedListener;
 import org.agius.lowtime.domain.LowtimeSettings;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -28,17 +24,13 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -46,7 +38,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 @SuppressLint("UseSparseArrays")
-public class LowtimeSettingIntent extends Activity {
+public class LowtimeSettingIntent extends LowtimeBase {
 
 	private TextView waketoneText; 
 	private TimePicker timePicker;
@@ -78,7 +70,8 @@ public class LowtimeSettingIntent extends Activity {
 	    	
         	setupOptionsLookup();
 	       
-            settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
+            settings = getSettings();
+            
         	timePicker = (TimePicker) findViewById(R.id.lowtimetime);
 	        waketoneText = (TextView) findViewById(R.id.waketone_value);
 	        rangeText = (TextView) findViewById(R.id.range_value);
@@ -168,11 +161,8 @@ public class LowtimeSettingIntent extends Activity {
 	            	Integer range = settings.getRange();
 	            	Integer snooze = settings.getSnoozeDuration();
 	            	
-	            	if(
-//	            			!settings.getWaketone().equals("") 
-//	            			&& 
+	            	if(!settings.getWaketone().equals("") && 
 	            			range != null && snooze != null){
-	            			
 
 	                    int lowtimeHour = timePicker.getCurrentHour();
 	                    int lowtimeMinute = timePicker.getCurrentMinute();
@@ -183,7 +173,10 @@ public class LowtimeSettingIntent extends Activity {
 	                    settings.setActive(true);
 	                    settings.commit();
 	                    
+	                    clearAlarm();
+	                    
 		                Intent i = new Intent(LowtimeSettingIntent.this, HomeIntent.class);
+		                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		                startActivity(i);
 		                
 	            	}else{
@@ -214,6 +207,7 @@ public class LowtimeSettingIntent extends Activity {
 	            @Override
 				public void onClick(View v) {
 	                Intent i = new Intent(LowtimeSettingIntent.this, HomeIntent.class);
+	                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	                startActivity(i);
 	            }
 	        });

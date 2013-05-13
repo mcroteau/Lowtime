@@ -4,13 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.agius.lowtime.custom.RobotoButton;
+import org.agius.lowtime.custom.RobotoTextView;
 import org.agius.lowtime.domain.LowtimeSettings;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
@@ -21,13 +20,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import org.agius.lowtime.custom.RobotoTextView;
-import org.agius.lowtime.custom.RobotoButton;
-
-import static org.agius.lowtime.LowtimeConstants.*;
 
 
-public class WakeIntent extends Activity{
+public class WakeIntent extends LowtimeBase {
 
 	static boolean active = false;	
 	
@@ -47,7 +42,7 @@ public class WakeIntent extends Activity{
 	               + WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
 	               + WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
 
-        settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
+        settings = getSettings();
         
         Calendar cal = Calendar.getInstance();
         Date datePre = cal.getTime();
@@ -93,10 +88,7 @@ public class WakeIntent extends Activity{
             	settings.setLowtimeLaunched(false);
             	settings.commit();
 
-                Intent intent = new Intent(WakeIntent.this, AlarmIntent.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(WakeIntent.this, ALARM_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-                AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
-                alarmManager.cancel(pendingIntent);
+            	clearAlarm();
                 
             	player.stop();
             	finish();
@@ -109,9 +101,10 @@ public class WakeIntent extends Activity{
             @Override
 			public void onClick(View v) {
                 stopService(new Intent(WakeIntent.this, LowtimeService.class));
-            	settings.setLowtimeLaunched(false);
-            	player.stop();
                 startService(new Intent(WakeIntent.this, LowtimeService.class));
+             	settings.setLowtimeLaunched(false);
+            	settings.commit();
+            	player.stop();
             	finish();
             }
         });

@@ -3,15 +3,13 @@ package org.agius.lowtime;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 
+import org.agius.lowtime.custom.RobotoButton;
+import org.agius.lowtime.custom.RobotoTextView;
 import org.agius.lowtime.domain.LowtimeSettings;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
@@ -22,12 +20,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import org.agius.lowtime.custom.RobotoTextView;
-import org.agius.lowtime.custom.RobotoButton;
 
-import static org.agius.lowtime.LowtimeConstants.*;
-
-public class AlarmIntent extends Activity{
+public class AlarmIntent extends LowtimeBase {
 
 	static boolean active = false;	
 	
@@ -48,8 +42,7 @@ public class AlarmIntent extends Activity{
 	               + WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
 
         
-
-        settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
+        settings = getSettings();
         stopService(new Intent(AlarmIntent.this, LowtimeService.class));
         
         Calendar cal = Calendar.getInstance();
@@ -96,14 +89,10 @@ public class AlarmIntent extends Activity{
                     stopService(new Intent(AlarmIntent.this, LowtimeService.class));
             	}
                 
-                Intent intent = new Intent(AlarmIntent.this, AlarmIntent.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(AlarmIntent.this, settings.getAlarmId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
-                AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
-                alarmManager.cancel(pendingIntent);
+            	clearAlarm();
 
             	settings.setActive(false);
             	settings.setLowtimeLaunched(false);
-            	settings.setAlarmId(INACTIVE_ID);
             	
             	settings.commit();
                 
@@ -139,12 +128,8 @@ public class AlarmIntent extends Activity{
             	}
 
             	
-                Intent intent = new Intent(AlarmIntent.this, AlarmIntent.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(AlarmIntent.this, settings.getAlarmId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
-                AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
-                alarmManager.cancel(pendingIntent);
+            	clearAlarm();
 
-                settings.setAlarmId(INACTIVE_ID);
             	settings.setLowtimeLaunched(false);
             	settings.setHour(hour);
             	settings.setMinutes(snoozed);
@@ -158,16 +143,7 @@ public class AlarmIntent extends Activity{
     }
     
     
-    
-//    public void disableAlarm(){
-//        Intent intent = new Intent(AlarmIntent.this, AlarmIntent.class);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(AlarmIntent.this, ALARM_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-//        AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
-//        alarmManager.cancel(pendingIntent);
-//    }
-//    
-    
-    
+
     
     /*
      * http://stackoverflow.com/questions/600207/android-check-if-a-service-is-running

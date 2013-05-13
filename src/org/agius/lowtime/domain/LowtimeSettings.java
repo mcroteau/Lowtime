@@ -16,6 +16,7 @@ public class LowtimeSettings {
 	private int snoozeDuration;
 	private boolean lowtimeLaunched;
 	private int alarmId;
+	private boolean alarmActive;
 	private SharedPreferences settings;
 	SharedPreferences.Editor editor; 
 	
@@ -101,6 +102,16 @@ public class LowtimeSettings {
 		this.alarmId = alarmId;
 	}
 	
+
+	public boolean isAlarmActive(){
+		return this.alarmActive;
+	}
+	
+	public void setAlarmActive(boolean alarmActive) {
+		this.alarmActive = alarmActive;
+	}
+
+
 	public SharedPreferences getSettings() {
 		return settings;
 	}
@@ -134,6 +145,8 @@ public class LowtimeSettings {
 	        setMinutes(settings.getInt(LOWTIME_MINUTES, 0));
 	        setActive(settings.getBoolean(LOWTIME_ACTIVE, false));
 	        setSnoozeDuration(settings.getInt(LOWTIME_SNOOZE, 0));
+	        setAlarmId(settings.getInt(LOWTIME_ALARM_ID, 0));
+	        setAlarmActive(settings.getBoolean(LOWTIME_ALARM_ACTIVE, false));
         }
 	}
 	
@@ -145,6 +158,8 @@ public class LowtimeSettings {
 		editor.putInt(LOWTIME_MINUTES, getMinutes());
 		editor.putBoolean(LOWTIME_ACTIVE, isActive());		
 		editor.putInt(LOWTIME_SNOOZE, getSnoozeDuration());
+		editor.putInt(LOWTIME_ALARM_ID, getAlarmId());
+		editor.putBoolean(LOWTIME_ALARM_ACTIVE, isAlarmActive());
 	}
 	
 }

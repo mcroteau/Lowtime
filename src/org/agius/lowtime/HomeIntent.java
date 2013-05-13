@@ -5,17 +5,14 @@ import static org.agius.lowtime.LowtimeConstants.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 
+import org.agius.lowtime.custom.RobotoButton;
 import org.agius.lowtime.domain.LowtimeSettings;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
-import android.app.AlarmManager;
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -30,7 +27,7 @@ import android.widget.TextView;
 
 
 @SuppressLint("SimpleDateFormat")
-public class HomeIntent  extends Activity{
+public class HomeIntent extends LowtimeBase {
 
 	private TextView alarm;
 	private TextView range;
@@ -44,9 +41,9 @@ public class HomeIntent  extends Activity{
 	private TableRow welcomeRow;
 	
 	
-	private Button howtoButton;
-	private Button toggleButton;
-	private Button createButton;
+	private RobotoButton howtoButton;
+	private RobotoButton toggleButton;
+	private RobotoButton createButton;
 	
 	private LowtimeSettings settings;
 	
@@ -59,7 +56,7 @@ public class HomeIntent  extends Activity{
     	if(serviceRunning())
         	System.out.println("running");
     	
-        settings = new LowtimeSettings(getSharedPreferences(LOWTIME_SETTINGS, 0));
+        settings = getSettings();
 
         alarm = (TextView) findViewById(R.id.alarm);
         range = (TextView) findViewById(R.id.range);
@@ -89,14 +86,16 @@ public class HomeIntent  extends Activity{
     		if(settings.isActive()){
         		setActiveViewState();
         		setSettingsValues();
-    			setAlarm();
     			restartService();
+        		clearAlarm();
+    			setAlarm();
     		}else{
         		setInactiveViewState();
     		}
     	}else{
     		setInactiveViewState();
     	}
+
     }
     
     
@@ -191,45 +190,24 @@ public class HomeIntent  extends Activity{
     private void reinitializeView(){
     	if(settings.settingsSet()){
         	displayLowtimeSetView();
-        	setAlarm();
+    		clearAlarm();
+			setAlarm();
         }else{
         	displayLowtimeUnsetView();
         }
     }
     
-    
-    private void setAlarm(){
 
-        Calendar cal = Calendar.getInstance();
-        
-        cal.setTimeInMillis(System.currentTimeMillis());
-        cal.set(Calendar.HOUR_OF_DAY, settings.getHour());
-        cal.set(Calendar.MINUTE, settings.getMinutes());
-        
-        if(cal.getTimeInMillis() < System.currentTimeMillis()){
-            cal.add(Calendar.DATE, 1);  
-        }
- 
-        Intent intent = new Intent(this, AlarmIntent.class);
-        
-        Random randomGenerator = new Random();
-        int alarmId = randomGenerator.nextInt(MAX_RANDOM);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager alarmManager =  (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
-        
-        settings.setAlarmId(alarmId);
-        settings.commit();
-        
-    }
     
- 
     
     
     private void updateStatus(){
 
-    	if(serviceRunning())
+    	if(serviceRunning()){
     		stopService(new Intent(HomeIntent.this, LowtimeService.class));
+    	}
+
+    	clearAlarm();
     	
     	String statusString = LOWTIME_ACTIVE_LABEL;
     	String buttonText = LOWTIME_BUTTON_DISABLE;
@@ -243,6 +221,7 @@ public class HomeIntent  extends Activity{
     		settings.setActive(true);
     		status.setBackgroundColor(Color.parseColor(ACTIVE_COLOR));
         	startService(new Intent(HomeIntent.this, LowtimeService.class));
+        	setAlarm();
     	}    	
 
     	status.setText(statusString);
@@ -282,7 +261,7 @@ public class HomeIntent  extends Activity{
             }
         });
         
-        howtoButton = (Button) findViewById(R.id.howtoButton);
+        howtoButton = (RobotoButton) findViewById(R.id.howtoButton);
         howtoButton.setOnClickListener(new View.OnClickListener() {
             @Override
 			public void onClick(View v) {
@@ -291,7 +270,7 @@ public class HomeIntent  extends Activity{
 				dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
     			dialog.setContentView(R.layout.howto_dialog);
      	     
-    			Button dialogButton = (Button) dialog.findViewById(R.id.close);
+    			RobotoButton dialogButton = (RobotoButton) dialog.findViewById(R.id.close);
     	    
     			dialogButton.setOnClickListener(new View.OnClickListener() {
     				@Override
@@ -306,7 +285,7 @@ public class HomeIntent  extends Activity{
         });
         
         
-        toggleButton = (Button) findViewById(R.id.toggleButton);
+        toggleButton = (RobotoButton) findViewById(R.id.toggleButton);
         toggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
 			public void onClick(View v) {
@@ -314,7 +293,7 @@ public class HomeIntent  extends Activity{
             }
         });	  
         
-        createButton = (Button) findViewById(R.id.createButton);
+        createButton = (RobotoButton) findViewById(R.id.createButton);
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
 			public void onClick(View v) {
@@ -357,7 +336,7 @@ public class HomeIntent  extends Activity{
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
 		dialog.setContentView(R.layout.howto_dialog);
 	     
-		Button dialogButton = (Button) dialog.findViewById(R.id.close);
+		RobotoButton dialogButton = (RobotoButton) dialog.findViewById(R.id.close);
     
 		dialogButton.setOnClickListener(new View.OnClickListener() {
 			@Override
