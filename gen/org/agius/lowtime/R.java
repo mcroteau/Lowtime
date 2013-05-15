@@ -9,6 +9,8 @@ package org.agius.lowtime;
 
 public final class R {
     public static final class array {
+        /**  <item>1</item> 
+         */
         public static final int lowtime_minute_select=0x7f060000;
     }
     public static final class attr {
@@ -46,18 +48,15 @@ public final class R {
         public static final int alarm=0x7f09000a;
         public static final int alarmLabel=0x7f090009;
         public static final int alarmRow=0x7f090008;
-        public static final int back=0x7f090042;
-        public static final int cancel=0x7f090051;
+        public static final int cancel=0x7f090046;
         public static final int close=0x7f09003d;
         public static final int createButton=0x7f090022;
         public static final int createRow=0x7f090021;
         public static final int current_time=0x7f090001;
-        public static final int difference=0x7f090046;
         public static final int editButton=0x7f090017;
         public static final int editRow=0x7f090016;
         public static final int example=0x7f090039;
         public static final int exampleLabel=0x7f090038;
-        public static final int forth=0x7f090043;
         public static final int help=0x7f090036;
         public static final int howtoButton=0x7f090020;
         public static final int howtoRow=0x7f09001f;
@@ -65,9 +64,7 @@ public final class R {
         public static final int howto_description=0x7f090035;
         public static final int howtolayout=0x7f090033;
         public static final int howtolayout2=0x7f090037;
-        public static final int image=0x7f090048;
         public static final int layout_root=0x7f090031;
-        public static final int lowtime=0x7f090041;
         public static final int lowtimeAlarm=0x7f090027;
         public static final int lowtimeAlarmLabel=0x7f090026;
         public static final int lowtimeAlarmRow=0x7f090025;
@@ -75,39 +72,37 @@ public final class R {
         public static final int lowtimeRangeMinutes=0x7f090030;
         public static final int lowtimeStatus=0x7f090024;
         public static final int lowtimeTitle=0x7f090023;
-        public static final int lowtimetime=0x7f09004a;
-        public static final int menu_help=0x7f09005f;
-        public static final int menu_settings=0x7f09005e;
-        public static final int na1=0x7f090045;
-        public static final int na2=0x7f090047;
+        public static final int lowtimetime=0x7f09003f;
+        public static final int menu_help=0x7f090054;
+        public static final int menu_settings=0x7f090053;
         public static final int note=0x7f09003c;
         public static final int noteLabel=0x7f09003b;
         public static final int range=0x7f09000d;
         public static final int rangeLabel=0x7f09000c;
         public static final int rangeRow=0x7f09000b;
-        public static final int range_help=0x7f090054;
-        public static final int range_help_title=0x7f090053;
-        public static final int range_spinner=0x7f090055;
-        public static final int range_value=0x7f09004d;
-        public static final int save=0x7f090052;
-        public static final int set_range=0x7f090056;
-        public static final int set_range_button=0x7f09004e;
-        public static final int set_snooze_duration=0x7f09005b;
-        public static final int set_snooze_duration_button=0x7f090050;
-        public static final int set_waketone=0x7f09005d;
-        public static final int set_waketone_button=0x7f09004c;
-        public static final int settingsText=0x7f090049;
-        public static final int sleeptone=0x7f090057;
+        public static final int range_help=0x7f090049;
+        public static final int range_help_title=0x7f090048;
+        public static final int range_spinner=0x7f09004a;
+        public static final int range_value=0x7f090042;
+        public static final int save=0x7f090047;
+        public static final int set_range=0x7f09004b;
+        public static final int set_range_button=0x7f090043;
+        public static final int set_snooze_duration=0x7f090050;
+        public static final int set_snooze_duration_button=0x7f090045;
+        public static final int set_waketone=0x7f090052;
+        public static final int set_waketone_button=0x7f090041;
+        public static final int settingsText=0x7f09003e;
+        public static final int sleeptone=0x7f09004c;
         public static final int snooze=0x7f090002;
         public static final int snoozeDuration=0x7f09002d;
         public static final int snoozeDurationLabel=0x7f09002c;
         public static final int snoozeDurationRow=0x7f09002b;
         public static final int snoozeLabel=0x7f090012;
         public static final int snoozeRow=0x7f090011;
-        public static final int snooze_duration_spinner=0x7f09005a;
-        public static final int snooze_duration_value=0x7f09004f;
-        public static final int snooze_help=0x7f090059;
-        public static final int snooze_help_title=0x7f090058;
+        public static final int snooze_duration_spinner=0x7f09004f;
+        public static final int snooze_duration_value=0x7f090044;
+        public static final int snooze_help=0x7f09004e;
+        public static final int snooze_help_title=0x7f09004d;
         public static final int status=0x7f090005;
         public static final int text1=0x7f09003a;
         public static final int timeRangeRow=0x7f09002e;
@@ -127,33 +122,28 @@ public final class R {
         public static final int waketoneLabel=0x7f09000f;
         public static final int waketoneRow=0x7f09000e;
         public static final int waketone_help_title=0x7f090034;
-        public static final int waketone_select_table=0x7f09005c;
-        public static final int waketone_value=0x7f09004b;
+        public static final int waketone_select_table=0x7f090051;
+        public static final int waketone_value=0x7f090040;
         public static final int welcomeText1=0x7f09001c;
         public static final int welcomeText2=0x7f09001e;
         public static final int welcomeTextRow1=0x7f09001b;
         public static final int welcomeTextRow2=0x7f09001d;
         public static final int welcome_row=0x7f090019;
         public static final int welcome_table=0x7f09001a;
-        public static final int x_axis=0x7f09003e;
-        public static final int y_axis=0x7f09003f;
-        public static final int z_axis=0x7f090040;
-        public static final int zvalue=0x7f090044;
     }
     public static final class layout {
         public static final int alarm=0x7f030000;
         public static final int home=0x7f030001;
         public static final int home_active=0x7f030002;
         public static final int howto_dialog=0x7f030003;
-        public static final int lowtime=0x7f030004;
-        public static final int lowtime_setting=0x7f030005;
-        public static final int range_select_dialog=0x7f030006;
-        public static final int sleep=0x7f030007;
-        public static final int sleeptone=0x7f030008;
-        public static final int snooze_select_dialog=0x7f030009;
-        public static final int wake=0x7f03000a;
-        public static final int waketone=0x7f03000b;
-        public static final int waketone_select_dialog=0x7f03000c;
+        public static final int lowtime_setting=0x7f030004;
+        public static final int range_select_dialog=0x7f030005;
+        public static final int sleep=0x7f030006;
+        public static final int sleeptone=0x7f030007;
+        public static final int snooze_select_dialog=0x7f030008;
+        public static final int wake=0x7f030009;
+        public static final int waketone=0x7f03000a;
+        public static final int waketone_select_dialog=0x7f03000b;
     }
     public static final class menu {
         public static final int activity_main=0x7f080000;

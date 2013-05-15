@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         
-	    <activity android:name="WakeToneIntent"
+	    <activity android:name="org.agius.lowtime.WakeToneIntentOLD"
 	    		  android:alwaysRetainTaskState="false"
 	    		  android:launchMode="singleTask"
             	  android:theme="@android:style/Theme.NoTitleBar"></activity>
@@ -48,7 +48,7 @@
 	    		  android:launchMode="singleTask"
             	  android:theme="@android:style/Theme.NoTitleBar"></activity>
 	    
-	    <activity android:name="LowtimeSettingIntent"
+	    <activity android:name="org.agius.lowtime.LowtimeSettingsIntent"
 	    		  android:alwaysRetainTaskState="false"
 	    		  android:launchMode="singleTask"
             	  android:theme="@android:style/Theme.NoTitleBar"></activity>

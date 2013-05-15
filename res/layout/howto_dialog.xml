@@ -51,7 +51,7 @@
 				    android:textStyle="normal"
 				    android:textColor="#fefefe"
 				    android:textSize="15dp"
-				    android:text="Lowtime is a very basic Alarm Clock application with an added feature, range notification.  To setup click Set Lowtime."/>
+				    android:text="Lowtime is a simple Alarm Clock with an added bonus feature, a responsive time range indicator."/>
 		
 			</TableRow>		    
 			
@@ -60,7 +60,6 @@
 			<TableRow android:layout_width="wrap_content"
 			    	  android:layout_height="wrap_content">
 			    	  
-
 				<TableLayout android:id="@+id/help"
 					    android:layout_width="fill_parent"
 					    android:layout_height="wrap_content" >
@@ -89,7 +88,7 @@
 					        android:paddingLeft="10dp"
 					        android:textColor="#fefefe"
 					        android:textSize="14sp"
-					        android:text="Time defined to wake up by playing the Wake Tone" />	    
+					        android:text="Time set in advance used to activate alarm." />	    
 					        
 					</TableRow>
 			        
@@ -118,7 +117,7 @@
 					        android:paddingLeft="10dp"
 					        android:textColor="#fefefe"
 					        android:textSize="14sp"
-					        android:text="Number of minutes from the Alarm time in which you want to notified." />	    
+					        android:text="Number of minutes from the Alarm time for which to be notified." />	    
 					        
 					</TableRow>
 		
@@ -148,7 +147,7 @@
 					        android:paddingLeft="10dp"
 					        android:textColor="#fefefe"
 					        android:textSize="14sp"
-					        android:text="The tone that you want to play during the Alarm or if the time is within the range." />	    
+					        android:text="The ringtone that will play during the Alarm or if the time is within the range." />	    
 					        
 					</TableRow>
 		
@@ -178,7 +177,7 @@
 					        android:paddingLeft="10dp"
 					        android:textColor="#fefefe"
 					        android:textSize="14sp"
-					        android:text="Number of minutes ahead to reset the Alarm and Range to." />	    
+					        android:text="Number of minutes in advance to reset the Alarm and Range." />	    
 					        
 					</TableRow>
 							    								    						
@@ -204,7 +203,7 @@
 					        android:textSize="13sp"
 					        android:textStyle="bold"
 					        android:paddingBottom="10dp"
-					        android:text="Example : You want to get out of bed anytime between 5:30am and 6:00am. " />
+					        android:text="Example : You would like to get out of bed anytime between 5:30am and 6:00am. " />
 					
 				    <org.agius.lowtime.custom.RobotoTextView
 				        android:id="@+id/example"

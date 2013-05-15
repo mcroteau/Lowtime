@@ -55,9 +55,6 @@ public class HomeIntent extends LowtimeBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         
-    	if(serviceRunning())
-        	System.out.println("running");
-    	
         settings = getSettings();
 
         alarm = (TextView) findViewById(R.id.alarm);
@@ -264,7 +261,7 @@ public class HomeIntent extends LowtimeBase {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
 			public void onClick(View v) {
-                Intent i = new Intent(HomeIntent.this, LowtimeSettingIntent.class);
+                Intent i = new Intent(HomeIntent.this, LowtimeSettingsIntent.class);
                 startActivity(i);
             }
         });
@@ -305,7 +302,7 @@ public class HomeIntent extends LowtimeBase {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
 			public void onClick(View v) {
-                Intent i = new Intent(HomeIntent.this, LowtimeSettingIntent.class);
+                Intent i = new Intent(HomeIntent.this, LowtimeSettingsIntent.class);
                 startActivity(i);
             }
         });
@@ -335,7 +332,7 @@ public class HomeIntent extends LowtimeBase {
     
     
     private void showSettings(){
-        Intent i = new Intent(HomeIntent.this, LowtimeSettingIntent.class);
+        Intent i = new Intent(HomeIntent.this, LowtimeSettingsIntent.class);
         startActivity(i);
     }
     

@@ -88,7 +88,8 @@ public class LowtimeService extends Service implements SensorEventListener {
 		    	        
 		    	        Intent intent;
 		    	        Context context = getApplicationContext();
-		    		    if ((diffMinutes <= settings.getRange() || diffMinutes <= 0) && diffMinutes < MAX_MINUTES && diffMinutes > -MAX_MINUTES){
+		    		    if ((diffMinutes <= settings.getRange() || diffMinutes <= 0) && 
+		    		    		diffMinutes < MAX_MINUTES && diffMinutes > -MAX_MINUTES){
 		    		    	intent = new Intent(context, WakeIntent.class);
 		    		    } else {
 		    		    	intent = new Intent(context, SleepIntent.class);
@@ -165,7 +166,6 @@ public class LowtimeService extends Service implements SensorEventListener {
     public BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.i(TAG, "onReceive("+intent+")");
             if (!intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
                 return;
             }
@@ -173,7 +173,6 @@ public class LowtimeService extends Service implements SensorEventListener {
             Runnable runnable = new Runnable() {
                 @Override
 				public void run() {
-                    Log.i(TAG, "Runnable executing.");
                     unregisterListener();
                     registerListener();
                 }
@@ -187,7 +186,6 @@ public class LowtimeService extends Service implements SensorEventListener {
     
     @Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        Log.i(TAG, "onAccuracyChanged().");
     }
 
     

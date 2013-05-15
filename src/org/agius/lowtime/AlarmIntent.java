@@ -68,8 +68,7 @@ public class AlarmIntent extends LowtimeBase {
         	final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         	//check to see if volume is normally set
-        	Log.i("LOWTIME WAKE INTENT ", "check ringtone mode " + audioManager.getRingerMode() + " : " + (audioManager.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) );
-            if ( audioManager.getRingerMode() != AudioManager.RINGER_MODE_NORMAL )
+        	if ( audioManager.getRingerMode() != AudioManager.RINGER_MODE_NORMAL )
             	audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
             
             

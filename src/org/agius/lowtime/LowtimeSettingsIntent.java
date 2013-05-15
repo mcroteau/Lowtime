@@ -25,7 +25,6 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -40,7 +39,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 @SuppressLint("UseSparseArrays")
-public class LowtimeSettingIntent extends LowtimeBase {
+public class LowtimeSettingsIntent extends LowtimeBase {
 
 	private TextView waketoneText; 
 	private TimePicker timePicker;
@@ -95,7 +94,7 @@ public class LowtimeSettingIntent extends LowtimeBase {
 	            @Override
 				public void onClick(View v) {
 	            	
-	    			final Dialog dialog = new Dialog(LowtimeSettingIntent.this);
+	    			final Dialog dialog = new Dialog(LowtimeSettingsIntent.this);
 					dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
 	    			dialog.setContentView(R.layout.range_select_dialog);
 	     	     
@@ -127,7 +126,7 @@ public class LowtimeSettingIntent extends LowtimeBase {
 	            @Override
 				public void onClick(View v) {
 	            	
-	    			final Dialog dialog = new Dialog(LowtimeSettingIntent.this);
+	    			final Dialog dialog = new Dialog(LowtimeSettingsIntent.this);
 	    			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
 	    			dialog.setContentView(R.layout.snooze_select_dialog);
 	     	     
@@ -177,13 +176,13 @@ public class LowtimeSettingIntent extends LowtimeBase {
 	                    
 	                    clearAlarm();
 	                    
-		                Intent i = new Intent(LowtimeSettingIntent.this, HomeIntent.class);
+		                Intent i = new Intent(LowtimeSettingsIntent.this, HomeIntent.class);
 //		                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		                startActivity(i);
 		                
 	            	}else{
 
-	            		AlertDialog.Builder builder = new AlertDialog.Builder(LowtimeSettingIntent.this);
+	            		AlertDialog.Builder builder = new AlertDialog.Builder(LowtimeSettingsIntent.this);
 
 	            		builder.setMessage("Make sure that \"Wakeup Tone\", \"Range\" & \"Snooze Duration\" are set")
 	            		       .setTitle("")
@@ -208,7 +207,7 @@ public class LowtimeSettingIntent extends LowtimeBase {
 	        cancelButton.setOnClickListener(new View.OnClickListener() {
 	            @Override
 				public void onClick(View v) {
-	                Intent i = new Intent(LowtimeSettingIntent.this, HomeIntent.class);
+	                Intent i = new Intent(LowtimeSettingsIntent.this, HomeIntent.class);
 //	                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	                startActivity(i);
 	            }
@@ -230,7 +229,7 @@ public class LowtimeSettingIntent extends LowtimeBase {
     
     private Dialog createWaketoneDialog(){
     	
-    	final Dialog dialog = new Dialog(LowtimeSettingIntent.this);
+    	final Dialog dialog = new Dialog(LowtimeSettingsIntent.this);
 		dialog.requestWindowFeature(dialog.getWindow().FEATURE_NO_TITLE); 
 		dialog.setContentView(R.layout.waketone_select_dialog);
 	     
@@ -248,17 +247,15 @@ public class LowtimeSettingIntent extends LowtimeBase {
     	
     	while(!alarmsCursor.isAfterLast() && alarmsCursor.moveToNext()) {
 
-    		Log.i("LOWTIME -->> ", "ringtoneCount : " + ringtoneCount);
-    		
     		int currentPosition = alarmsCursor.getPosition();
     		int elementsId = ringtoneCount + 2 + (ringtoneCount * 5);
     		
-    		TableRow row = new TableRow(LowtimeSettingIntent.this); 
+    		TableRow row = new TableRow(LowtimeSettingsIntent.this); 
     		row.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
             
-    	    String ringtoneTitle = ringtoneMgr.getRingtone(currentPosition).getTitle(LowtimeSettingIntent.this);
+    	    String ringtoneTitle = ringtoneMgr.getRingtone(currentPosition).getTitle(LowtimeSettingsIntent.this);
     	    
-    	    CheckBox toneCheckbox = new CheckBox(LowtimeSettingIntent.this);
+    	    CheckBox toneCheckbox = new CheckBox(LowtimeSettingsIntent.this);
     	    toneCheckbox.setId(elementsId);
             
             if(settings.getWaketone().equals(ringtoneTitle)){
@@ -278,14 +275,14 @@ public class LowtimeSettingIntent extends LowtimeBase {
             checkBoxes.add(toneCheckbox);
             row.addView(toneCheckbox, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     	    
-            TextView title = new TextView(LowtimeSettingIntent.this);
+            TextView title = new TextView(LowtimeSettingsIntent.this);
     	    title.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
     	    title.setText(ringtoneTitle);
     	    
     	    
     	    row.addView(title, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     	    
-    	    Button preview = new Button(LowtimeSettingIntent.this);
+    	    Button preview = new Button(LowtimeSettingsIntent.this);
             preview.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
             
             
@@ -296,7 +293,7 @@ public class LowtimeSettingIntent extends LowtimeBase {
 				public void onClick(View v) {
                  	int id = v.getId();
                 	if(ringtone != null && ringtone.isPlaying())ringtone.stop();
-        	    	ringtone = RingtoneManager.getRingtone(LowtimeSettingIntent.this, (Uri) lookup.get(id).get(URI));
+        	    	ringtone = RingtoneManager.getRingtone(LowtimeSettingsIntent.this, (Uri) lookup.get(id).get(URI));
         	    	ringtone.play();
                 }
             });
@@ -304,7 +301,7 @@ public class LowtimeSettingIntent extends LowtimeBase {
             row.addView(preview);
             
             lookup.put(elementsId, new HashMap<String, Object>());
-            lookup.get(elementsId).put(TONE, ringtoneMgr.getRingtone(currentPosition).getTitle(LowtimeSettingIntent.this));
+            lookup.get(elementsId).put(TONE, ringtoneMgr.getRingtone(currentPosition).getTitle(LowtimeSettingsIntent.this));
             lookup.get(elementsId).put(URI, ringtoneMgr.getRingtoneUri(currentPosition));
             
     	    ringtoneCount++;
@@ -321,7 +318,7 @@ public class LowtimeSettingIntent extends LowtimeBase {
 				CheckBox checkbox = getCheckedCheckBox();
 				if(checkbox == null){
 					
-            		AlertDialog.Builder builder = new AlertDialog.Builder(LowtimeSettingIntent.this);
+            		AlertDialog.Builder builder = new AlertDialog.Builder(LowtimeSettingsIntent.this);
 
             		builder.setMessage("Please select a \"Wakeup Tone\"")
             		       .setTitle("")
@@ -436,7 +433,7 @@ public class LowtimeSettingIntent extends LowtimeBase {
     
 
     private void showSettings(){
-        Intent i = new Intent(LowtimeSettingIntent.this, LowtimeSettingIntent.class);
+        Intent i = new Intent(LowtimeSettingsIntent.this, LowtimeSettingsIntent.class);
         startActivity(i);
     }
     

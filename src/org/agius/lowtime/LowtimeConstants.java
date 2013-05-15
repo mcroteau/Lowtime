@@ -28,10 +28,10 @@ public class LowtimeConstants {
 	public static final String LOWTIME_BUTTON_DISABLE = "Turn Off";
 
 	public static final int FORCE_THRESHOLD = 150;
-	public static final int TIME_THRESHOLD = 85;
+	public static final int TIME_THRESHOLD = 95;
 	public static final int SHAKE_TIMEOUT = 500;
 	public static final int SHAKE_DURATION = 1000;
-	public static final int SHAKE_COUNT = 3;
+	public static final int SHAKE_COUNT = 5;
 	public static final int MAX_MINUTES = 90;
 
     public static final int SCREEN_OFF_RECEIVER_DELAY = 500;
